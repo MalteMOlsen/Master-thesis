@@ -37,3 +37,10 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+#remove .csv and .png upload
+*.csv
+*.png
+*.tmp
+*.docx
+*.xlsx
