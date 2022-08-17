@@ -19,7 +19,10 @@ data_thirty_min <- data_thirty_min %>%
   mutate(total_N_load_PT4_kg_h=nitrate_load_PT4_kg_h+ammonium_load_PT4_kg_h) %>% 
   mutate(total_N_load_PT3_kg_h=nitrate_load_PT3_kg_h+ammonium_load_PT3_kg_h) %>% 
   mutate(total_N_load_PT2_kg_h=nitrate_load_PT2_kg_h+ammonium_load_PT2_kg_h) %>% 
-  mutate(total_N_load_PT1_kg_h=nitrate_load_PT1_kg_h+ammonium_load_PT1_kg_h) 
+  mutate(total_N_load_PT1_kg_h=nitrate_load_PT1_kg_h+ammonium_load_PT1_kg_h) %>% 
+  mutate(ammonium_load_effluent_kg_h=ammonium_effluent_mg_L*flow_effluent_m3_h/1000) %>%
+  mutate(nitrate_load_effluent_kg_h=nitrate_effluent_mg_L*flow_effluent_m3_h/1000) %>% 
+  mutate(total_N_load_effluent_kg_h=nitrate_load_effluent_kg_h+ammonium_load_effluent_kg_h)
   
 
 
@@ -70,6 +73,12 @@ over_8_total_N %>%
   geom_point()
 
 
+#Set up of the days, month, and year
+day1 = "2022-04-04"
+day2 = "2022-04-05"
+month = "2022-04"
+year = "2022"
+
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -85,111 +94,55 @@ over_8_total_N %>%
 #-------------------------------------------------------------------------------
 
 #===============================================================================
-#2022
+#year
 #===============================================================================
 
 data_thirty_min %>% 
-  plot_N_requirements("2022")
+  plot_N_requirements(year)
 
 
-#2022-04
+#year-month
 #-------------------------------------------------------------------------------
-data_thirty_min %>% 
-  plot_N_requirements("2022-04-06"~"2022-04-11")
-
-
-#
-#=======================2022-04-05=======================
-#Effluent
-data_thirty_min %>% 
-  plot_N_requirements("2022-04-04"~"2022-04-05")
-
-
-
-#Influent and rain
-data_thirty_min %>% 
-  plot_influent_1("2022-04-01"~"2022-04-05")
+#data_thirty_min %>% 
+ # plot_N_requirements(month)
 
 data_thirty_min %>% 
-  plot_influent_2("2022-04-04"~"2022-04-05")
+  plot_influent_load_month()
 
 data_thirty_min %>% 
-  plot_influent_3("2022-04-01"~"2022-04-05")
+  plot_process_tank_N_removal(month)
 
-
-
-#Process tank 4
-data_thirty_min %>% 
-  plot_process_tank_4_N_1("2022-04-04"~"2022-04-05")
-
-data_thirty_min %>% 
-  plot_process_tank_4_N_2("2022-04-04"~"2022-04-04")
-
-data_thirty_min %>% 
-  plot_process_tank_4_air("2022-04-02"~"2022-04-05")
-
-
-
-#Process tank 3
-data_thirty_min %>% 
-  plot_process_tank_3_N_1("2022-04-02"~"2022-04-04")
-
-data_thirty_min %>% 
-  plot_process_tank_3_N_2("2022-04-02"~"2022-04-05")
-
-data_thirty_min %>% 
-  plot_process_tank_3_air("2022-04-02"~"2022-04-04")
-
-
-
-#Process tank 2
-data_thirty_min %>% 
-  plot_process_tank_2_N_1("2022-04-02"~"2022-04-05")
-
-data_thirty_min %>% 
-  plot_process_tank_2_N_2("2022-04-02"~"2022-04-05")
-
-data_thirty_min %>% 
-  plot_process_tank_2_air("2022-04-02"~"2022-04-05")
-
-
-
-#Process tank 1
-data_thirty_min %>% 
-  plot_process_tank_1_N_1("2022-04-02"~"2022-04-05")
-
-data_thirty_min %>% 
-  plot_process_tank_1_N_2("2022-04-02"~"2022-04-05")
-
-data_thirty_min %>% 
-  plot_process_tank_1_air("2022-04-02"~"2022-04-05")
-
-#Temperature
 data_thirty_min %>%
-  plot_process_tank_temperature("2022-04-02"~"2022-04-05")
+  plot_process_tank_air_and_ss(month)
 
-#Sum up
-data_thirty_min %>% 
-  plot_process_tank_N_removal("2022-04-02"~"2022-04-05")
-
-#=======================2022-05-07==================
+#=======================
 #Effluent
 data_thirty_min %>% 
   plot_N_requirements(day1~day2)
 
+data_thirty_min %>%
+  plot_process_tank_air_and_ss(day1~day2)
 
+
+
+
+#REPEAT WITH OTHER DAYS
+
+data_thirty_min %>%
+  plot_effluent_1(day1~day2)
+
+#=======================
 #Influent and rain
-data_thirty_min %>% 
-  plot_influent_1(day1~day2)
-
-data_thirty_min %>% 
-  plot_influent_2(day1~day2)
-
 data_thirty_min %>% 
   plot_influent_3(day1~day2)
 
+data_thirty_min %>% 
+  plot_influent_1(day1~day2)
 
+# data_thirty_min %>% 
+#   plot_influent_2(day1~day2)
 
+#=======================
 #Process tank 4
 data_thirty_min %>% 
   plot_process_tank_4_N_1(day1~day2)
@@ -202,6 +155,7 @@ data_thirty_min %>%
 
 
 
+#=======================
 #Process tank 3
 data_thirty_min %>% 
   plot_process_tank_3_N_1(day1~day2)
@@ -214,6 +168,7 @@ data_thirty_min %>%
 
 
 
+#=======================
 #Process tank 2
 data_thirty_min %>% 
   plot_process_tank_2_N_1(day1~day2)
@@ -226,6 +181,7 @@ data_thirty_min %>%
 
 
 
+#=======================
 #Process tank 1
 data_thirty_min %>% 
   plot_process_tank_1_N_1(day1~day2)
@@ -236,10 +192,15 @@ data_thirty_min %>%
 data_thirty_min %>% 
   plot_process_tank_1_air(day1~day2)
 
+
+
+#=======================
 #Temperature
 data_thirty_min %>%
   plot_process_tank_temperature(day1~day2)
 
+
+#=======================
 #Sum up
 data_thirty_min %>% 
   plot_process_tank_N_removal(day1~day2)

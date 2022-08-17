@@ -629,3 +629,11 @@ temp <- NA_linear_approximate(data_thirty_min,
 data_thirty_min <- overwrite_NA_values(data_thirty_min,
                                        temp,
                                        T_PT1_C)
+
+
+
+#Overwriting the extra data from DIMS
+
+
+
+
