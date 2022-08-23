@@ -55,7 +55,7 @@ counting_values_are_NA_in_a_day <- function(df,
 #Effluent
 plot_N_requirements <- function(df,time_period){
   
-  df %>% 
+  p1 <-df %>% 
     filter_index(time_period) %>% 
     ggplot(aes(x=time_thirty_min)) +
       geom_line(aes(y=ammonium_effluent_mg_L),
@@ -76,6 +76,60 @@ plot_N_requirements <- function(df,time_period){
       name = "Ammonium/Total N concentration [mg/L]",
       sec.axis = sec_axis(~.*500, name="Flow in AN tank [m3/h]")
     )
+  
+  p2 <- df %>% 
+    filter_index(time_period) %>% 
+    ggplot(aes(x=time_thirty_min)) +
+    geom_line(aes(y=ammonium_load_AN_kg_h),
+              color="black") +
+    xlab("Date")+ 
+    theme_gray()+
+    scale_y_continuous(
+      name = "Ammonium/Total N concentration [mg/L]",
+      sec.axis = sec_axis(~.*500, name="Flow in AN tank [m3/h]")
+    )
+  gridExtra::grid.arrange(p1,p2)
+}
+
+
+
+
+plot_N_requirements_ONE_MIN <- function(df,time_period){
+  
+  p1 <-df %>% 
+    filter_index(time_period) %>% 
+    ggplot(aes(x=time_one_min)) +
+    geom_line(aes(y=ammonium_effluent_mg_L),
+              color="black") #+
+    #geom_line(aes(y=total_N_effluent_mg_L),
+   #           color="blue") +
+    # geom_line(aes(y=flow_AN_m3_h/500),
+    #           color="green") +
+    # geom_hline(yintercept=2, 
+    #            color="orange", 
+    #            size=.5) +
+    # geom_hline(yintercept=8, 
+    #            color="red", 
+    #            size=.5)+
+    # xlab("Date")+
+    # theme_light()+ 
+    # scale_y_continuous(
+    #   name = "Ammonium/Total N concentration [mg/L]",
+    #   sec.axis = sec_axis(~.*500, name="Flow in AN tank [m3/h]")
+    # )
+    # 
+  # p2 <- df %>% 
+  #   filter_index(time_period) %>% 
+  #   ggplot(aes(x=time_one_min))# +
+  #  # geom_line(aes(y=ammonium_load_AN_kg_h),
+  #             color="black")# +
+  #   xlab("Date")+ 
+  #   theme_gray()+
+  #   scale_y_continuous(
+  #     name = "Ammonium/Total N concentration [mg/L]",
+  #     sec.axis = sec_axis(~.*500, name="Flow in AN tank [m3/h]")
+  #   )
+  # gridExtra::grid.arrange(p1,p2)
 }
 
 plot_effluent_1 <- function(df,time_period){
@@ -654,7 +708,11 @@ plot_influent_load_month <- function(df){
     geom_line(aes(y=ammonium_load_AN_kg_h),
               color="black") +
     xlab("Date")+ 
-    theme_gray()
+    theme_gray()+ 
+    scale_y_continuous(
+      name = "Ammonium/Total N load [kg/h]",
+      sec.axis = sec_axis(~.*500, name="Flow in AN tank [m3/h]")
+    )
   
   p3 <-df %>% 
     filter_index(month) %>% 
@@ -756,10 +814,123 @@ plot_process_tank_air_and_ss <- function(df,time_period){
   
 }
 
+plot_process_tank_ss <- function(df,time_period){
+  p1 <- df %>% 
+    filter_index(time_period) %>% 
+    ggplot(aes(x=time_thirty_min)) +
+    geom_line(aes(y=SS_PT1_g_L),
+              color="black") +
+    xlab("Date")+ 
+    theme_gray()
+  p2 <- df %>% 
+    filter_index(time_period) %>% 
+    ggplot(aes(x=time_thirty_min)) +
+    geom_line(aes(y=SS_PT4_g_L),
+              color="black") +
+    xlab("Date")+ 
+    theme_gray()
+  
+  p3 <-df %>% 
+    filter_index(time_period) %>% 
+    ggplot(aes(x=time_thirty_min)) +
+    geom_line(aes(y=ammonium_effluent_mg_L),
+              color="black") +
+    geom_line(aes(y=total_N_effluent_mg_L),
+              color="blue") +
+    geom_line(aes(y=flow_AN_m3_h/500),
+              color="green") +
+    geom_hline(yintercept=2, 
+               color="orange", 
+               size=.5) +
+    geom_hline(yintercept=8, 
+               color="red", 
+               size=.5)+
+    xlab("Date")+
+    theme_light()+ 
+    scale_y_continuous(
+      name = "Ammonium/Total N concentration [mg/L]",
+      sec.axis = sec_axis(~.*500, name="Flow in AN tank [m3/h]")
+    )
+ 
+  
+  gridExtra::grid.arrange(p1,p2,p3)
+  
+}
 
 
-
-
+plot_process_tank_concentration_and_air <- function(df,time_period){
+  
+  p1 <- df %>% 
+    filter_index(time_period) %>% 
+    ggplot(aes(x=time_thirty_min)) +
+    geom_line(aes(y=airflow_PT4_m3_h/75),
+              color="Green") +
+    geom_line(aes(y=ammonium_PT4_mg_L),
+              color="red") +
+    geom_line(aes(y=nitrate_PT4_mg_L),
+              color="blue") +
+    xlab("Date")+ 
+    ylim(0,40)+
+    theme_gray()+
+    scale_y_continuous(
+      name = "Ammonium/nitrate concentration [mg/l]",
+      sec.axis = sec_axis(~.*75, name="Air flow to the tank [m3/h]")
+    )
+  
+  p2 <- df %>% 
+    filter_index(time_period) %>% 
+    ggplot(aes(x=time_thirty_min)) +
+    geom_line(aes(y=airflow_PT3_m3_h/75),
+              color="Green") +
+    geom_line(aes(y=ammonium_PT3_mg_L),
+              color="red") +
+    geom_line(aes(y=nitrate_PT3_mg_L),
+              color="blue") +
+    xlab("Date")+ 
+    ylim(0,40)+
+    theme_gray()+
+    scale_y_continuous(
+      name = "Ammonium/nitrate concentration [mg/l]",
+      sec.axis = sec_axis(~.*75, name="Air flow to the tank [m3/h]")
+    )
+  
+  p3 <- df %>% 
+    filter_index(time_period) %>% 
+    ggplot(aes(x=time_thirty_min)) +
+    geom_line(aes(y=airflow_PT2_m3_h/75),
+              color="Green") +
+    geom_line(aes(y=ammonium_PT2_mg_L),
+              color="red") +
+    geom_line(aes(y=nitrate_PT2_mg_L),
+              color="blue") +
+    xlab("Date")+ 
+    ylim(0,40)+
+    theme_gray()+
+    scale_y_continuous(
+      name = "Ammonium/nitrate concentration [mg/l]",
+      sec.axis = sec_axis(~.*75, name="Air flow to the tank [m3/h]")
+    )
+  
+  p4 <- df %>% 
+    filter_index(time_period) %>% 
+    ggplot(aes(x=time_thirty_min)) +
+    geom_line(aes(y=airflow_PT1_m3_h/75),
+              color="Green") +
+    geom_line(aes(y=ammonium_PT1_mg_L),
+              color="red") +
+    geom_line(aes(y=nitrate_PT1_mg_L),
+              color="blue") +
+    xlab("Date")+ 
+    ylim(0,40)+
+    theme_gray()+
+    scale_y_continuous(
+      name = "Ammonium/nitrate concentration [mg/l]",
+      sec.axis = sec_axis(~.*75, name="Air flow to the tank [m3/h]")
+    )
+  
+  gridExtra::grid.arrange(p1,p2,p3,p4)
+  
+}
 
 
 

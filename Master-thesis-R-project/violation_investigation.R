@@ -1,6 +1,8 @@
 #Finding the times where the process tanks were insufficient
 
 #Setup
+#Setup
+source("load_all_data.R")
 source("data_cleaning_remove_na.R")
 
 #Make a column with total N in the effluent 
@@ -74,9 +76,9 @@ over_8_total_N %>%
 
 
 #Set up of the days, month, and year
-day1 = "2022-04-04"
-day2 = "2022-04-05"
-month = "2022-04"
+day1 = "2022-01-11"
+day2 = "2022-01-13"
+month = "2022-01"
 year = "2022"
 
 #-------------------------------------------------------------------------------
@@ -107,6 +109,7 @@ data_thirty_min %>%
  # plot_N_requirements(month)
 
 data_thirty_min %>% 
+#  filter(nitrate_effluent_mg_L<25) %>% 
   plot_influent_load_month()
 
 data_thirty_min %>% 
@@ -114,6 +117,9 @@ data_thirty_min %>%
 
 data_thirty_min %>%
   plot_process_tank_air_and_ss(month)
+
+data_thirty_min %>%
+  plot_process_tank_ss(month)
 
 #=======================
 #Effluent
@@ -123,8 +129,57 @@ data_thirty_min %>%
 data_thirty_min %>%
   plot_process_tank_air_and_ss(day1~day2)
 
+data_thirty_min %>%
+  plot_process_tank_concentration_and_air(day1~day2)
 
+data_thirty_min %>%
+  plot_process_tank_ss(day1~day2)
 
+data_one_min %>%
+  plot_N_requirements_ONE_MIN(day1~day2)
+
+temp1 <- data_one_min %>%
+  filter_index(day1~day2) %>%
+  select(ammonium_effluent_mg_L)
+
+temp1 %>% autoplot()
+
+temp7 <- data_one_min %>%
+  filter_index(day1~day2) %>%
+  select(nitrate_effluent_mg_L) %>% 
+  filter(nitrate_effluent_mg_L<100)
+
+temp7 %>% autoplot()
+
+temp2 <- data_one_min %>%
+  filter_index(day1~day2) %>%
+  select(ammonium_PT1_mg_L)
+
+temp2 %>% autoplot()
+
+temp8 <- data_one_min %>%
+  filter_index(day1~day2) %>%
+  select(nitrate_PT1_mg_L)
+
+temp8 %>% autoplot()
+
+temp3 <- data_one_min %>%
+  filter_index(day1~day2) %>%
+  select(ammonium_PT2_mg_L)
+
+temp3 %>% autoplot()
+
+temp4 <- data_one_min %>%
+  filter_index(day1~day2) %>%
+  select(ammonium_AN_mg_L)
+
+temp4 %>% autoplot()
+
+temp5 <- data_one_min %>%
+  filter_index(day1~day2) %>%
+  select(flow_AN_m3_h)
+
+temp5 %>% autoplot()
 
 #REPEAT WITH OTHER DAYS
 
