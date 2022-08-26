@@ -1,12 +1,14 @@
-library(zoo)
-library(tidyverse)
+#///////////////////////////////////////////////////////////////////////////////
+#Adding extra data found in DIMS to the half hourly data frame
+#///////////////////////////////////////////////////////////////////////////////
+#The purpose of this script is add the extra data found in DIMS to the half 
+#hourly data frame
 
-source("data_cleaning_remove_na.R")
-
-#----------------
 #The extra ammonium in the effluent data
-#load the data from the csv file with every value as a character 
-temp_ammonium_effluent <- read_delim(here::here("data","extra_data_ammonium_effluent.csv"), 
+#-------------------------------------------------------------------------------
+#Load the data from the csv file with every value as a character 
+temp_ammonium_effluent <- read_delim(here::here("data",
+                                                "extra_data_ammonium_effluent.csv"), 
                                delim=";",
                                col_types = cols(.default = "c"))
 
@@ -14,12 +16,15 @@ temp_ammonium_effluent <- read_delim(here::here("data","extra_data_ammonium_effl
 #Change , to . and make data numeric
 temp_ammonium_effluent[,-1] <- lapply(temp_ammonium_effluent[,-1], 
                                 function(x) 
-                                  as.numeric(gsub(",", ".",  as.character(x))))
+                                  as.numeric(gsub(",",
+                                                  ".",  
+                                                  as.character(x))))
 
 
-# Change the time column to the year-month-day hour-minute-second format
+#Change the time column to the year-month-day hour-minute-second format
 temp_ammonium_effluent <- temp_ammonium_effluent %>% 
   mutate(DATETIME=dmy_hm(DATETIME))%>% 
+  #remove data which have an NA value
   na.omit()
 
 
@@ -35,8 +40,9 @@ temp_ammonium_effluent_30min <- temp_ammonium_effluent %>%
   select(-DATETIME) %>% 
   #Grouping by the new time column
   group_by(temp_name2) %>%
-  #Overwrite all the existing columns with the average over the given time interval
-  #this is done for all columns which are numeric, the na.rm=T makes the averaging robust to missing values
+  #Overwrite all the existing columns with the average of the given time interval
+  #this is done for all columns which are numeric, the na.rm=T makes the 
+  #averaging robust towards missing values
   summarise(temp_column=mean(Value))%>% 
   #Convert the back to a tsibble
   as_tsibble() %>% 
@@ -46,10 +52,11 @@ temp_ammonium_effluent_30min <- temp_ammonium_effluent %>%
   distinct(time_thirty_min, .keep_all = T)
 
 
-#--------------
 #The extra nitrate in the effluent data
-#load the data from the csv file with every value as a character 
-temp_nitrate_effluent <- read_delim(here::here("data","extra_data_nitrate_effluent.csv"), 
+#-------------------------------------------------------------------------------
+#Load the data from the csv file with every value as a character 
+temp_nitrate_effluent <- read_delim(here::here("data",
+                                               "extra_data_nitrate_effluent.csv"), 
                                delim=";",
                                col_types = cols(.default = "c"))
 
@@ -57,12 +64,15 @@ temp_nitrate_effluent <- read_delim(here::here("data","extra_data_nitrate_efflue
 #Change , to . and make data numeric
 temp_nitrate_effluent[,-1] <- lapply(temp_nitrate_effluent[,-1], 
                                 function(x) 
-                                  as.numeric(gsub(",", ".",  as.character(x))))
+                                  as.numeric(gsub(",", 
+                                                  ".", 
+                                                  as.character(x))))
 
 
-# Change the time column to the year-month-day hour-minute-second format
+#Change the time column to the year-month-day hour-minute-second format
 temp_nitrate_effluent <- temp_nitrate_effluent %>% 
   mutate(DATETIME=dmy_hm(DATETIME)) %>% 
+  #remove data which have an NA value
   na.omit()
 
 
@@ -79,7 +89,8 @@ temp_nitrate_effluent_30min <- temp_nitrate_effluent %>%
   #Grouping by the new time column
   group_by(temp_name2) %>%
   #Overwrite all the existing columns with the average over the given time interval
-  #this is done for all columns which are numeric, the na.rm=T makes the averaging robust to missing values
+  #this is done for all columns which are numeric, the na.rm=T makes the 
+  #averaging robust towards missing values
   summarise(temp_column=mean(Value))%>% 
   #Convert the back to a tsibble
   as_tsibble() %>% 
@@ -89,13 +100,14 @@ temp_nitrate_effluent_30min <- temp_nitrate_effluent %>%
   distinct(time_thirty_min, .keep_all = T)
 
 
-#-----------------
-#Include the data in the big data frame
+#Add the extra data fround in DIMS to the half hourly data frame
+#-------------------------------------------------------------------------------
+#Adding the extra ammonium data
 data_thirty_min <- overwrite_NA_values(data_thirty_min,
                                        temp_ammonium_effluent_30min,
                                        ammonium_effluent_mg_L)
 
-
+#Adding the extra nitrate data
 data_thirty_min <- overwrite_NA_values(data_thirty_min,
                                        temp_nitrate_effluent_30min,
                                        nitrate_effluent_mg_L)

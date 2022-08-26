@@ -1,75 +1,28 @@
-
-#Functions
-
-
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-#Data cleaning functions
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-#Approximate NA values in a time interval with at linear regression
-NA_linear_approximate <- function(df, time_periode, column_name){
-  df2 <- df %>% 
-    filter_index(time_periode) %>% 
-    select({{column_name}}) %>% 
-    mutate(temp_column=na.approx({{column_name}})) %>% 
-    select(-{{column_name}})
-}
-
-#Overwriting NA values with data from another data frame
-overwrite_NA_values <- function(df_with_NA,
-                                df_to_overwrite,
-                                column_name){
-  df <- df_with_NA %>% 
-    left_join(df_to_overwrite) %>%  
-    mutate(temp=if_else(is.na({{column_name}}), 
-                        temp_column, 
-                        {{column_name}})) %>% 
-    select(-temp_column) %>% 
-    select(-{{column_name}}) %>% 
-    rename({{column_name}}:=temp)
-}
+#///////////////////////////////////////////////////////////////////////////////
+#Functions to create plots for initial data investigation
+#///////////////////////////////////////////////////////////////////////////////
+#The purpose of this script is to create many standard functions which can be 
+#used for a quick way to investigate various process parameters at Egå WWTP
 
 
-#Finding how many hours have a NA in a day
-counting_values_are_NA_in_a_day <- function(df, 
-                                            column)
-{
-  df <- df %>% 
-    select({{column}}) %>% 
-    filter(is.na({{column}})) %>% 
-    as_tibble() %>% 
-    mutate(counter=1) %>% 
-    mutate(day_time=floor_date(time_thirty_min,"day")) %>% 
-    select(-time_thirty_min) %>%
-    group_by(day_time) %>% 
-    summarise(day_count=sum(counter))
-}
-
-
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-#Scenarios with insufficient operation functions/violation investigation
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 #Effluent
 plot_N_requirements <- function(df,time_period){
   
   p1 <-df %>% 
     filter_index(time_period) %>% 
     ggplot(aes(x=time_thirty_min)) +
-      geom_line(aes(y=ammonium_effluent_mg_L),
-                color="black") +
-      geom_line(aes(y=total_N_effluent_mg_L),
-                color="blue") +
+    geom_line(aes(y=ammonium_effluent_mg_L),
+              color="black") +
+    geom_line(aes(y=total_N_effluent_mg_L),
+              color="blue") +
     geom_line(aes(y=flow_AN_m3_h/500),
               color="green") +
-      geom_hline(yintercept=2, 
-                 color="orange", 
-                 size=.5) +
-      geom_hline(yintercept=8, 
-                 color="red", 
-                 size=.5)+
+    geom_hline(yintercept=2, 
+               color="orange", 
+               size=.5) +
+    geom_hline(yintercept=8, 
+               color="red", 
+               size=.5)+
     xlab("Date")+
     theme_light()+ 
     scale_y_continuous(
@@ -101,23 +54,23 @@ plot_N_requirements_ONE_MIN <- function(df,time_period){
     ggplot(aes(x=time_one_min)) +
     geom_line(aes(y=ammonium_effluent_mg_L),
               color="black") #+
-    #geom_line(aes(y=total_N_effluent_mg_L),
-   #           color="blue") +
-    # geom_line(aes(y=flow_AN_m3_h/500),
-    #           color="green") +
-    # geom_hline(yintercept=2, 
-    #            color="orange", 
-    #            size=.5) +
-    # geom_hline(yintercept=8, 
-    #            color="red", 
-    #            size=.5)+
-    # xlab("Date")+
-    # theme_light()+ 
-    # scale_y_continuous(
-    #   name = "Ammonium/Total N concentration [mg/L]",
-    #   sec.axis = sec_axis(~.*500, name="Flow in AN tank [m3/h]")
-    # )
-    # 
+  #geom_line(aes(y=total_N_effluent_mg_L),
+  #           color="blue") +
+  # geom_line(aes(y=flow_AN_m3_h/500),
+  #           color="green") +
+  # geom_hline(yintercept=2, 
+  #            color="orange", 
+  #            size=.5) +
+  # geom_hline(yintercept=8, 
+  #            color="red", 
+  #            size=.5)+
+  # xlab("Date")+
+  # theme_light()+ 
+  # scale_y_continuous(
+  #   name = "Ammonium/Total N concentration [mg/L]",
+  #   sec.axis = sec_axis(~.*500, name="Flow in AN tank [m3/h]")
+  # )
+  # 
   # p2 <- df %>% 
   #   filter_index(time_period) %>% 
   #   ggplot(aes(x=time_one_min))# +
@@ -236,7 +189,7 @@ plot_influent_3 <- function(df,time_period){
               color="black") +
     xlab("Date")+ 
     theme_gray()
-
+  
   gridExtra::grid.arrange(p1,p2,p3)
   
 }
@@ -701,7 +654,7 @@ plot_process_tank_temperature <- function(df,time_period){
 
 
 plot_influent_load_month <- function(df){
-
+  
   p2 <- df %>% 
     filter_index(month) %>% 
     ggplot(aes(x=time_thirty_min)) +
@@ -851,7 +804,7 @@ plot_process_tank_ss <- function(df,time_period){
       name = "Ammonium/Total N concentration [mg/L]",
       sec.axis = sec_axis(~.*500, name="Flow in AN tank [m3/h]")
     )
- 
+  
   
   gridExtra::grid.arrange(p1,p2,p3)
   
@@ -931,25 +884,3 @@ plot_process_tank_concentration_and_air <- function(df,time_period){
   gridExtra::grid.arrange(p1,p2,p3,p4)
   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

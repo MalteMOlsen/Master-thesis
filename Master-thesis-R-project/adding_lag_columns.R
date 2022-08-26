@@ -1,9 +1,15 @@
+#///////////////////////////////////////////////////////////////////////////////
+#Creating lagged columns for various parameters
+#///////////////////////////////////////////////////////////////////////////////
 #This script is to lag all columns one hole day. This is done to test if there 
 #is a correlation between different parameters, which is delayed due to the 
 #physically travel through the plant
 
-temp <- data_thirty_min %>%
+
+data_thirty_min <- data_thirty_min %>%
+  #
   #The ammonium concentration to the AN tank column
+  #
   mutate(ammonium_AN_lag1=lag(ammonium_to_AN_mg_L,1))%>% 
   mutate(ammonium_AN_lag2=lag(ammonium_to_AN_mg_L,2))%>% 
   mutate(ammonium_AN_lag3=lag(ammonium_to_AN_mg_L,3))%>% 
@@ -52,7 +58,9 @@ temp <- data_thirty_min %>%
   mutate(ammonium_AN_lag46=lag(ammonium_to_AN_mg_L,46))%>% 
   mutate(ammonium_AN_lag47=lag(ammonium_to_AN_mg_L,47))%>% 
   mutate(ammonium_AN_lag48=lag(ammonium_to_AN_mg_L,48))%>%
+  #
   #The load of ammonium to the AN tank column
+  #
   mutate(load_ammonium_AN_lag1=lag(ammonium_load_AN_kg_h,1))%>% 
   mutate(load_ammonium_AN_lag2=lag(ammonium_load_AN_kg_h,2))%>% 
   mutate(load_ammonium_AN_lag3=lag(ammonium_load_AN_kg_h,3))%>% 
@@ -101,7 +109,9 @@ temp <- data_thirty_min %>%
   mutate(load_ammonium_AN_lag46=lag(ammonium_load_AN_kg_h,46))%>% 
   mutate(load_ammonium_AN_lag47=lag(ammonium_load_AN_kg_h,47))%>% 
   mutate(load_ammonium_AN_lag48=lag(ammonium_load_AN_kg_h,48))%>%
+  #
   #Flow in the AN tank column
+  #
   mutate(flow_AN_lag1=lag(flow_AN_m3_h,1))%>% 
   mutate(flow_AN_lag2=lag(flow_AN_m3_h,2))%>% 
   mutate(flow_AN_lag3=lag(flow_AN_m3_h,3))%>% 
@@ -150,7 +160,9 @@ temp <- data_thirty_min %>%
   mutate(flow_AN_lag46=lag(flow_AN_m3_h,46))%>% 
   mutate(flow_AN_lag47=lag(flow_AN_m3_h,47))%>% 
   mutate(flow_AN_lag48=lag(flow_AN_m3_h,48))%>%
+  #
   #The rain column
+  #
   mutate(rain_lag1=lag(rainfall_mm,1))%>% 
   mutate(rain_lag2=lag(rainfall_mm,2))%>% 
   mutate(rain_lag3=lag(rainfall_mm,3))%>% 
@@ -199,7 +211,9 @@ temp <- data_thirty_min %>%
   mutate(rain_lag46=lag(rainfall_mm,46))%>% 
   mutate(rain_lag47=lag(rainfall_mm,47))%>% 
   mutate(rain_lag48=lag(rainfall_mm,48))%>%
+  #
   #The air flow in the process tank 4 column
+  #
   mutate(air_PT4_lag1=lag(airflow_PT4_m3_h,1))%>% 
   mutate(air_PT4_lag2=lag(airflow_PT4_m3_h,2))%>% 
   mutate(air_PT4_lag3=lag(airflow_PT4_m3_h,3))%>% 
@@ -248,7 +262,9 @@ temp <- data_thirty_min %>%
   mutate(air_PT4_lag46=lag(airflow_PT4_m3_h,46))%>% 
   mutate(air_PT4_lag47=lag(airflow_PT4_m3_h,47))%>% 
   mutate(air_PT4_lag48=lag(airflow_PT4_m3_h,48))%>%
+  #
   #The air flow in the process tank 3 column
+  #
   mutate(air_PT3_lag1=lag(airflow_PT3_m3_h,1))%>% 
   mutate(air_PT3_lag2=lag(airflow_PT3_m3_h,2))%>% 
   mutate(air_PT3_lag3=lag(airflow_PT3_m3_h,3))%>% 
