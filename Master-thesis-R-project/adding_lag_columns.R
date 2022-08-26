@@ -1,4 +1,9 @@
+#This script is to lag all columns one hole day. This is done to test if there 
+#is a correlation between different parameters, which is delayed due to the 
+#physically travel through the plant
+
 temp <- data_thirty_min %>%
+  #The ammonium concentration to the AN tank column
   mutate(ammonium_AN_lag1=lag(ammonium_to_AN_mg_L,1))%>% 
   mutate(ammonium_AN_lag2=lag(ammonium_to_AN_mg_L,2))%>% 
   mutate(ammonium_AN_lag3=lag(ammonium_to_AN_mg_L,3))%>% 
@@ -47,7 +52,7 @@ temp <- data_thirty_min %>%
   mutate(ammonium_AN_lag46=lag(ammonium_to_AN_mg_L,46))%>% 
   mutate(ammonium_AN_lag47=lag(ammonium_to_AN_mg_L,47))%>% 
   mutate(ammonium_AN_lag48=lag(ammonium_to_AN_mg_L,48))%>%
-  #New data column
+  #The load of ammonium to the AN tank column
   mutate(load_ammonium_AN_lag1=lag(ammonium_load_AN_kg_h,1))%>% 
   mutate(load_ammonium_AN_lag2=lag(ammonium_load_AN_kg_h,2))%>% 
   mutate(load_ammonium_AN_lag3=lag(ammonium_load_AN_kg_h,3))%>% 
@@ -96,7 +101,7 @@ temp <- data_thirty_min %>%
   mutate(load_ammonium_AN_lag46=lag(ammonium_load_AN_kg_h,46))%>% 
   mutate(load_ammonium_AN_lag47=lag(ammonium_load_AN_kg_h,47))%>% 
   mutate(load_ammonium_AN_lag48=lag(ammonium_load_AN_kg_h,48))%>%
-  #New data column
+  #Flow in the AN tank column
   mutate(flow_AN_lag1=lag(flow_AN_m3_h,1))%>% 
   mutate(flow_AN_lag2=lag(flow_AN_m3_h,2))%>% 
   mutate(flow_AN_lag3=lag(flow_AN_m3_h,3))%>% 
@@ -145,7 +150,7 @@ temp <- data_thirty_min %>%
   mutate(flow_AN_lag46=lag(flow_AN_m3_h,46))%>% 
   mutate(flow_AN_lag47=lag(flow_AN_m3_h,47))%>% 
   mutate(flow_AN_lag48=lag(flow_AN_m3_h,48))%>%
-  #New data column
+  #The rain column
   mutate(rain_lag1=lag(rainfall_mm,1))%>% 
   mutate(rain_lag2=lag(rainfall_mm,2))%>% 
   mutate(rain_lag3=lag(rainfall_mm,3))%>% 
@@ -194,7 +199,7 @@ temp <- data_thirty_min %>%
   mutate(rain_lag46=lag(rainfall_mm,46))%>% 
   mutate(rain_lag47=lag(rainfall_mm,47))%>% 
   mutate(rain_lag48=lag(rainfall_mm,48))%>%
-  #New data column
+  #The air flow in the process tank 4 column
   mutate(air_PT4_lag1=lag(airflow_PT4_m3_h,1))%>% 
   mutate(air_PT4_lag2=lag(airflow_PT4_m3_h,2))%>% 
   mutate(air_PT4_lag3=lag(airflow_PT4_m3_h,3))%>% 
@@ -243,7 +248,7 @@ temp <- data_thirty_min %>%
   mutate(air_PT4_lag46=lag(airflow_PT4_m3_h,46))%>% 
   mutate(air_PT4_lag47=lag(airflow_PT4_m3_h,47))%>% 
   mutate(air_PT4_lag48=lag(airflow_PT4_m3_h,48))%>%
-  #New data column
+  #The air flow in the process tank 3 column
   mutate(air_PT3_lag1=lag(airflow_PT3_m3_h,1))%>% 
   mutate(air_PT3_lag2=lag(airflow_PT3_m3_h,2))%>% 
   mutate(air_PT3_lag3=lag(airflow_PT3_m3_h,3))%>% 
@@ -292,7 +297,9 @@ temp <- data_thirty_min %>%
   mutate(air_PT3_lag46=lag(airflow_PT3_m3_h,46))%>% 
   mutate(air_PT3_lag47=lag(airflow_PT3_m3_h,47))%>% 
   mutate(air_PT3_lag48=lag(airflow_PT3_m3_h,48))%>%
-  #New data column
+  #
+  #The air flow in the process tank 2 column
+  #
   mutate(air_PT2_lag1=lag(airflow_PT2_m3_h,1))%>% 
   mutate(air_PT2_lag2=lag(airflow_PT2_m3_h,2))%>% 
   mutate(air_PT2_lag3=lag(airflow_PT2_m3_h,3))%>% 
@@ -341,7 +348,9 @@ temp <- data_thirty_min %>%
   mutate(air_PT2_lag46=lag(airflow_PT2_m3_h,46))%>% 
   mutate(air_PT2_lag47=lag(airflow_PT2_m3_h,47))%>% 
   mutate(air_PT2_lag48=lag(airflow_PT2_m3_h,48))%>%
-  #New data column
+  #
+  #The air flow in the process tank 1 column
+  #
   mutate(air_PT1_lag1=lag(airflow_PT1_m3_h,1))%>% 
   mutate(air_PT1_lag2=lag(airflow_PT1_m3_h,2))%>% 
   mutate(air_PT1_lag3=lag(airflow_PT1_m3_h,3))%>% 
@@ -390,7 +399,9 @@ temp <- data_thirty_min %>%
   mutate(air_PT1_lag46=lag(airflow_PT1_m3_h,46))%>% 
   mutate(air_PT1_lag47=lag(airflow_PT1_m3_h,47))%>% 
   mutate(air_PT1_lag48=lag(airflow_PT1_m3_h,48))%>%
-  #New data column
+  #
+  #The ammonium concentration in process tank 1 column
+  #
   mutate(ammonium_PT1_lag1=lag(ammonium_PT1_mg_L,1))%>% 
   mutate(ammonium_PT1_lag2=lag(ammonium_PT1_mg_L,2))%>% 
   mutate(ammonium_PT1_lag3=lag(ammonium_PT1_mg_L,3))%>% 
@@ -439,7 +450,60 @@ temp <- data_thirty_min %>%
   mutate(ammonium_PT1_lag46=lag(ammonium_PT1_mg_L,46))%>% 
   mutate(ammonium_PT1_lag47=lag(ammonium_PT1_mg_L,47))%>% 
   mutate(ammonium_PT1_lag48=lag(ammonium_PT1_mg_L,48))%>%
-  #New data column
+  #
+  #The ammonium load in process tank 1 column
+  #
+  mutate(load_ammonium_PT1_lag1=lag(ammonium_load_PT1_kg_h,1))%>% 
+  mutate(load_ammonium_PT1_lag2=lag(ammonium_load_PT1_kg_h,2))%>% 
+  mutate(load_ammonium_PT1_lag3=lag(ammonium_load_PT1_kg_h,3))%>% 
+  mutate(load_ammonium_PT1_lag4=lag(ammonium_load_PT1_kg_h,4))%>% 
+  mutate(load_ammonium_PT1_lag5=lag(ammonium_load_PT1_kg_h,5))%>% 
+  mutate(load_ammonium_PT1_lag6=lag(ammonium_load_PT1_kg_h,6))%>% 
+  mutate(load_ammonium_PT1_lag7=lag(ammonium_load_PT1_kg_h,7))%>% 
+  mutate(load_ammonium_PT1_lag8=lag(ammonium_load_PT1_kg_h,8))%>% 
+  mutate(load_ammonium_PT1_lag9=lag(ammonium_load_PT1_kg_h,9))%>% 
+  mutate(load_ammonium_PT1_lag10=lag(ammonium_load_PT1_kg_h,10))%>% 
+  mutate(load_ammonium_PT1_lag11=lag(ammonium_load_PT1_kg_h,11))%>% 
+  mutate(load_ammonium_PT1_lag12=lag(ammonium_load_PT1_kg_h,12))%>% 
+  mutate(load_ammonium_PT1_lag13=lag(ammonium_load_PT1_kg_h,13))%>% 
+  mutate(load_ammonium_PT1_lag14=lag(ammonium_load_PT1_kg_h,14))%>% 
+  mutate(load_ammonium_PT1_lag15=lag(ammonium_load_PT1_kg_h,15))%>% 
+  mutate(load_ammonium_PT1_lag16=lag(ammonium_load_PT1_kg_h,16))%>% 
+  mutate(load_ammonium_PT1_lag17=lag(ammonium_load_PT1_kg_h,17))%>% 
+  mutate(load_ammonium_PT1_lag18=lag(ammonium_load_PT1_kg_h,18))%>% 
+  mutate(load_ammonium_PT1_lag19=lag(ammonium_load_PT1_kg_h,19))%>% 
+  mutate(load_ammonium_PT1_lag20=lag(ammonium_load_PT1_kg_h,20))%>% 
+  mutate(load_ammonium_PT1_lag21=lag(ammonium_load_PT1_kg_h,21))%>% 
+  mutate(load_ammonium_PT1_lag22=lag(ammonium_load_PT1_kg_h,22))%>% 
+  mutate(load_ammonium_PT1_lag23=lag(ammonium_load_PT1_kg_h,23))%>% 
+  mutate(load_ammonium_PT1_lag24=lag(ammonium_load_PT1_kg_h,24))%>%
+  mutate(load_ammonium_PT1_lag25=lag(ammonium_load_PT1_kg_h,25))%>% 
+  mutate(load_ammonium_PT1_lag26=lag(ammonium_load_PT1_kg_h,26))%>% 
+  mutate(load_ammonium_PT1_lag27=lag(ammonium_load_PT1_kg_h,27))%>% 
+  mutate(load_ammonium_PT1_lag28=lag(ammonium_load_PT1_kg_h,28))%>% 
+  mutate(load_ammonium_PT1_lag29=lag(ammonium_load_PT1_kg_h,29))%>% 
+  mutate(load_ammonium_PT1_lag30=lag(ammonium_load_PT1_kg_h,30))%>% 
+  mutate(load_ammonium_PT1_lag31=lag(ammonium_load_PT1_kg_h,31))%>% 
+  mutate(load_ammonium_PT1_lag32=lag(ammonium_load_PT1_kg_h,32))%>% 
+  mutate(load_ammonium_PT1_lag33=lag(ammonium_load_PT1_kg_h,33))%>% 
+  mutate(load_ammonium_PT1_lag34=lag(ammonium_load_PT1_kg_h,34))%>% 
+  mutate(load_ammonium_PT1_lag35=lag(ammonium_load_PT1_kg_h,35))%>% 
+  mutate(load_ammonium_PT1_lag36=lag(ammonium_load_PT1_kg_h,36))%>% 
+  mutate(load_ammonium_PT1_lag37=lag(ammonium_load_PT1_kg_h,37))%>% 
+  mutate(load_ammonium_PT1_lag38=lag(ammonium_load_PT1_kg_h,38))%>% 
+  mutate(load_ammonium_PT1_lag39=lag(ammonium_load_PT1_kg_h,39))%>% 
+  mutate(load_ammonium_PT1_lag40=lag(ammonium_load_PT1_kg_h,40))%>% 
+  mutate(load_ammonium_PT1_lag41=lag(ammonium_load_PT1_kg_h,41))%>% 
+  mutate(load_ammonium_PT1_lag42=lag(ammonium_load_PT1_kg_h,42))%>% 
+  mutate(load_ammonium_PT1_lag43=lag(ammonium_load_PT1_kg_h,43))%>% 
+  mutate(load_ammonium_PT1_lag44=lag(ammonium_load_PT1_kg_h,44))%>% 
+  mutate(load_ammonium_PT1_lag45=lag(ammonium_load_PT1_kg_h,45))%>% 
+  mutate(load_ammonium_PT1_lag46=lag(ammonium_load_PT1_kg_h,46))%>% 
+  mutate(load_ammonium_PT1_lag47=lag(ammonium_load_PT1_kg_h,47))%>% 
+  mutate(load_ammonium_PT1_lag48=lag(ammonium_load_PT1_kg_h,48))%>%
+  #
+  #The ammonium concentration in process tank 2 column
+  #
   mutate(ammonium_PT2_lag1=lag(ammonium_PT2_mg_L,1))%>% 
   mutate(ammonium_PT2_lag2=lag(ammonium_PT2_mg_L,2))%>% 
   mutate(ammonium_PT2_lag3=lag(ammonium_PT2_mg_L,3))%>% 
@@ -488,7 +552,60 @@ temp <- data_thirty_min %>%
   mutate(ammonium_PT2_lag46=lag(ammonium_PT2_mg_L,46))%>% 
   mutate(ammonium_PT2_lag47=lag(ammonium_PT2_mg_L,47))%>% 
   mutate(ammonium_PT2_lag48=lag(ammonium_PT2_mg_L,48))%>%
-  #New data column
+  #
+  #The ammonium load in process tank 2 column
+  #
+  mutate(load_ammonium_PT2_lag1=lag(ammonium_load_PT2_kg_h,1))%>% 
+  mutate(load_ammonium_PT2_lag2=lag(ammonium_load_PT2_kg_h,2))%>% 
+  mutate(load_ammonium_PT2_lag3=lag(ammonium_load_PT2_kg_h,3))%>% 
+  mutate(load_ammonium_PT2_lag4=lag(ammonium_load_PT2_kg_h,4))%>% 
+  mutate(load_ammonium_PT2_lag5=lag(ammonium_load_PT2_kg_h,5))%>% 
+  mutate(load_ammonium_PT2_lag6=lag(ammonium_load_PT2_kg_h,6))%>% 
+  mutate(load_ammonium_PT2_lag7=lag(ammonium_load_PT2_kg_h,7))%>% 
+  mutate(load_ammonium_PT2_lag8=lag(ammonium_load_PT2_kg_h,8))%>% 
+  mutate(load_ammonium_PT2_lag9=lag(ammonium_load_PT2_kg_h,9))%>% 
+  mutate(load_ammonium_PT2_lag10=lag(ammonium_load_PT2_kg_h,10))%>% 
+  mutate(load_ammonium_PT2_lag11=lag(ammonium_load_PT2_kg_h,11))%>% 
+  mutate(load_ammonium_PT2_lag12=lag(ammonium_load_PT2_kg_h,12))%>% 
+  mutate(load_ammonium_PT2_lag13=lag(ammonium_load_PT2_kg_h,13))%>% 
+  mutate(load_ammonium_PT2_lag14=lag(ammonium_load_PT2_kg_h,14))%>% 
+  mutate(load_ammonium_PT2_lag15=lag(ammonium_load_PT2_kg_h,15))%>% 
+  mutate(load_ammonium_PT2_lag16=lag(ammonium_load_PT2_kg_h,16))%>% 
+  mutate(load_ammonium_PT2_lag17=lag(ammonium_load_PT2_kg_h,17))%>% 
+  mutate(load_ammonium_PT2_lag18=lag(ammonium_load_PT2_kg_h,18))%>% 
+  mutate(load_ammonium_PT2_lag19=lag(ammonium_load_PT2_kg_h,19))%>% 
+  mutate(load_ammonium_PT2_lag20=lag(ammonium_load_PT2_kg_h,20))%>% 
+  mutate(load_ammonium_PT2_lag21=lag(ammonium_load_PT2_kg_h,21))%>% 
+  mutate(load_ammonium_PT2_lag22=lag(ammonium_load_PT2_kg_h,22))%>% 
+  mutate(load_ammonium_PT2_lag23=lag(ammonium_load_PT2_kg_h,23))%>% 
+  mutate(load_ammonium_PT2_lag24=lag(ammonium_load_PT2_kg_h,24))%>%
+  mutate(load_ammonium_PT2_lag25=lag(ammonium_load_PT2_kg_h,25))%>% 
+  mutate(load_ammonium_PT2_lag26=lag(ammonium_load_PT2_kg_h,26))%>% 
+  mutate(load_ammonium_PT2_lag27=lag(ammonium_load_PT2_kg_h,27))%>% 
+  mutate(load_ammonium_PT2_lag28=lag(ammonium_load_PT2_kg_h,28))%>% 
+  mutate(load_ammonium_PT2_lag29=lag(ammonium_load_PT2_kg_h,29))%>% 
+  mutate(load_ammonium_PT2_lag30=lag(ammonium_load_PT2_kg_h,30))%>% 
+  mutate(load_ammonium_PT2_lag31=lag(ammonium_load_PT2_kg_h,31))%>% 
+  mutate(load_ammonium_PT2_lag32=lag(ammonium_load_PT2_kg_h,32))%>% 
+  mutate(load_ammonium_PT2_lag33=lag(ammonium_load_PT2_kg_h,33))%>% 
+  mutate(load_ammonium_PT2_lag34=lag(ammonium_load_PT2_kg_h,34))%>% 
+  mutate(load_ammonium_PT2_lag35=lag(ammonium_load_PT2_kg_h,35))%>% 
+  mutate(load_ammonium_PT2_lag36=lag(ammonium_load_PT2_kg_h,36))%>% 
+  mutate(load_ammonium_PT2_lag37=lag(ammonium_load_PT2_kg_h,37))%>% 
+  mutate(load_ammonium_PT2_lag38=lag(ammonium_load_PT2_kg_h,38))%>% 
+  mutate(load_ammonium_PT2_lag39=lag(ammonium_load_PT2_kg_h,39))%>% 
+  mutate(load_ammonium_PT2_lag40=lag(ammonium_load_PT2_kg_h,40))%>% 
+  mutate(load_ammonium_PT2_lag41=lag(ammonium_load_PT2_kg_h,41))%>% 
+  mutate(load_ammonium_PT2_lag42=lag(ammonium_load_PT2_kg_h,42))%>% 
+  mutate(load_ammonium_PT2_lag43=lag(ammonium_load_PT2_kg_h,43))%>% 
+  mutate(load_ammonium_PT2_lag44=lag(ammonium_load_PT2_kg_h,44))%>% 
+  mutate(load_ammonium_PT2_lag45=lag(ammonium_load_PT2_kg_h,45))%>% 
+  mutate(load_ammonium_PT2_lag46=lag(ammonium_load_PT2_kg_h,46))%>% 
+  mutate(load_ammonium_PT2_lag47=lag(ammonium_load_PT2_kg_h,47))%>% 
+  mutate(load_ammonium_PT2_lag48=lag(ammonium_load_PT2_kg_h,48))%>%
+  #
+  #The ammonium concentration in process tank 3 column
+  #
   mutate(ammonium_PT3_lag1=lag(ammonium_PT3_mg_L,1))%>% 
   mutate(ammonium_PT3_lag2=lag(ammonium_PT3_mg_L,2))%>% 
   mutate(ammonium_PT3_lag3=lag(ammonium_PT3_mg_L,3))%>% 
@@ -537,7 +654,60 @@ temp <- data_thirty_min %>%
   mutate(ammonium_PT3_lag46=lag(ammonium_PT3_mg_L,46))%>% 
   mutate(ammonium_PT3_lag47=lag(ammonium_PT3_mg_L,47))%>% 
   mutate(ammonium_PT3_lag48=lag(ammonium_PT3_mg_L,48))%>%
-  #New data column
+  #
+  #The ammonium load in process tank 3 column
+  #
+  mutate(load_ammonium_PT3_lag1=lag(ammonium_load_PT3_kg_h,1))%>% 
+  mutate(load_ammonium_PT3_lag2=lag(ammonium_load_PT3_kg_h,2))%>% 
+  mutate(load_ammonium_PT3_lag3=lag(ammonium_load_PT3_kg_h,3))%>% 
+  mutate(load_ammonium_PT3_lag4=lag(ammonium_load_PT3_kg_h,4))%>% 
+  mutate(load_ammonium_PT3_lag5=lag(ammonium_load_PT3_kg_h,5))%>% 
+  mutate(load_ammonium_PT3_lag6=lag(ammonium_load_PT3_kg_h,6))%>% 
+  mutate(load_ammonium_PT3_lag7=lag(ammonium_load_PT3_kg_h,7))%>% 
+  mutate(load_ammonium_PT3_lag8=lag(ammonium_load_PT3_kg_h,8))%>% 
+  mutate(load_ammonium_PT3_lag9=lag(ammonium_load_PT3_kg_h,9))%>% 
+  mutate(load_ammonium_PT3_lag10=lag(ammonium_load_PT3_kg_h,10))%>% 
+  mutate(load_ammonium_PT3_lag11=lag(ammonium_load_PT3_kg_h,11))%>% 
+  mutate(load_ammonium_PT3_lag12=lag(ammonium_load_PT3_kg_h,12))%>% 
+  mutate(load_ammonium_PT3_lag13=lag(ammonium_load_PT3_kg_h,13))%>% 
+  mutate(load_ammonium_PT3_lag14=lag(ammonium_load_PT3_kg_h,14))%>% 
+  mutate(load_ammonium_PT3_lag15=lag(ammonium_load_PT3_kg_h,15))%>% 
+  mutate(load_ammonium_PT3_lag16=lag(ammonium_load_PT3_kg_h,16))%>% 
+  mutate(load_ammonium_PT3_lag17=lag(ammonium_load_PT3_kg_h,17))%>% 
+  mutate(load_ammonium_PT3_lag18=lag(ammonium_load_PT3_kg_h,18))%>% 
+  mutate(load_ammonium_PT3_lag19=lag(ammonium_load_PT3_kg_h,19))%>% 
+  mutate(load_ammonium_PT3_lag20=lag(ammonium_load_PT3_kg_h,20))%>% 
+  mutate(load_ammonium_PT3_lag21=lag(ammonium_load_PT3_kg_h,21))%>% 
+  mutate(load_ammonium_PT3_lag22=lag(ammonium_load_PT3_kg_h,22))%>% 
+  mutate(load_ammonium_PT3_lag23=lag(ammonium_load_PT3_kg_h,23))%>% 
+  mutate(load_ammonium_PT3_lag24=lag(ammonium_load_PT3_kg_h,24))%>%
+  mutate(load_ammonium_PT3_lag25=lag(ammonium_load_PT3_kg_h,25))%>% 
+  mutate(load_ammonium_PT3_lag26=lag(ammonium_load_PT3_kg_h,26))%>% 
+  mutate(load_ammonium_PT3_lag27=lag(ammonium_load_PT3_kg_h,27))%>% 
+  mutate(load_ammonium_PT3_lag28=lag(ammonium_load_PT3_kg_h,28))%>% 
+  mutate(load_ammonium_PT3_lag29=lag(ammonium_load_PT3_kg_h,29))%>% 
+  mutate(load_ammonium_PT3_lag30=lag(ammonium_load_PT3_kg_h,30))%>% 
+  mutate(load_ammonium_PT3_lag31=lag(ammonium_load_PT3_kg_h,31))%>% 
+  mutate(load_ammonium_PT3_lag32=lag(ammonium_load_PT3_kg_h,32))%>% 
+  mutate(load_ammonium_PT3_lag33=lag(ammonium_load_PT3_kg_h,33))%>% 
+  mutate(load_ammonium_PT3_lag34=lag(ammonium_load_PT3_kg_h,34))%>% 
+  mutate(load_ammonium_PT3_lag35=lag(ammonium_load_PT3_kg_h,35))%>% 
+  mutate(load_ammonium_PT3_lag36=lag(ammonium_load_PT3_kg_h,36))%>% 
+  mutate(load_ammonium_PT3_lag37=lag(ammonium_load_PT3_kg_h,37))%>% 
+  mutate(load_ammonium_PT3_lag38=lag(ammonium_load_PT3_kg_h,38))%>% 
+  mutate(load_ammonium_PT3_lag39=lag(ammonium_load_PT3_kg_h,39))%>% 
+  mutate(load_ammonium_PT3_lag40=lag(ammonium_load_PT3_kg_h,40))%>% 
+  mutate(load_ammonium_PT3_lag41=lag(ammonium_load_PT3_kg_h,41))%>% 
+  mutate(load_ammonium_PT3_lag42=lag(ammonium_load_PT3_kg_h,42))%>% 
+  mutate(load_ammonium_PT3_lag43=lag(ammonium_load_PT3_kg_h,43))%>% 
+  mutate(load_ammonium_PT3_lag44=lag(ammonium_load_PT3_kg_h,44))%>% 
+  mutate(load_ammonium_PT3_lag45=lag(ammonium_load_PT3_kg_h,45))%>% 
+  mutate(load_ammonium_PT3_lag46=lag(ammonium_load_PT3_kg_h,46))%>% 
+  mutate(load_ammonium_PT3_lag47=lag(ammonium_load_PT3_kg_h,47))%>% 
+  mutate(load_ammonium_PT3_lag48=lag(ammonium_load_PT3_kg_h,48))%>%
+  #
+  #The ammonium concentration in process tank 4 column
+  #
   mutate(ammonium_PT4_lag1=lag(ammonium_PT4_mg_L,1))%>% 
   mutate(ammonium_PT4_lag2=lag(ammonium_PT4_mg_L,2))%>% 
   mutate(ammonium_PT4_lag3=lag(ammonium_PT4_mg_L,3))%>% 
@@ -586,4 +756,871 @@ temp <- data_thirty_min %>%
   mutate(ammonium_PT4_lag46=lag(ammonium_PT4_mg_L,46))%>% 
   mutate(ammonium_PT4_lag47=lag(ammonium_PT4_mg_L,47))%>% 
   mutate(ammonium_PT4_lag48=lag(ammonium_PT4_mg_L,48))%>%
+  #
+  #The ammonium load in process tank 4 column
+  #
+  mutate(load_ammonium_PT4_lag1=lag(ammonium_load_PT4_kg_h,1))%>% 
+  mutate(load_ammonium_PT4_lag2=lag(ammonium_load_PT4_kg_h,2))%>% 
+  mutate(load_ammonium_PT4_lag3=lag(ammonium_load_PT4_kg_h,3))%>% 
+  mutate(load_ammonium_PT4_lag4=lag(ammonium_load_PT4_kg_h,4))%>% 
+  mutate(load_ammonium_PT4_lag5=lag(ammonium_load_PT4_kg_h,5))%>% 
+  mutate(load_ammonium_PT4_lag6=lag(ammonium_load_PT4_kg_h,6))%>% 
+  mutate(load_ammonium_PT4_lag7=lag(ammonium_load_PT4_kg_h,7))%>% 
+  mutate(load_ammonium_PT4_lag8=lag(ammonium_load_PT4_kg_h,8))%>% 
+  mutate(load_ammonium_PT4_lag9=lag(ammonium_load_PT4_kg_h,9))%>% 
+  mutate(load_ammonium_PT4_lag10=lag(ammonium_load_PT4_kg_h,10))%>% 
+  mutate(load_ammonium_PT4_lag11=lag(ammonium_load_PT4_kg_h,11))%>% 
+  mutate(load_ammonium_PT4_lag12=lag(ammonium_load_PT4_kg_h,12))%>% 
+  mutate(load_ammonium_PT4_lag13=lag(ammonium_load_PT4_kg_h,13))%>% 
+  mutate(load_ammonium_PT4_lag14=lag(ammonium_load_PT4_kg_h,14))%>% 
+  mutate(load_ammonium_PT4_lag15=lag(ammonium_load_PT4_kg_h,15))%>% 
+  mutate(load_ammonium_PT4_lag16=lag(ammonium_load_PT4_kg_h,16))%>% 
+  mutate(load_ammonium_PT4_lag17=lag(ammonium_load_PT4_kg_h,17))%>% 
+  mutate(load_ammonium_PT4_lag18=lag(ammonium_load_PT4_kg_h,18))%>% 
+  mutate(load_ammonium_PT4_lag19=lag(ammonium_load_PT4_kg_h,19))%>% 
+  mutate(load_ammonium_PT4_lag20=lag(ammonium_load_PT4_kg_h,20))%>% 
+  mutate(load_ammonium_PT4_lag21=lag(ammonium_load_PT4_kg_h,21))%>% 
+  mutate(load_ammonium_PT4_lag22=lag(ammonium_load_PT4_kg_h,22))%>% 
+  mutate(load_ammonium_PT4_lag23=lag(ammonium_load_PT4_kg_h,23))%>% 
+  mutate(load_ammonium_PT4_lag24=lag(ammonium_load_PT4_kg_h,24))%>%
+  mutate(load_ammonium_PT4_lag25=lag(ammonium_load_PT4_kg_h,25))%>% 
+  mutate(load_ammonium_PT4_lag26=lag(ammonium_load_PT4_kg_h,26))%>% 
+  mutate(load_ammonium_PT4_lag27=lag(ammonium_load_PT4_kg_h,27))%>% 
+  mutate(load_ammonium_PT4_lag28=lag(ammonium_load_PT4_kg_h,28))%>% 
+  mutate(load_ammonium_PT4_lag29=lag(ammonium_load_PT4_kg_h,29))%>% 
+  mutate(load_ammonium_PT4_lag30=lag(ammonium_load_PT4_kg_h,30))%>% 
+  mutate(load_ammonium_PT4_lag31=lag(ammonium_load_PT4_kg_h,31))%>% 
+  mutate(load_ammonium_PT4_lag32=lag(ammonium_load_PT4_kg_h,32))%>% 
+  mutate(load_ammonium_PT4_lag33=lag(ammonium_load_PT4_kg_h,33))%>% 
+  mutate(load_ammonium_PT4_lag34=lag(ammonium_load_PT4_kg_h,34))%>% 
+  mutate(load_ammonium_PT4_lag35=lag(ammonium_load_PT4_kg_h,35))%>% 
+  mutate(load_ammonium_PT4_lag36=lag(ammonium_load_PT4_kg_h,36))%>% 
+  mutate(load_ammonium_PT4_lag37=lag(ammonium_load_PT4_kg_h,37))%>% 
+  mutate(load_ammonium_PT4_lag38=lag(ammonium_load_PT4_kg_h,38))%>% 
+  mutate(load_ammonium_PT4_lag39=lag(ammonium_load_PT4_kg_h,39))%>% 
+  mutate(load_ammonium_PT4_lag40=lag(ammonium_load_PT4_kg_h,40))%>% 
+  mutate(load_ammonium_PT4_lag41=lag(ammonium_load_PT4_kg_h,41))%>% 
+  mutate(load_ammonium_PT4_lag42=lag(ammonium_load_PT4_kg_h,42))%>% 
+  mutate(load_ammonium_PT4_lag43=lag(ammonium_load_PT4_kg_h,43))%>% 
+  mutate(load_ammonium_PT4_lag44=lag(ammonium_load_PT4_kg_h,44))%>% 
+  mutate(load_ammonium_PT4_lag45=lag(ammonium_load_PT4_kg_h,45))%>% 
+  mutate(load_ammonium_PT4_lag46=lag(ammonium_load_PT4_kg_h,46))%>% 
+  mutate(load_ammonium_PT4_lag47=lag(ammonium_load_PT4_kg_h,47))%>% 
+  mutate(load_ammonium_PT4_lag48=lag(ammonium_load_PT4_kg_h,48))%>%
+  #
+  #The nitrate concentration in process tank 1 column
+  #
+  mutate(nitrate_PT1_lag1=lag(nitrate_PT1_mg_L,1))%>% 
+  mutate(nitrate_PT1_lag2=lag(nitrate_PT1_mg_L,2))%>% 
+  mutate(nitrate_PT1_lag3=lag(nitrate_PT1_mg_L,3))%>% 
+  mutate(nitrate_PT1_lag4=lag(nitrate_PT1_mg_L,4))%>% 
+  mutate(nitrate_PT1_lag5=lag(nitrate_PT1_mg_L,5))%>% 
+  mutate(nitrate_PT1_lag6=lag(nitrate_PT1_mg_L,6))%>% 
+  mutate(nitrate_PT1_lag7=lag(nitrate_PT1_mg_L,7))%>% 
+  mutate(nitrate_PT1_lag8=lag(nitrate_PT1_mg_L,8))%>% 
+  mutate(nitrate_PT1_lag9=lag(nitrate_PT1_mg_L,9))%>% 
+  mutate(nitrate_PT1_lag10=lag(nitrate_PT1_mg_L,10))%>% 
+  mutate(nitrate_PT1_lag11=lag(nitrate_PT1_mg_L,11))%>% 
+  mutate(nitrate_PT1_lag12=lag(nitrate_PT1_mg_L,12))%>% 
+  mutate(nitrate_PT1_lag13=lag(nitrate_PT1_mg_L,13))%>% 
+  mutate(nitrate_PT1_lag14=lag(nitrate_PT1_mg_L,14))%>% 
+  mutate(nitrate_PT1_lag15=lag(nitrate_PT1_mg_L,15))%>% 
+  mutate(nitrate_PT1_lag16=lag(nitrate_PT1_mg_L,16))%>% 
+  mutate(nitrate_PT1_lag17=lag(nitrate_PT1_mg_L,17))%>% 
+  mutate(nitrate_PT1_lag18=lag(nitrate_PT1_mg_L,18))%>% 
+  mutate(nitrate_PT1_lag19=lag(nitrate_PT1_mg_L,19))%>% 
+  mutate(nitrate_PT1_lag20=lag(nitrate_PT1_mg_L,20))%>% 
+  mutate(nitrate_PT1_lag21=lag(nitrate_PT1_mg_L,21))%>% 
+  mutate(nitrate_PT1_lag22=lag(nitrate_PT1_mg_L,22))%>% 
+  mutate(nitrate_PT1_lag23=lag(nitrate_PT1_mg_L,23))%>% 
+  mutate(nitrate_PT1_lag24=lag(nitrate_PT1_mg_L,24))%>%
+  mutate(nitrate_PT1_lag25=lag(nitrate_PT1_mg_L,25))%>% 
+  mutate(nitrate_PT1_lag26=lag(nitrate_PT1_mg_L,26))%>% 
+  mutate(nitrate_PT1_lag27=lag(nitrate_PT1_mg_L,27))%>% 
+  mutate(nitrate_PT1_lag28=lag(nitrate_PT1_mg_L,28))%>% 
+  mutate(nitrate_PT1_lag29=lag(nitrate_PT1_mg_L,29))%>% 
+  mutate(nitrate_PT1_lag30=lag(nitrate_PT1_mg_L,30))%>% 
+  mutate(nitrate_PT1_lag31=lag(nitrate_PT1_mg_L,31))%>% 
+  mutate(nitrate_PT1_lag32=lag(nitrate_PT1_mg_L,32))%>% 
+  mutate(nitrate_PT1_lag33=lag(nitrate_PT1_mg_L,33))%>% 
+  mutate(nitrate_PT1_lag34=lag(nitrate_PT1_mg_L,34))%>% 
+  mutate(nitrate_PT1_lag35=lag(nitrate_PT1_mg_L,35))%>% 
+  mutate(nitrate_PT1_lag36=lag(nitrate_PT1_mg_L,36))%>% 
+  mutate(nitrate_PT1_lag37=lag(nitrate_PT1_mg_L,37))%>% 
+  mutate(nitrate_PT1_lag38=lag(nitrate_PT1_mg_L,38))%>% 
+  mutate(nitrate_PT1_lag39=lag(nitrate_PT1_mg_L,39))%>% 
+  mutate(nitrate_PT1_lag40=lag(nitrate_PT1_mg_L,40))%>% 
+  mutate(nitrate_PT1_lag41=lag(nitrate_PT1_mg_L,41))%>% 
+  mutate(nitrate_PT1_lag42=lag(nitrate_PT1_mg_L,42))%>% 
+  mutate(nitrate_PT1_lag43=lag(nitrate_PT1_mg_L,43))%>% 
+  mutate(nitrate_PT1_lag44=lag(nitrate_PT1_mg_L,44))%>% 
+  mutate(nitrate_PT1_lag45=lag(nitrate_PT1_mg_L,45))%>% 
+  mutate(nitrate_PT1_lag46=lag(nitrate_PT1_mg_L,46))%>% 
+  mutate(nitrate_PT1_lag47=lag(nitrate_PT1_mg_L,47))%>% 
+  mutate(nitrate_PT1_lag48=lag(nitrate_PT1_mg_L,48))%>%
+  #
+  #The nitrate load in process tank 1 column
+  #
+  mutate(load_nitrate_PT1_lag1=lag(nitrate_load_PT1_kg_h,1))%>% 
+  mutate(load_nitrate_PT1_lag2=lag(nitrate_load_PT1_kg_h,2))%>% 
+  mutate(load_nitrate_PT1_lag3=lag(nitrate_load_PT1_kg_h,3))%>% 
+  mutate(load_nitrate_PT1_lag4=lag(nitrate_load_PT1_kg_h,4))%>% 
+  mutate(load_nitrate_PT1_lag5=lag(nitrate_load_PT1_kg_h,5))%>% 
+  mutate(load_nitrate_PT1_lag6=lag(nitrate_load_PT1_kg_h,6))%>% 
+  mutate(load_nitrate_PT1_lag7=lag(nitrate_load_PT1_kg_h,7))%>% 
+  mutate(load_nitrate_PT1_lag8=lag(nitrate_load_PT1_kg_h,8))%>% 
+  mutate(load_nitrate_PT1_lag9=lag(nitrate_load_PT1_kg_h,9))%>% 
+  mutate(load_nitrate_PT1_lag10=lag(nitrate_load_PT1_kg_h,10))%>% 
+  mutate(load_nitrate_PT1_lag11=lag(nitrate_load_PT1_kg_h,11))%>% 
+  mutate(load_nitrate_PT1_lag12=lag(nitrate_load_PT1_kg_h,12))%>% 
+  mutate(load_nitrate_PT1_lag13=lag(nitrate_load_PT1_kg_h,13))%>% 
+  mutate(load_nitrate_PT1_lag14=lag(nitrate_load_PT1_kg_h,14))%>% 
+  mutate(load_nitrate_PT1_lag15=lag(nitrate_load_PT1_kg_h,15))%>% 
+  mutate(load_nitrate_PT1_lag16=lag(nitrate_load_PT1_kg_h,16))%>% 
+  mutate(load_nitrate_PT1_lag17=lag(nitrate_load_PT1_kg_h,17))%>% 
+  mutate(load_nitrate_PT1_lag18=lag(nitrate_load_PT1_kg_h,18))%>% 
+  mutate(load_nitrate_PT1_lag19=lag(nitrate_load_PT1_kg_h,19))%>% 
+  mutate(load_nitrate_PT1_lag20=lag(nitrate_load_PT1_kg_h,20))%>% 
+  mutate(load_nitrate_PT1_lag21=lag(nitrate_load_PT1_kg_h,21))%>% 
+  mutate(load_nitrate_PT1_lag22=lag(nitrate_load_PT1_kg_h,22))%>% 
+  mutate(load_nitrate_PT1_lag23=lag(nitrate_load_PT1_kg_h,23))%>% 
+  mutate(load_nitrate_PT1_lag24=lag(nitrate_load_PT1_kg_h,24))%>%
+  mutate(load_nitrate_PT1_lag25=lag(nitrate_load_PT1_kg_h,25))%>% 
+  mutate(load_nitrate_PT1_lag26=lag(nitrate_load_PT1_kg_h,26))%>% 
+  mutate(load_nitrate_PT1_lag27=lag(nitrate_load_PT1_kg_h,27))%>% 
+  mutate(load_nitrate_PT1_lag28=lag(nitrate_load_PT1_kg_h,28))%>% 
+  mutate(load_nitrate_PT1_lag29=lag(nitrate_load_PT1_kg_h,29))%>% 
+  mutate(load_nitrate_PT1_lag30=lag(nitrate_load_PT1_kg_h,30))%>% 
+  mutate(load_nitrate_PT1_lag31=lag(nitrate_load_PT1_kg_h,31))%>% 
+  mutate(load_nitrate_PT1_lag32=lag(nitrate_load_PT1_kg_h,32))%>% 
+  mutate(load_nitrate_PT1_lag33=lag(nitrate_load_PT1_kg_h,33))%>% 
+  mutate(load_nitrate_PT1_lag34=lag(nitrate_load_PT1_kg_h,34))%>% 
+  mutate(load_nitrate_PT1_lag35=lag(nitrate_load_PT1_kg_h,35))%>% 
+  mutate(load_nitrate_PT1_lag36=lag(nitrate_load_PT1_kg_h,36))%>% 
+  mutate(load_nitrate_PT1_lag37=lag(nitrate_load_PT1_kg_h,37))%>% 
+  mutate(load_nitrate_PT1_lag38=lag(nitrate_load_PT1_kg_h,38))%>% 
+  mutate(load_nitrate_PT1_lag39=lag(nitrate_load_PT1_kg_h,39))%>% 
+  mutate(load_nitrate_PT1_lag40=lag(nitrate_load_PT1_kg_h,40))%>% 
+  mutate(load_nitrate_PT1_lag41=lag(nitrate_load_PT1_kg_h,41))%>% 
+  mutate(load_nitrate_PT1_lag42=lag(nitrate_load_PT1_kg_h,42))%>% 
+  mutate(load_nitrate_PT1_lag43=lag(nitrate_load_PT1_kg_h,43))%>% 
+  mutate(load_nitrate_PT1_lag44=lag(nitrate_load_PT1_kg_h,44))%>% 
+  mutate(load_nitrate_PT1_lag45=lag(nitrate_load_PT1_kg_h,45))%>% 
+  mutate(load_nitrate_PT1_lag46=lag(nitrate_load_PT1_kg_h,46))%>% 
+  mutate(load_nitrate_PT1_lag47=lag(nitrate_load_PT1_kg_h,47))%>% 
+  mutate(load_nitrate_PT1_lag48=lag(nitrate_load_PT1_kg_h,48))%>%
+  #
+  #The nitrate concentration in process tank 2 column
+  #
+  mutate(nitrate_PT2_lag1=lag(nitrate_PT2_mg_L,1))%>% 
+  mutate(nitrate_PT2_lag2=lag(nitrate_PT2_mg_L,2))%>% 
+  mutate(nitrate_PT2_lag3=lag(nitrate_PT2_mg_L,3))%>% 
+  mutate(nitrate_PT2_lag4=lag(nitrate_PT2_mg_L,4))%>% 
+  mutate(nitrate_PT2_lag5=lag(nitrate_PT2_mg_L,5))%>% 
+  mutate(nitrate_PT2_lag6=lag(nitrate_PT2_mg_L,6))%>% 
+  mutate(nitrate_PT2_lag7=lag(nitrate_PT2_mg_L,7))%>% 
+  mutate(nitrate_PT2_lag8=lag(nitrate_PT2_mg_L,8))%>% 
+  mutate(nitrate_PT2_lag9=lag(nitrate_PT2_mg_L,9))%>% 
+  mutate(nitrate_PT2_lag10=lag(nitrate_PT2_mg_L,10))%>% 
+  mutate(nitrate_PT2_lag11=lag(nitrate_PT2_mg_L,11))%>% 
+  mutate(nitrate_PT2_lag12=lag(nitrate_PT2_mg_L,12))%>% 
+  mutate(nitrate_PT2_lag13=lag(nitrate_PT2_mg_L,13))%>% 
+  mutate(nitrate_PT2_lag14=lag(nitrate_PT2_mg_L,14))%>% 
+  mutate(nitrate_PT2_lag15=lag(nitrate_PT2_mg_L,15))%>% 
+  mutate(nitrate_PT2_lag16=lag(nitrate_PT2_mg_L,16))%>% 
+  mutate(nitrate_PT2_lag17=lag(nitrate_PT2_mg_L,17))%>% 
+  mutate(nitrate_PT2_lag18=lag(nitrate_PT2_mg_L,18))%>% 
+  mutate(nitrate_PT2_lag19=lag(nitrate_PT2_mg_L,19))%>% 
+  mutate(nitrate_PT2_lag20=lag(nitrate_PT2_mg_L,20))%>% 
+  mutate(nitrate_PT2_lag21=lag(nitrate_PT2_mg_L,21))%>% 
+  mutate(nitrate_PT2_lag22=lag(nitrate_PT2_mg_L,22))%>% 
+  mutate(nitrate_PT2_lag23=lag(nitrate_PT2_mg_L,23))%>% 
+  mutate(nitrate_PT2_lag24=lag(nitrate_PT2_mg_L,24))%>%
+  mutate(nitrate_PT2_lag25=lag(nitrate_PT2_mg_L,25))%>% 
+  mutate(nitrate_PT2_lag26=lag(nitrate_PT2_mg_L,26))%>% 
+  mutate(nitrate_PT2_lag27=lag(nitrate_PT2_mg_L,27))%>% 
+  mutate(nitrate_PT2_lag28=lag(nitrate_PT2_mg_L,28))%>% 
+  mutate(nitrate_PT2_lag29=lag(nitrate_PT2_mg_L,29))%>% 
+  mutate(nitrate_PT2_lag30=lag(nitrate_PT2_mg_L,30))%>% 
+  mutate(nitrate_PT2_lag31=lag(nitrate_PT2_mg_L,31))%>% 
+  mutate(nitrate_PT2_lag32=lag(nitrate_PT2_mg_L,32))%>% 
+  mutate(nitrate_PT2_lag33=lag(nitrate_PT2_mg_L,33))%>% 
+  mutate(nitrate_PT2_lag34=lag(nitrate_PT2_mg_L,34))%>% 
+  mutate(nitrate_PT2_lag35=lag(nitrate_PT2_mg_L,35))%>% 
+  mutate(nitrate_PT2_lag36=lag(nitrate_PT2_mg_L,36))%>% 
+  mutate(nitrate_PT2_lag37=lag(nitrate_PT2_mg_L,37))%>% 
+  mutate(nitrate_PT2_lag38=lag(nitrate_PT2_mg_L,38))%>% 
+  mutate(nitrate_PT2_lag39=lag(nitrate_PT2_mg_L,39))%>% 
+  mutate(nitrate_PT2_lag40=lag(nitrate_PT2_mg_L,40))%>% 
+  mutate(nitrate_PT2_lag41=lag(nitrate_PT2_mg_L,41))%>% 
+  mutate(nitrate_PT2_lag42=lag(nitrate_PT2_mg_L,42))%>% 
+  mutate(nitrate_PT2_lag43=lag(nitrate_PT2_mg_L,43))%>% 
+  mutate(nitrate_PT2_lag44=lag(nitrate_PT2_mg_L,44))%>% 
+  mutate(nitrate_PT2_lag45=lag(nitrate_PT2_mg_L,45))%>% 
+  mutate(nitrate_PT2_lag46=lag(nitrate_PT2_mg_L,46))%>% 
+  mutate(nitrate_PT2_lag47=lag(nitrate_PT2_mg_L,47))%>% 
+  mutate(nitrate_PT2_lag48=lag(nitrate_PT2_mg_L,48))%>%
+  #
+  #The nitrate load in process tank 2 column
+  #
+  mutate(load_nitrate_PT2_lag1=lag(nitrate_load_PT2_kg_h,1))%>% 
+  mutate(load_nitrate_PT2_lag2=lag(nitrate_load_PT2_kg_h,2))%>% 
+  mutate(load_nitrate_PT2_lag3=lag(nitrate_load_PT2_kg_h,3))%>% 
+  mutate(load_nitrate_PT2_lag4=lag(nitrate_load_PT2_kg_h,4))%>% 
+  mutate(load_nitrate_PT2_lag5=lag(nitrate_load_PT2_kg_h,5))%>% 
+  mutate(load_nitrate_PT2_lag6=lag(nitrate_load_PT2_kg_h,6))%>% 
+  mutate(load_nitrate_PT2_lag7=lag(nitrate_load_PT2_kg_h,7))%>% 
+  mutate(load_nitrate_PT2_lag8=lag(nitrate_load_PT2_kg_h,8))%>% 
+  mutate(load_nitrate_PT2_lag9=lag(nitrate_load_PT2_kg_h,9))%>% 
+  mutate(load_nitrate_PT2_lag10=lag(nitrate_load_PT2_kg_h,10))%>% 
+  mutate(load_nitrate_PT2_lag11=lag(nitrate_load_PT2_kg_h,11))%>% 
+  mutate(load_nitrate_PT2_lag12=lag(nitrate_load_PT2_kg_h,12))%>% 
+  mutate(load_nitrate_PT2_lag13=lag(nitrate_load_PT2_kg_h,13))%>% 
+  mutate(load_nitrate_PT2_lag14=lag(nitrate_load_PT2_kg_h,14))%>% 
+  mutate(load_nitrate_PT2_lag15=lag(nitrate_load_PT2_kg_h,15))%>% 
+  mutate(load_nitrate_PT2_lag16=lag(nitrate_load_PT2_kg_h,16))%>% 
+  mutate(load_nitrate_PT2_lag17=lag(nitrate_load_PT2_kg_h,17))%>% 
+  mutate(load_nitrate_PT2_lag18=lag(nitrate_load_PT2_kg_h,18))%>% 
+  mutate(load_nitrate_PT2_lag19=lag(nitrate_load_PT2_kg_h,19))%>% 
+  mutate(load_nitrate_PT2_lag20=lag(nitrate_load_PT2_kg_h,20))%>% 
+  mutate(load_nitrate_PT2_lag21=lag(nitrate_load_PT2_kg_h,21))%>% 
+  mutate(load_nitrate_PT2_lag22=lag(nitrate_load_PT2_kg_h,22))%>% 
+  mutate(load_nitrate_PT2_lag23=lag(nitrate_load_PT2_kg_h,23))%>% 
+  mutate(load_nitrate_PT2_lag24=lag(nitrate_load_PT2_kg_h,24))%>%
+  mutate(load_nitrate_PT2_lag25=lag(nitrate_load_PT2_kg_h,25))%>% 
+  mutate(load_nitrate_PT2_lag26=lag(nitrate_load_PT2_kg_h,26))%>% 
+  mutate(load_nitrate_PT2_lag27=lag(nitrate_load_PT2_kg_h,27))%>% 
+  mutate(load_nitrate_PT2_lag28=lag(nitrate_load_PT2_kg_h,28))%>% 
+  mutate(load_nitrate_PT2_lag29=lag(nitrate_load_PT2_kg_h,29))%>% 
+  mutate(load_nitrate_PT2_lag30=lag(nitrate_load_PT2_kg_h,30))%>% 
+  mutate(load_nitrate_PT2_lag31=lag(nitrate_load_PT2_kg_h,31))%>% 
+  mutate(load_nitrate_PT2_lag32=lag(nitrate_load_PT2_kg_h,32))%>% 
+  mutate(load_nitrate_PT2_lag33=lag(nitrate_load_PT2_kg_h,33))%>% 
+  mutate(load_nitrate_PT2_lag34=lag(nitrate_load_PT2_kg_h,34))%>% 
+  mutate(load_nitrate_PT2_lag35=lag(nitrate_load_PT2_kg_h,35))%>% 
+  mutate(load_nitrate_PT2_lag36=lag(nitrate_load_PT2_kg_h,36))%>% 
+  mutate(load_nitrate_PT2_lag37=lag(nitrate_load_PT2_kg_h,37))%>% 
+  mutate(load_nitrate_PT2_lag38=lag(nitrate_load_PT2_kg_h,38))%>% 
+  mutate(load_nitrate_PT2_lag39=lag(nitrate_load_PT2_kg_h,39))%>% 
+  mutate(load_nitrate_PT2_lag40=lag(nitrate_load_PT2_kg_h,40))%>% 
+  mutate(load_nitrate_PT2_lag41=lag(nitrate_load_PT2_kg_h,41))%>% 
+  mutate(load_nitrate_PT2_lag42=lag(nitrate_load_PT2_kg_h,42))%>% 
+  mutate(load_nitrate_PT2_lag43=lag(nitrate_load_PT2_kg_h,43))%>% 
+  mutate(load_nitrate_PT2_lag44=lag(nitrate_load_PT2_kg_h,44))%>% 
+  mutate(load_nitrate_PT2_lag45=lag(nitrate_load_PT2_kg_h,45))%>% 
+  mutate(load_nitrate_PT2_lag46=lag(nitrate_load_PT2_kg_h,46))%>% 
+  mutate(load_nitrate_PT2_lag47=lag(nitrate_load_PT2_kg_h,47))%>% 
+  mutate(load_nitrate_PT2_lag48=lag(nitrate_load_PT2_kg_h,48))%>%
+  #
+  #The nitrate concentration in process tank 3 column
+  #
+  mutate(nitrate_PT3_lag1=lag(nitrate_PT3_mg_L,1))%>% 
+  mutate(nitrate_PT3_lag2=lag(nitrate_PT3_mg_L,2))%>% 
+  mutate(nitrate_PT3_lag3=lag(nitrate_PT3_mg_L,3))%>% 
+  mutate(nitrate_PT3_lag4=lag(nitrate_PT3_mg_L,4))%>% 
+  mutate(nitrate_PT3_lag5=lag(nitrate_PT3_mg_L,5))%>% 
+  mutate(nitrate_PT3_lag6=lag(nitrate_PT3_mg_L,6))%>% 
+  mutate(nitrate_PT3_lag7=lag(nitrate_PT3_mg_L,7))%>% 
+  mutate(nitrate_PT3_lag8=lag(nitrate_PT3_mg_L,8))%>% 
+  mutate(nitrate_PT3_lag9=lag(nitrate_PT3_mg_L,9))%>% 
+  mutate(nitrate_PT3_lag10=lag(nitrate_PT3_mg_L,10))%>% 
+  mutate(nitrate_PT3_lag11=lag(nitrate_PT3_mg_L,11))%>% 
+  mutate(nitrate_PT3_lag12=lag(nitrate_PT3_mg_L,12))%>% 
+  mutate(nitrate_PT3_lag13=lag(nitrate_PT3_mg_L,13))%>% 
+  mutate(nitrate_PT3_lag14=lag(nitrate_PT3_mg_L,14))%>% 
+  mutate(nitrate_PT3_lag15=lag(nitrate_PT3_mg_L,15))%>% 
+  mutate(nitrate_PT3_lag16=lag(nitrate_PT3_mg_L,16))%>% 
+  mutate(nitrate_PT3_lag17=lag(nitrate_PT3_mg_L,17))%>% 
+  mutate(nitrate_PT3_lag18=lag(nitrate_PT3_mg_L,18))%>% 
+  mutate(nitrate_PT3_lag19=lag(nitrate_PT3_mg_L,19))%>% 
+  mutate(nitrate_PT3_lag20=lag(nitrate_PT3_mg_L,20))%>% 
+  mutate(nitrate_PT3_lag21=lag(nitrate_PT3_mg_L,21))%>% 
+  mutate(nitrate_PT3_lag22=lag(nitrate_PT3_mg_L,22))%>% 
+  mutate(nitrate_PT3_lag23=lag(nitrate_PT3_mg_L,23))%>% 
+  mutate(nitrate_PT3_lag24=lag(nitrate_PT3_mg_L,24))%>%
+  mutate(nitrate_PT3_lag25=lag(nitrate_PT3_mg_L,25))%>% 
+  mutate(nitrate_PT3_lag26=lag(nitrate_PT3_mg_L,26))%>% 
+  mutate(nitrate_PT3_lag27=lag(nitrate_PT3_mg_L,27))%>% 
+  mutate(nitrate_PT3_lag28=lag(nitrate_PT3_mg_L,28))%>% 
+  mutate(nitrate_PT3_lag29=lag(nitrate_PT3_mg_L,29))%>% 
+  mutate(nitrate_PT3_lag30=lag(nitrate_PT3_mg_L,30))%>% 
+  mutate(nitrate_PT3_lag31=lag(nitrate_PT3_mg_L,31))%>% 
+  mutate(nitrate_PT3_lag32=lag(nitrate_PT3_mg_L,32))%>% 
+  mutate(nitrate_PT3_lag33=lag(nitrate_PT3_mg_L,33))%>% 
+  mutate(nitrate_PT3_lag34=lag(nitrate_PT3_mg_L,34))%>% 
+  mutate(nitrate_PT3_lag35=lag(nitrate_PT3_mg_L,35))%>% 
+  mutate(nitrate_PT3_lag36=lag(nitrate_PT3_mg_L,36))%>% 
+  mutate(nitrate_PT3_lag37=lag(nitrate_PT3_mg_L,37))%>% 
+  mutate(nitrate_PT3_lag38=lag(nitrate_PT3_mg_L,38))%>% 
+  mutate(nitrate_PT3_lag39=lag(nitrate_PT3_mg_L,39))%>% 
+  mutate(nitrate_PT3_lag40=lag(nitrate_PT3_mg_L,40))%>% 
+  mutate(nitrate_PT3_lag41=lag(nitrate_PT3_mg_L,41))%>% 
+  mutate(nitrate_PT3_lag42=lag(nitrate_PT3_mg_L,42))%>% 
+  mutate(nitrate_PT3_lag43=lag(nitrate_PT3_mg_L,43))%>% 
+  mutate(nitrate_PT3_lag44=lag(nitrate_PT3_mg_L,44))%>% 
+  mutate(nitrate_PT3_lag45=lag(nitrate_PT3_mg_L,45))%>% 
+  mutate(nitrate_PT3_lag46=lag(nitrate_PT3_mg_L,46))%>% 
+  mutate(nitrate_PT3_lag47=lag(nitrate_PT3_mg_L,47))%>% 
+  mutate(nitrate_PT3_lag48=lag(nitrate_PT3_mg_L,48))%>%
+  #
+  #The nitrate load in process tank 3 column
+  #
+  mutate(load_nitrate_PT3_lag1=lag(nitrate_load_PT3_kg_h,1))%>% 
+  mutate(load_nitrate_PT3_lag2=lag(nitrate_load_PT3_kg_h,2))%>% 
+  mutate(load_nitrate_PT3_lag3=lag(nitrate_load_PT3_kg_h,3))%>% 
+  mutate(load_nitrate_PT3_lag4=lag(nitrate_load_PT3_kg_h,4))%>% 
+  mutate(load_nitrate_PT3_lag5=lag(nitrate_load_PT3_kg_h,5))%>% 
+  mutate(load_nitrate_PT3_lag6=lag(nitrate_load_PT3_kg_h,6))%>% 
+  mutate(load_nitrate_PT3_lag7=lag(nitrate_load_PT3_kg_h,7))%>% 
+  mutate(load_nitrate_PT3_lag8=lag(nitrate_load_PT3_kg_h,8))%>% 
+  mutate(load_nitrate_PT3_lag9=lag(nitrate_load_PT3_kg_h,9))%>% 
+  mutate(load_nitrate_PT3_lag10=lag(nitrate_load_PT3_kg_h,10))%>% 
+  mutate(load_nitrate_PT3_lag11=lag(nitrate_load_PT3_kg_h,11))%>% 
+  mutate(load_nitrate_PT3_lag12=lag(nitrate_load_PT3_kg_h,12))%>% 
+  mutate(load_nitrate_PT3_lag13=lag(nitrate_load_PT3_kg_h,13))%>% 
+  mutate(load_nitrate_PT3_lag14=lag(nitrate_load_PT3_kg_h,14))%>% 
+  mutate(load_nitrate_PT3_lag15=lag(nitrate_load_PT3_kg_h,15))%>% 
+  mutate(load_nitrate_PT3_lag16=lag(nitrate_load_PT3_kg_h,16))%>% 
+  mutate(load_nitrate_PT3_lag17=lag(nitrate_load_PT3_kg_h,17))%>% 
+  mutate(load_nitrate_PT3_lag18=lag(nitrate_load_PT3_kg_h,18))%>% 
+  mutate(load_nitrate_PT3_lag19=lag(nitrate_load_PT3_kg_h,19))%>% 
+  mutate(load_nitrate_PT3_lag20=lag(nitrate_load_PT3_kg_h,20))%>% 
+  mutate(load_nitrate_PT3_lag21=lag(nitrate_load_PT3_kg_h,21))%>% 
+  mutate(load_nitrate_PT3_lag22=lag(nitrate_load_PT3_kg_h,22))%>% 
+  mutate(load_nitrate_PT3_lag23=lag(nitrate_load_PT3_kg_h,23))%>% 
+  mutate(load_nitrate_PT3_lag24=lag(nitrate_load_PT3_kg_h,24))%>%
+  mutate(load_nitrate_PT3_lag25=lag(nitrate_load_PT3_kg_h,25))%>% 
+  mutate(load_nitrate_PT3_lag26=lag(nitrate_load_PT3_kg_h,26))%>% 
+  mutate(load_nitrate_PT3_lag27=lag(nitrate_load_PT3_kg_h,27))%>% 
+  mutate(load_nitrate_PT3_lag28=lag(nitrate_load_PT3_kg_h,28))%>% 
+  mutate(load_nitrate_PT3_lag29=lag(nitrate_load_PT3_kg_h,29))%>% 
+  mutate(load_nitrate_PT3_lag30=lag(nitrate_load_PT3_kg_h,30))%>% 
+  mutate(load_nitrate_PT3_lag31=lag(nitrate_load_PT3_kg_h,31))%>% 
+  mutate(load_nitrate_PT3_lag32=lag(nitrate_load_PT3_kg_h,32))%>% 
+  mutate(load_nitrate_PT3_lag33=lag(nitrate_load_PT3_kg_h,33))%>% 
+  mutate(load_nitrate_PT3_lag34=lag(nitrate_load_PT3_kg_h,34))%>% 
+  mutate(load_nitrate_PT3_lag35=lag(nitrate_load_PT3_kg_h,35))%>% 
+  mutate(load_nitrate_PT3_lag36=lag(nitrate_load_PT3_kg_h,36))%>% 
+  mutate(load_nitrate_PT3_lag37=lag(nitrate_load_PT3_kg_h,37))%>% 
+  mutate(load_nitrate_PT3_lag38=lag(nitrate_load_PT3_kg_h,38))%>% 
+  mutate(load_nitrate_PT3_lag39=lag(nitrate_load_PT3_kg_h,39))%>% 
+  mutate(load_nitrate_PT3_lag40=lag(nitrate_load_PT3_kg_h,40))%>% 
+  mutate(load_nitrate_PT3_lag41=lag(nitrate_load_PT3_kg_h,41))%>% 
+  mutate(load_nitrate_PT3_lag42=lag(nitrate_load_PT3_kg_h,42))%>% 
+  mutate(load_nitrate_PT3_lag43=lag(nitrate_load_PT3_kg_h,43))%>% 
+  mutate(load_nitrate_PT3_lag44=lag(nitrate_load_PT3_kg_h,44))%>% 
+  mutate(load_nitrate_PT3_lag45=lag(nitrate_load_PT3_kg_h,45))%>% 
+  mutate(load_nitrate_PT3_lag46=lag(nitrate_load_PT3_kg_h,46))%>% 
+  mutate(load_nitrate_PT3_lag47=lag(nitrate_load_PT3_kg_h,47))%>% 
+  mutate(load_nitrate_PT3_lag48=lag(nitrate_load_PT3_kg_h,48))%>%
+  #
+  #The nitrate concentration in process tank 4 column
+  #
+  mutate(nitrate_PT4_lag1=lag(nitrate_PT4_mg_L,1))%>% 
+  mutate(nitrate_PT4_lag2=lag(nitrate_PT4_mg_L,2))%>% 
+  mutate(nitrate_PT4_lag3=lag(nitrate_PT4_mg_L,3))%>% 
+  mutate(nitrate_PT4_lag4=lag(nitrate_PT4_mg_L,4))%>% 
+  mutate(nitrate_PT4_lag5=lag(nitrate_PT4_mg_L,5))%>% 
+  mutate(nitrate_PT4_lag6=lag(nitrate_PT4_mg_L,6))%>% 
+  mutate(nitrate_PT4_lag7=lag(nitrate_PT4_mg_L,7))%>% 
+  mutate(nitrate_PT4_lag8=lag(nitrate_PT4_mg_L,8))%>% 
+  mutate(nitrate_PT4_lag9=lag(nitrate_PT4_mg_L,9))%>% 
+  mutate(nitrate_PT4_lag10=lag(nitrate_PT4_mg_L,10))%>% 
+  mutate(nitrate_PT4_lag11=lag(nitrate_PT4_mg_L,11))%>% 
+  mutate(nitrate_PT4_lag12=lag(nitrate_PT4_mg_L,12))%>% 
+  mutate(nitrate_PT4_lag13=lag(nitrate_PT4_mg_L,13))%>% 
+  mutate(nitrate_PT4_lag14=lag(nitrate_PT4_mg_L,14))%>% 
+  mutate(nitrate_PT4_lag15=lag(nitrate_PT4_mg_L,15))%>% 
+  mutate(nitrate_PT4_lag16=lag(nitrate_PT4_mg_L,16))%>% 
+  mutate(nitrate_PT4_lag17=lag(nitrate_PT4_mg_L,17))%>% 
+  mutate(nitrate_PT4_lag18=lag(nitrate_PT4_mg_L,18))%>% 
+  mutate(nitrate_PT4_lag19=lag(nitrate_PT4_mg_L,19))%>% 
+  mutate(nitrate_PT4_lag20=lag(nitrate_PT4_mg_L,20))%>% 
+  mutate(nitrate_PT4_lag21=lag(nitrate_PT4_mg_L,21))%>% 
+  mutate(nitrate_PT4_lag22=lag(nitrate_PT4_mg_L,22))%>% 
+  mutate(nitrate_PT4_lag23=lag(nitrate_PT4_mg_L,23))%>% 
+  mutate(nitrate_PT4_lag24=lag(nitrate_PT4_mg_L,24))%>%
+  mutate(nitrate_PT4_lag25=lag(nitrate_PT4_mg_L,25))%>% 
+  mutate(nitrate_PT4_lag26=lag(nitrate_PT4_mg_L,26))%>% 
+  mutate(nitrate_PT4_lag27=lag(nitrate_PT4_mg_L,27))%>% 
+  mutate(nitrate_PT4_lag28=lag(nitrate_PT4_mg_L,28))%>% 
+  mutate(nitrate_PT4_lag29=lag(nitrate_PT4_mg_L,29))%>% 
+  mutate(nitrate_PT4_lag30=lag(nitrate_PT4_mg_L,30))%>% 
+  mutate(nitrate_PT4_lag31=lag(nitrate_PT4_mg_L,31))%>% 
+  mutate(nitrate_PT4_lag32=lag(nitrate_PT4_mg_L,32))%>% 
+  mutate(nitrate_PT4_lag33=lag(nitrate_PT4_mg_L,33))%>% 
+  mutate(nitrate_PT4_lag34=lag(nitrate_PT4_mg_L,34))%>% 
+  mutate(nitrate_PT4_lag35=lag(nitrate_PT4_mg_L,35))%>% 
+  mutate(nitrate_PT4_lag36=lag(nitrate_PT4_mg_L,36))%>% 
+  mutate(nitrate_PT4_lag37=lag(nitrate_PT4_mg_L,37))%>% 
+  mutate(nitrate_PT4_lag38=lag(nitrate_PT4_mg_L,38))%>% 
+  mutate(nitrate_PT4_lag39=lag(nitrate_PT4_mg_L,39))%>% 
+  mutate(nitrate_PT4_lag40=lag(nitrate_PT4_mg_L,40))%>% 
+  mutate(nitrate_PT4_lag41=lag(nitrate_PT4_mg_L,41))%>% 
+  mutate(nitrate_PT4_lag42=lag(nitrate_PT4_mg_L,42))%>% 
+  mutate(nitrate_PT4_lag43=lag(nitrate_PT4_mg_L,43))%>% 
+  mutate(nitrate_PT4_lag44=lag(nitrate_PT4_mg_L,44))%>% 
+  mutate(nitrate_PT4_lag45=lag(nitrate_PT4_mg_L,45))%>% 
+  mutate(nitrate_PT4_lag46=lag(nitrate_PT4_mg_L,46))%>% 
+  mutate(nitrate_PT4_lag47=lag(nitrate_PT4_mg_L,47))%>% 
+  mutate(nitrate_PT4_lag48=lag(nitrate_PT4_mg_L,48))%>%
+  #
+  #The nitrate load in process tank 4 column
+  #
+  mutate(load_nitrate_PT4_lag1=lag(nitrate_load_PT4_kg_h,1))%>% 
+  mutate(load_nitrate_PT4_lag2=lag(nitrate_load_PT4_kg_h,2))%>% 
+  mutate(load_nitrate_PT4_lag3=lag(nitrate_load_PT4_kg_h,3))%>% 
+  mutate(load_nitrate_PT4_lag4=lag(nitrate_load_PT4_kg_h,4))%>% 
+  mutate(load_nitrate_PT4_lag5=lag(nitrate_load_PT4_kg_h,5))%>% 
+  mutate(load_nitrate_PT4_lag6=lag(nitrate_load_PT4_kg_h,6))%>% 
+  mutate(load_nitrate_PT4_lag7=lag(nitrate_load_PT4_kg_h,7))%>% 
+  mutate(load_nitrate_PT4_lag8=lag(nitrate_load_PT4_kg_h,8))%>% 
+  mutate(load_nitrate_PT4_lag9=lag(nitrate_load_PT4_kg_h,9))%>% 
+  mutate(load_nitrate_PT4_lag10=lag(nitrate_load_PT4_kg_h,10))%>% 
+  mutate(load_nitrate_PT4_lag11=lag(nitrate_load_PT4_kg_h,11))%>% 
+  mutate(load_nitrate_PT4_lag12=lag(nitrate_load_PT4_kg_h,12))%>% 
+  mutate(load_nitrate_PT4_lag13=lag(nitrate_load_PT4_kg_h,13))%>% 
+  mutate(load_nitrate_PT4_lag14=lag(nitrate_load_PT4_kg_h,14))%>% 
+  mutate(load_nitrate_PT4_lag15=lag(nitrate_load_PT4_kg_h,15))%>% 
+  mutate(load_nitrate_PT4_lag16=lag(nitrate_load_PT4_kg_h,16))%>% 
+  mutate(load_nitrate_PT4_lag17=lag(nitrate_load_PT4_kg_h,17))%>% 
+  mutate(load_nitrate_PT4_lag18=lag(nitrate_load_PT4_kg_h,18))%>% 
+  mutate(load_nitrate_PT4_lag19=lag(nitrate_load_PT4_kg_h,19))%>% 
+  mutate(load_nitrate_PT4_lag20=lag(nitrate_load_PT4_kg_h,20))%>% 
+  mutate(load_nitrate_PT4_lag21=lag(nitrate_load_PT4_kg_h,21))%>% 
+  mutate(load_nitrate_PT4_lag22=lag(nitrate_load_PT4_kg_h,22))%>% 
+  mutate(load_nitrate_PT4_lag23=lag(nitrate_load_PT4_kg_h,23))%>% 
+  mutate(load_nitrate_PT4_lag24=lag(nitrate_load_PT4_kg_h,24))%>%
+  mutate(load_nitrate_PT4_lag25=lag(nitrate_load_PT4_kg_h,25))%>% 
+  mutate(load_nitrate_PT4_lag26=lag(nitrate_load_PT4_kg_h,26))%>% 
+  mutate(load_nitrate_PT4_lag27=lag(nitrate_load_PT4_kg_h,27))%>% 
+  mutate(load_nitrate_PT4_lag28=lag(nitrate_load_PT4_kg_h,28))%>% 
+  mutate(load_nitrate_PT4_lag29=lag(nitrate_load_PT4_kg_h,29))%>% 
+  mutate(load_nitrate_PT4_lag30=lag(nitrate_load_PT4_kg_h,30))%>% 
+  mutate(load_nitrate_PT4_lag31=lag(nitrate_load_PT4_kg_h,31))%>% 
+  mutate(load_nitrate_PT4_lag32=lag(nitrate_load_PT4_kg_h,32))%>% 
+  mutate(load_nitrate_PT4_lag33=lag(nitrate_load_PT4_kg_h,33))%>% 
+  mutate(load_nitrate_PT4_lag34=lag(nitrate_load_PT4_kg_h,34))%>% 
+  mutate(load_nitrate_PT4_lag35=lag(nitrate_load_PT4_kg_h,35))%>% 
+  mutate(load_nitrate_PT4_lag36=lag(nitrate_load_PT4_kg_h,36))%>% 
+  mutate(load_nitrate_PT4_lag37=lag(nitrate_load_PT4_kg_h,37))%>% 
+  mutate(load_nitrate_PT4_lag38=lag(nitrate_load_PT4_kg_h,38))%>% 
+  mutate(load_nitrate_PT4_lag39=lag(nitrate_load_PT4_kg_h,39))%>% 
+  mutate(load_nitrate_PT4_lag40=lag(nitrate_load_PT4_kg_h,40))%>% 
+  mutate(load_nitrate_PT4_lag41=lag(nitrate_load_PT4_kg_h,41))%>% 
+  mutate(load_nitrate_PT4_lag42=lag(nitrate_load_PT4_kg_h,42))%>% 
+  mutate(load_nitrate_PT4_lag43=lag(nitrate_load_PT4_kg_h,43))%>% 
+  mutate(load_nitrate_PT4_lag44=lag(nitrate_load_PT4_kg_h,44))%>% 
+  mutate(load_nitrate_PT4_lag45=lag(nitrate_load_PT4_kg_h,45))%>% 
+  mutate(load_nitrate_PT4_lag46=lag(nitrate_load_PT4_kg_h,46))%>% 
+  mutate(load_nitrate_PT4_lag47=lag(nitrate_load_PT4_kg_h,47))%>% 
+  mutate(load_nitrate_PT4_lag48=lag(nitrate_load_PT4_kg_h,48))%>%
+  #
+  #The dissolved oxygen in process tank 1 column
+  #
+  mutate(DO_PT1_lag1=lag(DO_PT1_mg_L,1))%>% 
+  mutate(DO_PT1_lag2=lag(DO_PT1_mg_L,2))%>% 
+  mutate(DO_PT1_lag3=lag(DO_PT1_mg_L,3))%>% 
+  mutate(DO_PT1_lag4=lag(DO_PT1_mg_L,4))%>% 
+  mutate(DO_PT1_lag5=lag(DO_PT1_mg_L,5))%>% 
+  mutate(DO_PT1_lag6=lag(DO_PT1_mg_L,6))%>% 
+  mutate(DO_PT1_lag7=lag(DO_PT1_mg_L,7))%>% 
+  mutate(DO_PT1_lag8=lag(DO_PT1_mg_L,8))%>% 
+  mutate(DO_PT1_lag9=lag(DO_PT1_mg_L,9))%>% 
+  mutate(DO_PT1_lag10=lag(DO_PT1_mg_L,10))%>% 
+  mutate(DO_PT1_lag11=lag(DO_PT1_mg_L,11))%>% 
+  mutate(DO_PT1_lag12=lag(DO_PT1_mg_L,12))%>% 
+  mutate(DO_PT1_lag13=lag(DO_PT1_mg_L,13))%>% 
+  mutate(DO_PT1_lag14=lag(DO_PT1_mg_L,14))%>% 
+  mutate(DO_PT1_lag15=lag(DO_PT1_mg_L,15))%>% 
+  mutate(DO_PT1_lag16=lag(DO_PT1_mg_L,16))%>% 
+  mutate(DO_PT1_lag17=lag(DO_PT1_mg_L,17))%>% 
+  mutate(DO_PT1_lag18=lag(DO_PT1_mg_L,18))%>% 
+  mutate(DO_PT1_lag19=lag(DO_PT1_mg_L,19))%>% 
+  mutate(DO_PT1_lag20=lag(DO_PT1_mg_L,20))%>% 
+  mutate(DO_PT1_lag21=lag(DO_PT1_mg_L,21))%>% 
+  mutate(DO_PT1_lag22=lag(DO_PT1_mg_L,22))%>% 
+  mutate(DO_PT1_lag23=lag(DO_PT1_mg_L,23))%>% 
+  mutate(DO_PT1_lag24=lag(DO_PT1_mg_L,24))%>%
+  mutate(DO_PT1_lag25=lag(DO_PT1_mg_L,25))%>% 
+  mutate(DO_PT1_lag26=lag(DO_PT1_mg_L,26))%>% 
+  mutate(DO_PT1_lag27=lag(DO_PT1_mg_L,27))%>% 
+  mutate(DO_PT1_lag28=lag(DO_PT1_mg_L,28))%>% 
+  mutate(DO_PT1_lag29=lag(DO_PT1_mg_L,29))%>% 
+  mutate(DO_PT1_lag30=lag(DO_PT1_mg_L,30))%>% 
+  mutate(DO_PT1_lag31=lag(DO_PT1_mg_L,31))%>% 
+  mutate(DO_PT1_lag32=lag(DO_PT1_mg_L,32))%>% 
+  mutate(DO_PT1_lag33=lag(DO_PT1_mg_L,33))%>% 
+  mutate(DO_PT1_lag34=lag(DO_PT1_mg_L,34))%>% 
+  mutate(DO_PT1_lag35=lag(DO_PT1_mg_L,35))%>% 
+  mutate(DO_PT1_lag36=lag(DO_PT1_mg_L,36))%>% 
+  mutate(DO_PT1_lag37=lag(DO_PT1_mg_L,37))%>% 
+  mutate(DO_PT1_lag38=lag(DO_PT1_mg_L,38))%>% 
+  mutate(DO_PT1_lag39=lag(DO_PT1_mg_L,39))%>% 
+  mutate(DO_PT1_lag40=lag(DO_PT1_mg_L,40))%>% 
+  mutate(DO_PT1_lag41=lag(DO_PT1_mg_L,41))%>% 
+  mutate(DO_PT1_lag42=lag(DO_PT1_mg_L,42))%>% 
+  mutate(DO_PT1_lag43=lag(DO_PT1_mg_L,43))%>% 
+  mutate(DO_PT1_lag44=lag(DO_PT1_mg_L,44))%>% 
+  mutate(DO_PT1_lag45=lag(DO_PT1_mg_L,45))%>% 
+  mutate(DO_PT1_lag46=lag(DO_PT1_mg_L,46))%>% 
+  mutate(DO_PT1_lag47=lag(DO_PT1_mg_L,47))%>% 
+  mutate(DO_PT1_lag48=lag(DO_PT1_mg_L,48))%>%
+  #
+  #The dissolved oxygen in process tank 2 column
+  #
+  mutate(DO_PT2_lag1=lag(DO_PT2_mg_L,1))%>% 
+  mutate(DO_PT2_lag2=lag(DO_PT2_mg_L,2))%>% 
+  mutate(DO_PT2_lag3=lag(DO_PT2_mg_L,3))%>% 
+  mutate(DO_PT2_lag4=lag(DO_PT2_mg_L,4))%>% 
+  mutate(DO_PT2_lag5=lag(DO_PT2_mg_L,5))%>% 
+  mutate(DO_PT2_lag6=lag(DO_PT2_mg_L,6))%>% 
+  mutate(DO_PT2_lag7=lag(DO_PT2_mg_L,7))%>% 
+  mutate(DO_PT2_lag8=lag(DO_PT2_mg_L,8))%>% 
+  mutate(DO_PT2_lag9=lag(DO_PT2_mg_L,9))%>% 
+  mutate(DO_PT2_lag10=lag(DO_PT2_mg_L,10))%>% 
+  mutate(DO_PT2_lag11=lag(DO_PT2_mg_L,11))%>% 
+  mutate(DO_PT2_lag12=lag(DO_PT2_mg_L,12))%>% 
+  mutate(DO_PT2_lag13=lag(DO_PT2_mg_L,13))%>% 
+  mutate(DO_PT2_lag14=lag(DO_PT2_mg_L,14))%>% 
+  mutate(DO_PT2_lag15=lag(DO_PT2_mg_L,15))%>% 
+  mutate(DO_PT2_lag16=lag(DO_PT2_mg_L,16))%>% 
+  mutate(DO_PT2_lag17=lag(DO_PT2_mg_L,17))%>% 
+  mutate(DO_PT2_lag18=lag(DO_PT2_mg_L,18))%>% 
+  mutate(DO_PT2_lag19=lag(DO_PT2_mg_L,19))%>% 
+  mutate(DO_PT2_lag20=lag(DO_PT2_mg_L,20))%>% 
+  mutate(DO_PT2_lag21=lag(DO_PT2_mg_L,21))%>% 
+  mutate(DO_PT2_lag22=lag(DO_PT2_mg_L,22))%>% 
+  mutate(DO_PT2_lag23=lag(DO_PT2_mg_L,23))%>% 
+  mutate(DO_PT2_lag24=lag(DO_PT2_mg_L,24))%>%
+  mutate(DO_PT2_lag25=lag(DO_PT2_mg_L,25))%>% 
+  mutate(DO_PT2_lag26=lag(DO_PT2_mg_L,26))%>% 
+  mutate(DO_PT2_lag27=lag(DO_PT2_mg_L,27))%>% 
+  mutate(DO_PT2_lag28=lag(DO_PT2_mg_L,28))%>% 
+  mutate(DO_PT2_lag29=lag(DO_PT2_mg_L,29))%>% 
+  mutate(DO_PT2_lag30=lag(DO_PT2_mg_L,30))%>% 
+  mutate(DO_PT2_lag31=lag(DO_PT2_mg_L,31))%>% 
+  mutate(DO_PT2_lag32=lag(DO_PT2_mg_L,32))%>% 
+  mutate(DO_PT2_lag33=lag(DO_PT2_mg_L,33))%>% 
+  mutate(DO_PT2_lag34=lag(DO_PT2_mg_L,34))%>% 
+  mutate(DO_PT2_lag35=lag(DO_PT2_mg_L,35))%>% 
+  mutate(DO_PT2_lag36=lag(DO_PT2_mg_L,36))%>% 
+  mutate(DO_PT2_lag37=lag(DO_PT2_mg_L,37))%>% 
+  mutate(DO_PT2_lag38=lag(DO_PT2_mg_L,38))%>% 
+  mutate(DO_PT2_lag39=lag(DO_PT2_mg_L,39))%>% 
+  mutate(DO_PT2_lag40=lag(DO_PT2_mg_L,40))%>% 
+  mutate(DO_PT2_lag41=lag(DO_PT2_mg_L,41))%>% 
+  mutate(DO_PT2_lag42=lag(DO_PT2_mg_L,42))%>% 
+  mutate(DO_PT2_lag43=lag(DO_PT2_mg_L,43))%>% 
+  mutate(DO_PT2_lag44=lag(DO_PT2_mg_L,44))%>% 
+  mutate(DO_PT2_lag45=lag(DO_PT2_mg_L,45))%>% 
+  mutate(DO_PT2_lag46=lag(DO_PT2_mg_L,46))%>% 
+  mutate(DO_PT2_lag47=lag(DO_PT2_mg_L,47))%>% 
+  mutate(DO_PT2_lag48=lag(DO_PT2_mg_L,48))%>%
+  #
+  #The dissolved oxygen in process tank 3 column
+  #
+  mutate(DO_PT3_lag1=lag(DO_PT3_mg_L,1))%>% 
+  mutate(DO_PT3_lag2=lag(DO_PT3_mg_L,2))%>% 
+  mutate(DO_PT3_lag3=lag(DO_PT3_mg_L,3))%>% 
+  mutate(DO_PT3_lag4=lag(DO_PT3_mg_L,4))%>% 
+  mutate(DO_PT3_lag5=lag(DO_PT3_mg_L,5))%>% 
+  mutate(DO_PT3_lag6=lag(DO_PT3_mg_L,6))%>% 
+  mutate(DO_PT3_lag7=lag(DO_PT3_mg_L,7))%>% 
+  mutate(DO_PT3_lag8=lag(DO_PT3_mg_L,8))%>% 
+  mutate(DO_PT3_lag9=lag(DO_PT3_mg_L,9))%>% 
+  mutate(DO_PT3_lag10=lag(DO_PT3_mg_L,10))%>% 
+  mutate(DO_PT3_lag11=lag(DO_PT3_mg_L,11))%>% 
+  mutate(DO_PT3_lag12=lag(DO_PT3_mg_L,12))%>% 
+  mutate(DO_PT3_lag13=lag(DO_PT3_mg_L,13))%>% 
+  mutate(DO_PT3_lag14=lag(DO_PT3_mg_L,14))%>% 
+  mutate(DO_PT3_lag15=lag(DO_PT3_mg_L,15))%>% 
+  mutate(DO_PT3_lag16=lag(DO_PT3_mg_L,16))%>% 
+  mutate(DO_PT3_lag17=lag(DO_PT3_mg_L,17))%>% 
+  mutate(DO_PT3_lag18=lag(DO_PT3_mg_L,18))%>% 
+  mutate(DO_PT3_lag19=lag(DO_PT3_mg_L,19))%>% 
+  mutate(DO_PT3_lag20=lag(DO_PT3_mg_L,20))%>% 
+  mutate(DO_PT3_lag21=lag(DO_PT3_mg_L,21))%>% 
+  mutate(DO_PT3_lag22=lag(DO_PT3_mg_L,22))%>% 
+  mutate(DO_PT3_lag23=lag(DO_PT3_mg_L,23))%>% 
+  mutate(DO_PT3_lag24=lag(DO_PT3_mg_L,24))%>%
+  mutate(DO_PT3_lag25=lag(DO_PT3_mg_L,25))%>% 
+  mutate(DO_PT3_lag26=lag(DO_PT3_mg_L,26))%>% 
+  mutate(DO_PT3_lag27=lag(DO_PT3_mg_L,27))%>% 
+  mutate(DO_PT3_lag28=lag(DO_PT3_mg_L,28))%>% 
+  mutate(DO_PT3_lag29=lag(DO_PT3_mg_L,29))%>% 
+  mutate(DO_PT3_lag30=lag(DO_PT3_mg_L,30))%>% 
+  mutate(DO_PT3_lag31=lag(DO_PT3_mg_L,31))%>% 
+  mutate(DO_PT3_lag32=lag(DO_PT3_mg_L,32))%>% 
+  mutate(DO_PT3_lag33=lag(DO_PT3_mg_L,33))%>% 
+  mutate(DO_PT3_lag34=lag(DO_PT3_mg_L,34))%>% 
+  mutate(DO_PT3_lag35=lag(DO_PT3_mg_L,35))%>% 
+  mutate(DO_PT3_lag36=lag(DO_PT3_mg_L,36))%>% 
+  mutate(DO_PT3_lag37=lag(DO_PT3_mg_L,37))%>% 
+  mutate(DO_PT3_lag38=lag(DO_PT3_mg_L,38))%>% 
+  mutate(DO_PT3_lag39=lag(DO_PT3_mg_L,39))%>% 
+  mutate(DO_PT3_lag40=lag(DO_PT3_mg_L,40))%>% 
+  mutate(DO_PT3_lag41=lag(DO_PT3_mg_L,41))%>% 
+  mutate(DO_PT3_lag42=lag(DO_PT3_mg_L,42))%>% 
+  mutate(DO_PT3_lag43=lag(DO_PT3_mg_L,43))%>% 
+  mutate(DO_PT3_lag44=lag(DO_PT3_mg_L,44))%>% 
+  mutate(DO_PT3_lag45=lag(DO_PT3_mg_L,45))%>% 
+  mutate(DO_PT3_lag46=lag(DO_PT3_mg_L,46))%>% 
+  mutate(DO_PT3_lag47=lag(DO_PT3_mg_L,47))%>% 
+  mutate(DO_PT3_lag48=lag(DO_PT3_mg_L,48))%>%
+  #
+  #The dissolved oxygen in process tank 4 column
+  #
+  mutate(DO_PT4_lag1=lag(DO_PT4_mg_L,1))%>% 
+  mutate(DO_PT4_lag2=lag(DO_PT4_mg_L,2))%>% 
+  mutate(DO_PT4_lag3=lag(DO_PT4_mg_L,3))%>% 
+  mutate(DO_PT4_lag4=lag(DO_PT4_mg_L,4))%>% 
+  mutate(DO_PT4_lag5=lag(DO_PT4_mg_L,5))%>% 
+  mutate(DO_PT4_lag6=lag(DO_PT4_mg_L,6))%>% 
+  mutate(DO_PT4_lag7=lag(DO_PT4_mg_L,7))%>% 
+  mutate(DO_PT4_lag8=lag(DO_PT4_mg_L,8))%>% 
+  mutate(DO_PT4_lag9=lag(DO_PT4_mg_L,9))%>% 
+  mutate(DO_PT4_lag10=lag(DO_PT4_mg_L,10))%>% 
+  mutate(DO_PT4_lag11=lag(DO_PT4_mg_L,11))%>% 
+  mutate(DO_PT4_lag12=lag(DO_PT4_mg_L,12))%>% 
+  mutate(DO_PT4_lag13=lag(DO_PT4_mg_L,13))%>% 
+  mutate(DO_PT4_lag14=lag(DO_PT4_mg_L,14))%>% 
+  mutate(DO_PT4_lag15=lag(DO_PT4_mg_L,15))%>% 
+  mutate(DO_PT4_lag16=lag(DO_PT4_mg_L,16))%>% 
+  mutate(DO_PT4_lag17=lag(DO_PT4_mg_L,17))%>% 
+  mutate(DO_PT4_lag18=lag(DO_PT4_mg_L,18))%>% 
+  mutate(DO_PT4_lag19=lag(DO_PT4_mg_L,19))%>% 
+  mutate(DO_PT4_lag20=lag(DO_PT4_mg_L,20))%>% 
+  mutate(DO_PT4_lag21=lag(DO_PT4_mg_L,21))%>% 
+  mutate(DO_PT4_lag22=lag(DO_PT4_mg_L,22))%>% 
+  mutate(DO_PT4_lag23=lag(DO_PT4_mg_L,23))%>% 
+  mutate(DO_PT4_lag24=lag(DO_PT4_mg_L,24))%>%
+  mutate(DO_PT4_lag25=lag(DO_PT4_mg_L,25))%>% 
+  mutate(DO_PT4_lag26=lag(DO_PT4_mg_L,26))%>% 
+  mutate(DO_PT4_lag27=lag(DO_PT4_mg_L,27))%>% 
+  mutate(DO_PT4_lag28=lag(DO_PT4_mg_L,28))%>% 
+  mutate(DO_PT4_lag29=lag(DO_PT4_mg_L,29))%>% 
+  mutate(DO_PT4_lag30=lag(DO_PT4_mg_L,30))%>% 
+  mutate(DO_PT4_lag31=lag(DO_PT4_mg_L,31))%>% 
+  mutate(DO_PT4_lag32=lag(DO_PT4_mg_L,32))%>% 
+  mutate(DO_PT4_lag33=lag(DO_PT4_mg_L,33))%>% 
+  mutate(DO_PT4_lag34=lag(DO_PT4_mg_L,34))%>% 
+  mutate(DO_PT4_lag35=lag(DO_PT4_mg_L,35))%>% 
+  mutate(DO_PT4_lag36=lag(DO_PT4_mg_L,36))%>% 
+  mutate(DO_PT4_lag37=lag(DO_PT4_mg_L,37))%>% 
+  mutate(DO_PT4_lag38=lag(DO_PT4_mg_L,38))%>% 
+  mutate(DO_PT4_lag39=lag(DO_PT4_mg_L,39))%>% 
+  mutate(DO_PT4_lag40=lag(DO_PT4_mg_L,40))%>% 
+  mutate(DO_PT4_lag41=lag(DO_PT4_mg_L,41))%>% 
+  mutate(DO_PT4_lag42=lag(DO_PT4_mg_L,42))%>% 
+  mutate(DO_PT4_lag43=lag(DO_PT4_mg_L,43))%>% 
+  mutate(DO_PT4_lag44=lag(DO_PT4_mg_L,44))%>% 
+  mutate(DO_PT4_lag45=lag(DO_PT4_mg_L,45))%>% 
+  mutate(DO_PT4_lag46=lag(DO_PT4_mg_L,46))%>% 
+  mutate(DO_PT4_lag47=lag(DO_PT4_mg_L,47))%>% 
+  mutate(DO_PT4_lag48=lag(DO_PT4_mg_L,48))%>%
+  #
+  #The temperature in process tank 1 column
+  #
+  mutate(temperature_PT1_lag1=lag(T_PT1_C,1))%>% 
+  mutate(temperature_PT1_lag2=lag(T_PT1_C,2))%>% 
+  mutate(temperature_PT1_lag3=lag(T_PT1_C,3))%>% 
+  mutate(temperature_PT1_lag4=lag(T_PT1_C,4))%>% 
+  mutate(temperature_PT1_lag5=lag(T_PT1_C,5))%>% 
+  mutate(temperature_PT1_lag6=lag(T_PT1_C,6))%>% 
+  mutate(temperature_PT1_lag7=lag(T_PT1_C,7))%>% 
+  mutate(temperature_PT1_lag8=lag(T_PT1_C,8))%>% 
+  mutate(temperature_PT1_lag9=lag(T_PT1_C,9))%>% 
+  mutate(temperature_PT1_lag10=lag(T_PT1_C,10))%>% 
+  mutate(temperature_PT1_lag11=lag(T_PT1_C,11))%>% 
+  mutate(temperature_PT1_lag12=lag(T_PT1_C,12))%>% 
+  mutate(temperature_PT1_lag13=lag(T_PT1_C,13))%>% 
+  mutate(temperature_PT1_lag14=lag(T_PT1_C,14))%>% 
+  mutate(temperature_PT1_lag15=lag(T_PT1_C,15))%>% 
+  mutate(temperature_PT1_lag16=lag(T_PT1_C,16))%>% 
+  mutate(temperature_PT1_lag17=lag(T_PT1_C,17))%>% 
+  mutate(temperature_PT1_lag18=lag(T_PT1_C,18))%>% 
+  mutate(temperature_PT1_lag19=lag(T_PT1_C,19))%>% 
+  mutate(temperature_PT1_lag20=lag(T_PT1_C,20))%>% 
+  mutate(temperature_PT1_lag21=lag(T_PT1_C,21))%>% 
+  mutate(temperature_PT1_lag22=lag(T_PT1_C,22))%>% 
+  mutate(temperature_PT1_lag23=lag(T_PT1_C,23))%>% 
+  mutate(temperature_PT1_lag24=lag(T_PT1_C,24))%>%
+  mutate(temperature_PT1_lag25=lag(T_PT1_C,25))%>% 
+  mutate(temperature_PT1_lag26=lag(T_PT1_C,26))%>% 
+  mutate(temperature_PT1_lag27=lag(T_PT1_C,27))%>% 
+  mutate(temperature_PT1_lag28=lag(T_PT1_C,28))%>% 
+  mutate(temperature_PT1_lag29=lag(T_PT1_C,29))%>% 
+  mutate(temperature_PT1_lag30=lag(T_PT1_C,30))%>% 
+  mutate(temperature_PT1_lag31=lag(T_PT1_C,31))%>% 
+  mutate(temperature_PT1_lag32=lag(T_PT1_C,32))%>% 
+  mutate(temperature_PT1_lag33=lag(T_PT1_C,33))%>% 
+  mutate(temperature_PT1_lag34=lag(T_PT1_C,34))%>% 
+  mutate(temperature_PT1_lag35=lag(T_PT1_C,35))%>% 
+  mutate(temperature_PT1_lag36=lag(T_PT1_C,36))%>% 
+  mutate(temperature_PT1_lag37=lag(T_PT1_C,37))%>% 
+  mutate(temperature_PT1_lag38=lag(T_PT1_C,38))%>% 
+  mutate(temperature_PT1_lag39=lag(T_PT1_C,39))%>% 
+  mutate(temperature_PT1_lag40=lag(T_PT1_C,40))%>% 
+  mutate(temperature_PT1_lag41=lag(T_PT1_C,41))%>% 
+  mutate(temperature_PT1_lag42=lag(T_PT1_C,42))%>% 
+  mutate(temperature_PT1_lag43=lag(T_PT1_C,43))%>% 
+  mutate(temperature_PT1_lag44=lag(T_PT1_C,44))%>% 
+  mutate(temperature_PT1_lag45=lag(T_PT1_C,45))%>% 
+  mutate(temperature_PT1_lag46=lag(T_PT1_C,46))%>% 
+  mutate(temperature_PT1_lag47=lag(T_PT1_C,47))%>% 
+  mutate(temperature_PT1_lag48=lag(T_PT1_C,48))%>%
+  #
+  #The temperature in process tank 2 column
+  #
+  mutate(temperature_PT2_lag1=lag(T_PT2_C,1))%>% 
+  mutate(temperature_PT2_lag2=lag(T_PT2_C,2))%>% 
+  mutate(temperature_PT2_lag3=lag(T_PT2_C,3))%>% 
+  mutate(temperature_PT2_lag4=lag(T_PT2_C,4))%>% 
+  mutate(temperature_PT2_lag5=lag(T_PT2_C,5))%>% 
+  mutate(temperature_PT2_lag6=lag(T_PT2_C,6))%>% 
+  mutate(temperature_PT2_lag7=lag(T_PT2_C,7))%>% 
+  mutate(temperature_PT2_lag8=lag(T_PT2_C,8))%>% 
+  mutate(temperature_PT2_lag9=lag(T_PT2_C,9))%>% 
+  mutate(temperature_PT2_lag10=lag(T_PT2_C,10))%>% 
+  mutate(temperature_PT2_lag11=lag(T_PT2_C,11))%>% 
+  mutate(temperature_PT2_lag12=lag(T_PT2_C,12))%>% 
+  mutate(temperature_PT2_lag13=lag(T_PT2_C,13))%>% 
+  mutate(temperature_PT2_lag14=lag(T_PT2_C,14))%>% 
+  mutate(temperature_PT2_lag15=lag(T_PT2_C,15))%>% 
+  mutate(temperature_PT2_lag16=lag(T_PT2_C,16))%>% 
+  mutate(temperature_PT2_lag17=lag(T_PT2_C,17))%>% 
+  mutate(temperature_PT2_lag18=lag(T_PT2_C,18))%>% 
+  mutate(temperature_PT2_lag19=lag(T_PT2_C,19))%>% 
+  mutate(temperature_PT2_lag20=lag(T_PT2_C,20))%>% 
+  mutate(temperature_PT2_lag21=lag(T_PT2_C,21))%>% 
+  mutate(temperature_PT2_lag22=lag(T_PT2_C,22))%>% 
+  mutate(temperature_PT2_lag23=lag(T_PT2_C,23))%>% 
+  mutate(temperature_PT2_lag24=lag(T_PT2_C,24))%>%
+  mutate(temperature_PT2_lag25=lag(T_PT2_C,25))%>% 
+  mutate(temperature_PT2_lag26=lag(T_PT2_C,26))%>% 
+  mutate(temperature_PT2_lag27=lag(T_PT2_C,27))%>% 
+  mutate(temperature_PT2_lag28=lag(T_PT2_C,28))%>% 
+  mutate(temperature_PT2_lag29=lag(T_PT2_C,29))%>% 
+  mutate(temperature_PT2_lag30=lag(T_PT2_C,30))%>% 
+  mutate(temperature_PT2_lag31=lag(T_PT2_C,31))%>% 
+  mutate(temperature_PT2_lag32=lag(T_PT2_C,32))%>% 
+  mutate(temperature_PT2_lag33=lag(T_PT2_C,33))%>% 
+  mutate(temperature_PT2_lag34=lag(T_PT2_C,34))%>% 
+  mutate(temperature_PT2_lag35=lag(T_PT2_C,35))%>% 
+  mutate(temperature_PT2_lag36=lag(T_PT2_C,36))%>% 
+  mutate(temperature_PT2_lag37=lag(T_PT2_C,37))%>% 
+  mutate(temperature_PT2_lag38=lag(T_PT2_C,38))%>% 
+  mutate(temperature_PT2_lag39=lag(T_PT2_C,39))%>% 
+  mutate(temperature_PT2_lag40=lag(T_PT2_C,40))%>% 
+  mutate(temperature_PT2_lag41=lag(T_PT2_C,41))%>% 
+  mutate(temperature_PT2_lag42=lag(T_PT2_C,42))%>% 
+  mutate(temperature_PT2_lag43=lag(T_PT2_C,43))%>% 
+  mutate(temperature_PT2_lag44=lag(T_PT2_C,44))%>% 
+  mutate(temperature_PT2_lag45=lag(T_PT2_C,45))%>% 
+  mutate(temperature_PT2_lag46=lag(T_PT2_C,46))%>% 
+  mutate(temperature_PT2_lag47=lag(T_PT2_C,47))%>% 
+  mutate(temperature_PT2_lag48=lag(T_PT2_C,48))%>%
+  #
+  #The temperature in process tank 3 column
+  #
+  mutate(temperature_PT3_lag1=lag(T_PT3_C,1))%>% 
+  mutate(temperature_PT3_lag2=lag(T_PT3_C,2))%>% 
+  mutate(temperature_PT3_lag3=lag(T_PT3_C,3))%>% 
+  mutate(temperature_PT3_lag4=lag(T_PT3_C,4))%>% 
+  mutate(temperature_PT3_lag5=lag(T_PT3_C,5))%>% 
+  mutate(temperature_PT3_lag6=lag(T_PT3_C,6))%>% 
+  mutate(temperature_PT3_lag7=lag(T_PT3_C,7))%>% 
+  mutate(temperature_PT3_lag8=lag(T_PT3_C,8))%>% 
+  mutate(temperature_PT3_lag9=lag(T_PT3_C,9))%>% 
+  mutate(temperature_PT3_lag10=lag(T_PT3_C,10))%>% 
+  mutate(temperature_PT3_lag11=lag(T_PT3_C,11))%>% 
+  mutate(temperature_PT3_lag12=lag(T_PT3_C,12))%>% 
+  mutate(temperature_PT3_lag13=lag(T_PT3_C,13))%>% 
+  mutate(temperature_PT3_lag14=lag(T_PT3_C,14))%>% 
+  mutate(temperature_PT3_lag15=lag(T_PT3_C,15))%>% 
+  mutate(temperature_PT3_lag16=lag(T_PT3_C,16))%>% 
+  mutate(temperature_PT3_lag17=lag(T_PT3_C,17))%>% 
+  mutate(temperature_PT3_lag18=lag(T_PT3_C,18))%>% 
+  mutate(temperature_PT3_lag19=lag(T_PT3_C,19))%>% 
+  mutate(temperature_PT3_lag20=lag(T_PT3_C,20))%>% 
+  mutate(temperature_PT3_lag21=lag(T_PT3_C,21))%>% 
+  mutate(temperature_PT3_lag22=lag(T_PT3_C,22))%>% 
+  mutate(temperature_PT3_lag23=lag(T_PT3_C,23))%>% 
+  mutate(temperature_PT3_lag24=lag(T_PT3_C,24))%>%
+  mutate(temperature_PT3_lag25=lag(T_PT3_C,25))%>% 
+  mutate(temperature_PT3_lag26=lag(T_PT3_C,26))%>% 
+  mutate(temperature_PT3_lag27=lag(T_PT3_C,27))%>% 
+  mutate(temperature_PT3_lag28=lag(T_PT3_C,28))%>% 
+  mutate(temperature_PT3_lag29=lag(T_PT3_C,29))%>% 
+  mutate(temperature_PT3_lag30=lag(T_PT3_C,30))%>% 
+  mutate(temperature_PT3_lag31=lag(T_PT3_C,31))%>% 
+  mutate(temperature_PT3_lag32=lag(T_PT3_C,32))%>% 
+  mutate(temperature_PT3_lag33=lag(T_PT3_C,33))%>% 
+  mutate(temperature_PT3_lag34=lag(T_PT3_C,34))%>% 
+  mutate(temperature_PT3_lag35=lag(T_PT3_C,35))%>% 
+  mutate(temperature_PT3_lag36=lag(T_PT3_C,36))%>% 
+  mutate(temperature_PT3_lag37=lag(T_PT3_C,37))%>% 
+  mutate(temperature_PT3_lag38=lag(T_PT3_C,38))%>% 
+  mutate(temperature_PT3_lag39=lag(T_PT3_C,39))%>% 
+  mutate(temperature_PT3_lag40=lag(T_PT3_C,40))%>% 
+  mutate(temperature_PT3_lag41=lag(T_PT3_C,41))%>% 
+  mutate(temperature_PT3_lag42=lag(T_PT3_C,42))%>% 
+  mutate(temperature_PT3_lag43=lag(T_PT3_C,43))%>% 
+  mutate(temperature_PT3_lag44=lag(T_PT3_C,44))%>% 
+  mutate(temperature_PT3_lag45=lag(T_PT3_C,45))%>% 
+  mutate(temperature_PT3_lag46=lag(T_PT3_C,46))%>% 
+  mutate(temperature_PT3_lag47=lag(T_PT3_C,47))%>% 
+  mutate(temperature_PT3_lag48=lag(T_PT3_C,48))%>%
+  #
+  #The temperature in process tank 4 column
+  #
+  mutate(temperature_PT4_lag1=lag(T_PT4_C,1))%>% 
+  mutate(temperature_PT4_lag2=lag(T_PT4_C,2))%>% 
+  mutate(temperature_PT4_lag3=lag(T_PT4_C,3))%>% 
+  mutate(temperature_PT4_lag4=lag(T_PT4_C,4))%>% 
+  mutate(temperature_PT4_lag5=lag(T_PT4_C,5))%>% 
+  mutate(temperature_PT4_lag6=lag(T_PT4_C,6))%>% 
+  mutate(temperature_PT4_lag7=lag(T_PT4_C,7))%>% 
+  mutate(temperature_PT4_lag8=lag(T_PT4_C,8))%>% 
+  mutate(temperature_PT4_lag9=lag(T_PT4_C,9))%>% 
+  mutate(temperature_PT4_lag10=lag(T_PT4_C,10))%>% 
+  mutate(temperature_PT4_lag11=lag(T_PT4_C,11))%>% 
+  mutate(temperature_PT4_lag12=lag(T_PT4_C,12))%>% 
+  mutate(temperature_PT4_lag13=lag(T_PT4_C,13))%>% 
+  mutate(temperature_PT4_lag14=lag(T_PT4_C,14))%>% 
+  mutate(temperature_PT4_lag15=lag(T_PT4_C,15))%>% 
+  mutate(temperature_PT4_lag16=lag(T_PT4_C,16))%>% 
+  mutate(temperature_PT4_lag17=lag(T_PT4_C,17))%>% 
+  mutate(temperature_PT4_lag18=lag(T_PT4_C,18))%>% 
+  mutate(temperature_PT4_lag19=lag(T_PT4_C,19))%>% 
+  mutate(temperature_PT4_lag20=lag(T_PT4_C,20))%>% 
+  mutate(temperature_PT4_lag21=lag(T_PT4_C,21))%>% 
+  mutate(temperature_PT4_lag22=lag(T_PT4_C,22))%>% 
+  mutate(temperature_PT4_lag23=lag(T_PT4_C,23))%>% 
+  mutate(temperature_PT4_lag24=lag(T_PT4_C,24))%>%
+  mutate(temperature_PT4_lag25=lag(T_PT4_C,25))%>% 
+  mutate(temperature_PT4_lag26=lag(T_PT4_C,26))%>% 
+  mutate(temperature_PT4_lag27=lag(T_PT4_C,27))%>% 
+  mutate(temperature_PT4_lag28=lag(T_PT4_C,28))%>% 
+  mutate(temperature_PT4_lag29=lag(T_PT4_C,29))%>% 
+  mutate(temperature_PT4_lag30=lag(T_PT4_C,30))%>% 
+  mutate(temperature_PT4_lag31=lag(T_PT4_C,31))%>% 
+  mutate(temperature_PT4_lag32=lag(T_PT4_C,32))%>% 
+  mutate(temperature_PT4_lag33=lag(T_PT4_C,33))%>% 
+  mutate(temperature_PT4_lag34=lag(T_PT4_C,34))%>% 
+  mutate(temperature_PT4_lag35=lag(T_PT4_C,35))%>% 
+  mutate(temperature_PT4_lag36=lag(T_PT4_C,36))%>% 
+  mutate(temperature_PT4_lag37=lag(T_PT4_C,37))%>% 
+  mutate(temperature_PT4_lag38=lag(T_PT4_C,38))%>% 
+  mutate(temperature_PT4_lag39=lag(T_PT4_C,39))%>% 
+  mutate(temperature_PT4_lag40=lag(T_PT4_C,40))%>% 
+  mutate(temperature_PT4_lag41=lag(T_PT4_C,41))%>% 
+  mutate(temperature_PT4_lag42=lag(T_PT4_C,42))%>% 
+  mutate(temperature_PT4_lag43=lag(T_PT4_C,43))%>% 
+  mutate(temperature_PT4_lag44=lag(T_PT4_C,44))%>% 
+  mutate(temperature_PT4_lag45=lag(T_PT4_C,45))%>% 
+  mutate(temperature_PT4_lag46=lag(T_PT4_C,46))%>% 
+  mutate(temperature_PT4_lag47=lag(T_PT4_C,47))%>% 
+  mutate(temperature_PT4_lag48=lag(T_PT4_C,48))%>%
   na.omit() 
