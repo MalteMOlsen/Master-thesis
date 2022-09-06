@@ -1,0 +1,13 @@
+#///////////////////////////////////////////////////////////////////////////////
+#Data cleaning - creating model data
+#///////////////////////////////////////////////////////////////////////////////
+#The purpose of this script to aggregated the cleaned one minute data frame into 
+#a half hourly data frame.
+
+#Trim the data by the rules
+
+
+#Aggregate the data 
+
+
+

@@ -4,6 +4,9 @@
 #The purpose of this script is add the extra data found in DIMS to the half 
 #hourly data frame
 
+#choosing the the working directory to be here
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/initial_graphical_data_analysis/data_cleaning_for_initial_graphical_analysis")
+
 #The extra ammonium in the effluent data
 #-------------------------------------------------------------------------------
 #Load the data from the csv file with every value as a character 

@@ -1,10 +1,16 @@
+#///////////////////////////////////////////////////////////////////////////////
+#Data cleaning - overwriting  missing values and grapical investigation
+#///////////////////////////////////////////////////////////////////////////////
+#The purpose of this script is to find the missing values which can be replaced
+#make a grapical investigation of the area, and then replace the missing 
+#values.
+#This script is cleaned up to become "data_cleaning_remove_NA"
 
-#Data cleaning - overwriting outliers, missing values and measurement errors
-
+#Chose the working directory
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/initial_graphical_data_analysis/data_cleaning_for_initial_graphcal_analysis")
 
 #load data and packages
-source("load_half_hourly_data_and_packages.R")
-source("functions.R")
+source("setup.R")
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------

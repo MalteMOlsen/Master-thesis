@@ -6,6 +6,8 @@
 #This script is based on the "data_cleaning_investigation_interpolation_and_graphs"
 #but the graphs generating is removed
 
+#choosing the the working directory to be here
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/initial_graphical_data_analysis/data_cleaning_for_initial_graphical_analysis")
 
 #load the functions that needed for the script
 source("functions_to_NA_invenstigation_and_interpolation.R")
@@ -95,7 +97,7 @@ data_thirty_min <- overwrite_NA_values(data_thirty_min,
                                        temp,
                                        ammonium_to_AN_mg_L)
 
------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 #Ammonium in process tank 1
 #------------------------------------------------------------------------------
@@ -115,10 +117,6 @@ temp <- NA_linear_approximate(data_thirty_min,
 data_thirty_min <- overwrite_NA_values(data_thirty_min,
                                        temp,
                                        ammonium_PT1_mg_L)
-
-#Long time intervals
-temp_counter <- counting_values_are_NA_in_a_day(data_thirty_min,
-                                                ammonium_PT1_mg_L)
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -633,11 +631,5 @@ temp <- NA_linear_approximate(data_thirty_min,
 data_thirty_min <- overwrite_NA_values(data_thirty_min,
                                        temp,
                                        T_PT1_C)
-
-
-
-#Overwriting the extra data from DIMS
-
-
 
 
