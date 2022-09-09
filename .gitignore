@@ -41,6 +41,5 @@ vignettes/*.pdf
 #remove .csv and .png upload
 *.csv
 *.png
-*.tmp
 *.docx
 *.xlsx
