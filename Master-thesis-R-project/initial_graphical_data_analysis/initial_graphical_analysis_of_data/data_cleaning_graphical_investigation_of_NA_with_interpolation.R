@@ -12,6 +12,12 @@ setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-p
 #load data and packages
 source("setup.R")
 
+#Chose the working directory
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/initial_graphical_data_analysis/data_cleaning_for_initial_graphcal_analysis")
+
+#load data and packages
+source("functions_to_NA_invenstigation_and_interpolation.R")
+
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 #Flow to the AN tank

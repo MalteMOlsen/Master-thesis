@@ -1,0 +1,70 @@
+#///////////////////////////////////////////////////////////////////////////////
+#Adding diff columns to all the data columns
+#///////////////////////////////////////////////////////////////////////////////
+#The purpose of this script is add a difference value to all the data columns
+
+data_one_min <- data_one_min %>% 
+  mutate(diff_rainfall_mm=difference(rainfall_mm)) %>% 
+  mutate(diff_flow_AN_m3_h=difference(flow_AN_m3_h)) %>%
+  mutate(diff_flow_influent_m3_h=difference(flow_influent_m3_h)) %>%
+  mutate(diff_flow_effluent_m3_h=difference(flow_effluent_m3_h)) %>%
+  mutate(diff_flow_HT_m3_h=difference(flow_HT_m3_h)) %>%
+  mutate(diff_ammonium_to_AN_mg_L=difference(ammonium_to_AN_mg_L)) %>%
+  mutate(diff_T_PT1_C=difference(T_PT1_C)) %>%
+  mutate(diff_T_PT2_C=difference(T_PT2_C)) %>%
+  mutate(diff_T_PT3_C=difference(T_PT3_C)) %>%
+  mutate(diff_T_PT4_C=difference(T_PT4_C)) %>%
+  mutate(diff_ammonium_PT1_mg_L=difference(ammonium_PT1_mg_L)) %>%
+  mutate(diff_ammonium_PT2_mg_L=difference(ammonium_PT2_mg_L)) %>%
+  mutate(diff_ammonium_PT3_mg_L=difference(ammonium_PT3_mg_L)) %>%
+  mutate(diff_ammonium_PT4_mg_L=difference(ammonium_PT4_mg_L)) %>%
+  mutate(diff_SS_PT1_g_L=difference(SS_PT1_g_L)) %>%
+  mutate(diff_SS_PT4_g_L=difference(SS_PT4_g_L)) %>%
+  mutate(diff_SS_to_AN_g_L=difference(SS_to_AN_g_L)) %>%
+  mutate(diff_airflow_PT1_m3_h=difference(airflow_PT1_m3_h)) %>%
+  mutate(diff_airflow_PT2_m3_h=difference(airflow_PT2_m3_h)) %>%
+  mutate(diff_airflow_PT3_m3_h=difference(airflow_PT3_m3_h)) %>%
+  mutate(diff_airflow_PT4_m3_h=difference(airflow_PT4_m3_h)) %>%
+  mutate(diff_nitrate_PT1_mg_L=difference(nitrate_PT1_mg_L)) %>%
+  mutate(diff_nitrate_PT2_mg_L=difference(nitrate_PT2_mg_L)) %>%
+  mutate(diff_nitrate_PT3_mg_L=difference(nitrate_PT3_mg_L)) %>%
+  mutate(diff_nitrate_PT4_mg_L=difference(nitrate_PT4_mg_L)) %>%
+  mutate(diff_DO_PT1_mg_L=difference(DO_PT1_mg_L)) %>%
+  mutate(diff_DO_PT2_mg_L=difference(DO_PT2_mg_L)) %>%
+  mutate(diff_DO_PT3_mg_L=difference(DO_PT3_mg_L)) %>%
+  mutate(diff_DO_PT4_mg_L=difference(DO_PT4_mg_L)) %>%
+  mutate(diff_ammonium_effluent_mg_L=difference(ammonium_effluent_mg_L)) %>%
+  mutate(diff_nitrate_effluent_mg_L=difference(nitrate_effluent_mg_L)) %>%
+  mutate(diff_drought=difference(drought)) %>%
+  mutate(diff_EU_PT_kWh_h=difference(EU_PT_kWh_h)) %>%
+  mutate(diff_SC_operatingNumber=difference(SC_operatingNumber)) %>%
+  mutate(diff_lag1_flow_AN_m3_h=difference(lag1_flow_AN_m3_h)) %>%
+  mutate(diff_lag1_flow_influent_m3_h=difference(lag1_flow_influent_m3_h)) %>%
+  mutate(diff_lag1_flow_effluent_m3_h=difference(lag1_flow_effluent_m3_h)) %>%
+  mutate(diff_lag1_flow_HT_m3_h=difference(lag1_flow_HT_m3_h)) %>%
+  mutate(diff_lag1_ammonium_to_AN_mg_L=difference(lag1_ammonium_to_AN_mg_L)) %>%
+  mutate(diff_lag1_T_PT1_C=difference(lag1_T_PT1_C)) %>%
+  mutate(diff_lag1_T_PT2_C=difference(lag1_T_PT2_C)) %>%
+  mutate(diff_lag1_T_PT3_C=difference(lag1_T_PT3_C)) %>%
+  mutate(diff_lag1_T_PT4_C=difference(lag1_T_PT4_C)) %>%
+  mutate(diff_lag1_ammonium_PT1_mg_L=difference(lag1_ammonium_PT1_mg_L)) %>%
+  mutate(diff_lag1_ammonium_PT2_mg_L=difference(lag1_ammonium_PT2_mg_L)) %>%
+  mutate(diff_lag1_ammonium_PT3_mg_L=difference(lag1_ammonium_PT3_mg_L)) %>%
+  mutate(diff_lag1_ammonium_PT4_mg_L=difference(lag1_ammonium_PT4_mg_L)) %>%
+  mutate(diff_lag1_SS_PT1_g_L=difference(lag1_SS_PT1_g_L)) %>%
+  mutate(diff_lag1_SS_PT4_g_L=difference(lag1_SS_PT4_g_L)) %>%
+  mutate(diff_lag1_SS_to_AN_g_L=difference(lag1_SS_to_AN_g_L)) %>%
+  mutate(diff_lag1_airflow_PT1_m3_h=difference(lag1_airflow_PT1_m3_h)) %>%
+  mutate(diff_lag1_airflow_PT2_m3_h=difference(lag1_airflow_PT2_m3_h)) %>%
+  mutate(diff_lag1_airflow_PT3_m3_h=difference(lag1_airflow_PT3_m3_h)) %>%
+  mutate(diff_lag1_airflow_PT4_m3_h=difference(lag1_airflow_PT4_m3_h)) %>%
+  mutate(diff_lag1_nitrate_PT1_mg_L=difference(lag1_nitrate_PT1_mg_L)) %>%
+  mutate(diff_lag1_nitrate_PT2_mg_L=difference(lag1_nitrate_PT2_mg_L)) %>%
+  mutate(diff_lag1_nitrate_PT3_mg_L=difference(lag1_nitrate_PT3_mg_L)) %>%
+  mutate(diff_lag1_nitrate_PT4_mg_L=difference(lag1_nitrate_PT4_mg_L)) %>%
+  mutate(diff_lag1_DO_PT1_mg_L=difference(lag1_DO_PT1_mg_L)) %>%
+  mutate(diff_lag1_DO_PT2_mg_L=difference(lag1_DO_PT2_mg_L)) %>%
+  mutate(diff_lag1_DO_PT3_mg_L=difference(lag1_DO_PT3_mg_L)) %>%
+  mutate(diff_lag1_DO_PT4_mg_L=difference(lag1_DO_PT4_mg_L)) %>%
+  mutate(diff_lag1_ammonium_effluent_mg_L=difference(lag1_ammonium_effluent_mg_L)) %>%
+  mutate(diff_lag1_nitrate_effluent_mg_L=difference(lag1_nitrate_effluent_mg_L)) 

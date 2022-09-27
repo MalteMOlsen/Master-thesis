@@ -4,7 +4,7 @@
 #The purpose of this script is to find time where the process tanks were insufficient
 #and to generate a intuitive understanding of the data
 
-#The way the different functions works are discribed in the "functions_used_for_initial_graphical_analysis.R"
+#The way the different functions works are described in the "functions_used_for_initial_graphical_analysis.R"
 
 
 #Setup
@@ -18,7 +18,8 @@ setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-p
 #Load setup
 source("setup.R")
 
-setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/initial_graphical_data_analysis/initial_graphical_analysis_of_data")
+#Chose the working directory
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/initial_graphical_data_analysis/data_cleaning_for_initial_graphical_analysis")
 source("functions_used_for_initial_graphical_analysis.R")
 
 #Make a column additional columns that will be used later on

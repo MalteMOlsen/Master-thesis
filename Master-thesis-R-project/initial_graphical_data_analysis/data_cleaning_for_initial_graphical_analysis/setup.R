@@ -28,6 +28,20 @@ setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-p
 source("adding_extra_DIMS_data.R")
 
 
+#Defining the theme
+theme_malte <- function(){
+  theme_light()+
+  theme(
+    axis.line = element_line(),
+    panel.border = element_blank())
+}
+
+
+remove(temp)
+remove(temp_ammonium_effluent)
+remove(temp_ammonium_effluent_30min)
+remove(temp_nitrate_effluent)
+remove(temp_nitrate_effluent_30min)
 
 
 

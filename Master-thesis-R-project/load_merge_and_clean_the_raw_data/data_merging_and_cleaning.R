@@ -3,24 +3,17 @@
 #Setup of different helping tools 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+#The purpose of this script is to load all the data into R and make some initial
+#cleaning of all some of the columns and aggregate the data into different time
+#bins and save these aggregated data as a .csv file
 
 #All comments refer to the code line below the comment
-
-#Loading packages
-library(tidyverse) 
-library(lubridate)
-library(fpp3)
-library(zoo)
-#Making the lubridate package run faster
-options(lubridate.fasttime = TRUE)
 
 #set working directory
 setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/load_merge_and_clean_the_raw_data")
 
-
 #Load the functions
 source("function_for_data_merging_and_cleaning.R")
-
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -196,7 +189,7 @@ setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-p
 write_csv(rain_negative_values, 
           "rain_negative_values.csv")
 
-#Replacing the the negative values with zero
+#Replacing the the negative values with zero, found in the weather achieve to be true
 data_one_min$rainfall_mm[data_one_min$rainfall_mm<0] <- 0
 
 #Peaks give large values in negative and positive direction
@@ -212,7 +205,7 @@ setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-p
 write_csv(rain_large_values, 
           "rain_large_values.csv")
 
-#Replacing the the values over 10 to zero
+#Replacing the the values over 10 to zero, found in the weather achieve to be true
 data_one_min$rainfall_mm[data_one_min$rainfall_mm>5.5] <- 0
 
 
