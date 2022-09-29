@@ -131,6 +131,18 @@ temp %>%
   two_graph(ammonium_to_AN_mg_L,
             diff_ammonium_to_AN_mg_L)
 
+temp <- data_one_min %>%
+  select(ammonium_to_AN_mg_L) %>% 
+  filter(ammonium_to_AN_mg_L<100) 
+temp %>% 
+  one_graph(ammonium_to_AN_mg_L)
+
+temp <- data_one_min %>%
+  select(ammonium_to_AN_mg_L) %>% 
+  filter(ammonium_to_AN_mg_L<85) 
+temp %>% 
+  one_graph(ammonium_to_AN_mg_L)
+
 
 #Flow (Hydrolysis tank)
 data_one_min %>% 
@@ -216,10 +228,25 @@ data_one_min %>%
   two_graph(SS_PT1_g_L,
              SS_PT4_g_L)
 
-data_one_min %>% 
+data_one_min %>%  
+  filter_index("2020") %>% 
+  two_graph(SS_PT1_g_L,
+            SS_PT4_g_L)
+
+data_one_min %>%
   two_graph(diff_SS_PT1_g_L,
             diff_SS_PT4_g_L)
 
+
+temp <- data_one_min %>%
+  select(diff_SS_PT1_g_L,
+       diff_SS_PT4_g_L) %>%  
+  filter(abs(diff_SS_PT1_g_L)<5) %>% 
+  filter(abs(diff_SS_PT4_g_L)<5)
+  
+temp %>% 
+  two_graph(diff_SS_PT1_g_L,
+            diff_SS_PT4_g_L)
 
 #-------------------------------------------------------------------------------
 #The aeration in the process tank
