@@ -204,10 +204,27 @@ print(end)
 model_data <- model_data %>% 
   rename(time_thirty_min=temp_name1)
 
+model_data <- model_data %>% 
+  rename(rainfall_mm=sum_rain)
+
+
 #Removing the duplicated time values and keeping the first value and removing the rest
 model_data <- model_data%>%  
   distinct(time_thirty_min,
            .keep_all = T)
+
+#choosing the the working directory to be here
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/creating_model_data")
+#-------------------------------------------------------------------------------
+#Adding the difference columns
+source("removal_of_outliers_in_the_half_hourly_data_frame.R")
+
+
+#choosing the the working directory to be here
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/creating_model_data")
+#-------------------------------------------------------------------------------
+#Adding the difference columns
+source("adding_additional_parameters.R")
 
 #Set working directory
 setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/data")

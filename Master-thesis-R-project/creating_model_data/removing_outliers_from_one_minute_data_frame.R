@@ -2,7 +2,7 @@
 #Removing outliers from the one minute data frame
 #///////////////////////////////////////////////////////////////////////////////
 #The purpose of this script is to remove the outliers which has been determined 
-#in the graphical investigation of the datframe
+#in the graphical investigation of the one minute data frame
 
 #----
 #Ammonium concentration
