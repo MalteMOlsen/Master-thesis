@@ -6,27 +6,7 @@
 #physically travel through the plant
 
 
-#Adding additional load columns
-data_thirty_min <- data_thirty_min %>% 
-  mutate(total_N_effluent_mg_L=ammonium_effluent_mg_L+nitrate_effluent_mg_L) %>% 
-  mutate(ammonium_load_AN_kg_h=ammonium_to_AN_mg_L*flow_AN_m3_h/1000) %>% 
-  mutate(ammonium_load_PT4_kg_h=ammonium_PT4_mg_L*flow_AN_m3_h/1000) %>% 
-  mutate(ammonium_load_PT3_kg_h=ammonium_PT3_mg_L*flow_AN_m3_h/1000) %>% 
-  mutate(ammonium_load_PT2_kg_h=ammonium_PT2_mg_L*flow_AN_m3_h/1000) %>% 
-  mutate(ammonium_load_PT1_kg_h=ammonium_PT1_mg_L*(flow_AN_m3_h+flow_HT_m3_h)/1000) %>% 
-  mutate(nitrate_load_PT4_kg_h=nitrate_PT4_mg_L*flow_AN_m3_h/1000) %>% 
-  mutate(nitrate_load_PT3_kg_h=nitrate_PT3_mg_L*flow_AN_m3_h/1000) %>% 
-  mutate(nitrate_load_PT2_kg_h=nitrate_PT2_mg_L*flow_AN_m3_h/1000) %>% 
-  mutate(nitrate_load_PT1_kg_h=nitrate_PT1_mg_L*(flow_AN_m3_h+flow_HT_m3_h)/1000) %>% 
-  mutate(total_N_load_PT4_kg_h=nitrate_load_PT4_kg_h+ammonium_load_PT4_kg_h) %>% 
-  mutate(total_N_load_PT3_kg_h=nitrate_load_PT3_kg_h+ammonium_load_PT3_kg_h) %>% 
-  mutate(total_N_load_PT2_kg_h=nitrate_load_PT2_kg_h+ammonium_load_PT2_kg_h) %>% 
-  mutate(total_N_load_PT1_kg_h=nitrate_load_PT1_kg_h+ammonium_load_PT1_kg_h) %>% 
-  mutate(ammonium_load_effluent_kg_h=ammonium_effluent_mg_L*flow_effluent_m3_h/1000) %>%
-  mutate(nitrate_load_effluent_kg_h=nitrate_effluent_mg_L*flow_effluent_m3_h/1000) %>% 
-  mutate(total_N_load_effluent_kg_h=nitrate_load_effluent_kg_h+ammonium_load_effluent_kg_h)
-
-data_thirty_min <- data_thirty_min %>%
+model_data <- model_data %>%
   #
   #The ammonium concentration to the AN tank column
   #
@@ -77,7 +57,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(ammonium_AN_lag45=lag(ammonium_to_AN_mg_L,45))%>% 
   mutate(ammonium_AN_lag46=lag(ammonium_to_AN_mg_L,46))%>% 
   mutate(ammonium_AN_lag47=lag(ammonium_to_AN_mg_L,47))%>% 
-  mutate(ammonium_AN_lag48=lag(ammonium_to_AN_mg_L,48))%>%
+  mutate(ammonium_AN_lag48=lag(ammonium_to_AN_mg_L,48))
+model_data <- model_data %>%
   #
   #The load of ammonium to the AN tank column
   #
@@ -128,7 +109,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(load_ammonium_AN_lag45=lag(ammonium_load_AN_kg_h,45))%>% 
   mutate(load_ammonium_AN_lag46=lag(ammonium_load_AN_kg_h,46))%>% 
   mutate(load_ammonium_AN_lag47=lag(ammonium_load_AN_kg_h,47))%>% 
-  mutate(load_ammonium_AN_lag48=lag(ammonium_load_AN_kg_h,48))%>%
+  mutate(load_ammonium_AN_lag48=lag(ammonium_load_AN_kg_h,48))
+model_data <- model_data %>%
   #
   #Flow in the AN tank column
   #
@@ -179,7 +161,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(flow_AN_lag45=lag(flow_AN_m3_h,45))%>% 
   mutate(flow_AN_lag46=lag(flow_AN_m3_h,46))%>% 
   mutate(flow_AN_lag47=lag(flow_AN_m3_h,47))%>% 
-  mutate(flow_AN_lag48=lag(flow_AN_m3_h,48))%>%
+  mutate(flow_AN_lag48=lag(flow_AN_m3_h,48))
+model_data <- model_data %>%
   #
   #The rain column
   #
@@ -230,7 +213,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(rain_lag45=lag(rainfall_mm,45))%>% 
   mutate(rain_lag46=lag(rainfall_mm,46))%>% 
   mutate(rain_lag47=lag(rainfall_mm,47))%>% 
-  mutate(rain_lag48=lag(rainfall_mm,48))%>%
+  mutate(rain_lag48=lag(rainfall_mm,48))
+model_data <- model_data %>%
   #
   #The air flow in the process tank 4 column
   #
@@ -281,7 +265,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(air_PT4_lag45=lag(airflow_PT4_m3_h,45))%>% 
   mutate(air_PT4_lag46=lag(airflow_PT4_m3_h,46))%>% 
   mutate(air_PT4_lag47=lag(airflow_PT4_m3_h,47))%>% 
-  mutate(air_PT4_lag48=lag(airflow_PT4_m3_h,48))%>%
+  mutate(air_PT4_lag48=lag(airflow_PT4_m3_h,48))
+model_data <- model_data %>%
   #
   #The air flow in the process tank 3 column
   #
@@ -332,7 +317,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(air_PT3_lag45=lag(airflow_PT3_m3_h,45))%>% 
   mutate(air_PT3_lag46=lag(airflow_PT3_m3_h,46))%>% 
   mutate(air_PT3_lag47=lag(airflow_PT3_m3_h,47))%>% 
-  mutate(air_PT3_lag48=lag(airflow_PT3_m3_h,48))%>%
+  mutate(air_PT3_lag48=lag(airflow_PT3_m3_h,48))
+model_data <- model_data %>%
   #
   #The air flow in the process tank 2 column
   #
@@ -383,7 +369,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(air_PT2_lag45=lag(airflow_PT2_m3_h,45))%>% 
   mutate(air_PT2_lag46=lag(airflow_PT2_m3_h,46))%>% 
   mutate(air_PT2_lag47=lag(airflow_PT2_m3_h,47))%>% 
-  mutate(air_PT2_lag48=lag(airflow_PT2_m3_h,48))%>%
+  mutate(air_PT2_lag48=lag(airflow_PT2_m3_h,48))
+model_data <- model_data %>%
   #
   #The air flow in the process tank 1 column
   #
@@ -434,7 +421,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(air_PT1_lag45=lag(airflow_PT1_m3_h,45))%>% 
   mutate(air_PT1_lag46=lag(airflow_PT1_m3_h,46))%>% 
   mutate(air_PT1_lag47=lag(airflow_PT1_m3_h,47))%>% 
-  mutate(air_PT1_lag48=lag(airflow_PT1_m3_h,48))%>%
+  mutate(air_PT1_lag48=lag(airflow_PT1_m3_h,48))
+model_data <- model_data %>%
   #
   #The ammonium concentration in process tank 1 column
   #
@@ -485,7 +473,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(ammonium_PT1_lag45=lag(ammonium_PT1_mg_L,45))%>% 
   mutate(ammonium_PT1_lag46=lag(ammonium_PT1_mg_L,46))%>% 
   mutate(ammonium_PT1_lag47=lag(ammonium_PT1_mg_L,47))%>% 
-  mutate(ammonium_PT1_lag48=lag(ammonium_PT1_mg_L,48))%>%
+  mutate(ammonium_PT1_lag48=lag(ammonium_PT1_mg_L,48))
+model_data <- model_data %>%
   #
   #The ammonium load in process tank 1 column
   #
@@ -536,7 +525,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(load_ammonium_PT1_lag45=lag(ammonium_load_PT1_kg_h,45))%>% 
   mutate(load_ammonium_PT1_lag46=lag(ammonium_load_PT1_kg_h,46))%>% 
   mutate(load_ammonium_PT1_lag47=lag(ammonium_load_PT1_kg_h,47))%>% 
-  mutate(load_ammonium_PT1_lag48=lag(ammonium_load_PT1_kg_h,48))%>%
+  mutate(load_ammonium_PT1_lag48=lag(ammonium_load_PT1_kg_h,48))
+model_data <- model_data %>%
   #
   #The ammonium concentration in process tank 2 column
   #
@@ -587,7 +577,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(ammonium_PT2_lag45=lag(ammonium_PT2_mg_L,45))%>% 
   mutate(ammonium_PT2_lag46=lag(ammonium_PT2_mg_L,46))%>% 
   mutate(ammonium_PT2_lag47=lag(ammonium_PT2_mg_L,47))%>% 
-  mutate(ammonium_PT2_lag48=lag(ammonium_PT2_mg_L,48))%>%
+  mutate(ammonium_PT2_lag48=lag(ammonium_PT2_mg_L,48))
+model_data <- model_data %>%
   #
   #The ammonium load in process tank 2 column
   #
@@ -638,7 +629,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(load_ammonium_PT2_lag45=lag(ammonium_load_PT2_kg_h,45))%>% 
   mutate(load_ammonium_PT2_lag46=lag(ammonium_load_PT2_kg_h,46))%>% 
   mutate(load_ammonium_PT2_lag47=lag(ammonium_load_PT2_kg_h,47))%>% 
-  mutate(load_ammonium_PT2_lag48=lag(ammonium_load_PT2_kg_h,48))%>%
+  mutate(load_ammonium_PT2_lag48=lag(ammonium_load_PT2_kg_h,48))
+model_data <- model_data %>%
   #
   #The ammonium concentration in process tank 3 column
   #
@@ -689,7 +681,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(ammonium_PT3_lag45=lag(ammonium_PT3_mg_L,45))%>% 
   mutate(ammonium_PT3_lag46=lag(ammonium_PT3_mg_L,46))%>% 
   mutate(ammonium_PT3_lag47=lag(ammonium_PT3_mg_L,47))%>% 
-  mutate(ammonium_PT3_lag48=lag(ammonium_PT3_mg_L,48))%>%
+  mutate(ammonium_PT3_lag48=lag(ammonium_PT3_mg_L,48))
+model_data <- model_data %>%
   #
   #The ammonium load in process tank 3 column
   #
@@ -740,7 +733,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(load_ammonium_PT3_lag45=lag(ammonium_load_PT3_kg_h,45))%>% 
   mutate(load_ammonium_PT3_lag46=lag(ammonium_load_PT3_kg_h,46))%>% 
   mutate(load_ammonium_PT3_lag47=lag(ammonium_load_PT3_kg_h,47))%>% 
-  mutate(load_ammonium_PT3_lag48=lag(ammonium_load_PT3_kg_h,48))%>%
+  mutate(load_ammonium_PT3_lag48=lag(ammonium_load_PT3_kg_h,48))
+model_data <- model_data %>%
   #
   #The ammonium concentration in process tank 4 column
   #
@@ -791,7 +785,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(ammonium_PT4_lag45=lag(ammonium_PT4_mg_L,45))%>% 
   mutate(ammonium_PT4_lag46=lag(ammonium_PT4_mg_L,46))%>% 
   mutate(ammonium_PT4_lag47=lag(ammonium_PT4_mg_L,47))%>% 
-  mutate(ammonium_PT4_lag48=lag(ammonium_PT4_mg_L,48))%>%
+  mutate(ammonium_PT4_lag48=lag(ammonium_PT4_mg_L,48))
+model_data <- model_data %>%
   #
   #The ammonium load in process tank 4 column
   #
@@ -842,7 +837,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(load_ammonium_PT4_lag45=lag(ammonium_load_PT4_kg_h,45))%>% 
   mutate(load_ammonium_PT4_lag46=lag(ammonium_load_PT4_kg_h,46))%>% 
   mutate(load_ammonium_PT4_lag47=lag(ammonium_load_PT4_kg_h,47))%>% 
-  mutate(load_ammonium_PT4_lag48=lag(ammonium_load_PT4_kg_h,48))%>%
+  mutate(load_ammonium_PT4_lag48=lag(ammonium_load_PT4_kg_h,48))
+model_data <- model_data %>%
   #
   #The nitrate concentration in process tank 1 column
   #
@@ -893,7 +889,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(nitrate_PT1_lag45=lag(nitrate_PT1_mg_L,45))%>% 
   mutate(nitrate_PT1_lag46=lag(nitrate_PT1_mg_L,46))%>% 
   mutate(nitrate_PT1_lag47=lag(nitrate_PT1_mg_L,47))%>% 
-  mutate(nitrate_PT1_lag48=lag(nitrate_PT1_mg_L,48))%>%
+  mutate(nitrate_PT1_lag48=lag(nitrate_PT1_mg_L,48))
+model_data <- model_data %>%
   #
   #The nitrate load in process tank 1 column
   #
@@ -944,7 +941,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(load_nitrate_PT1_lag45=lag(nitrate_load_PT1_kg_h,45))%>% 
   mutate(load_nitrate_PT1_lag46=lag(nitrate_load_PT1_kg_h,46))%>% 
   mutate(load_nitrate_PT1_lag47=lag(nitrate_load_PT1_kg_h,47))%>% 
-  mutate(load_nitrate_PT1_lag48=lag(nitrate_load_PT1_kg_h,48))%>%
+  mutate(load_nitrate_PT1_lag48=lag(nitrate_load_PT1_kg_h,48))
+model_data <- model_data %>%
   #
   #The nitrate concentration in process tank 2 column
   #
@@ -995,7 +993,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(nitrate_PT2_lag45=lag(nitrate_PT2_mg_L,45))%>% 
   mutate(nitrate_PT2_lag46=lag(nitrate_PT2_mg_L,46))%>% 
   mutate(nitrate_PT2_lag47=lag(nitrate_PT2_mg_L,47))%>% 
-  mutate(nitrate_PT2_lag48=lag(nitrate_PT2_mg_L,48))%>%
+  mutate(nitrate_PT2_lag48=lag(nitrate_PT2_mg_L,48))
+model_data <- model_data %>%
   #
   #The nitrate load in process tank 2 column
   #
@@ -1046,7 +1045,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(load_nitrate_PT2_lag45=lag(nitrate_load_PT2_kg_h,45))%>% 
   mutate(load_nitrate_PT2_lag46=lag(nitrate_load_PT2_kg_h,46))%>% 
   mutate(load_nitrate_PT2_lag47=lag(nitrate_load_PT2_kg_h,47))%>% 
-  mutate(load_nitrate_PT2_lag48=lag(nitrate_load_PT2_kg_h,48))%>%
+  mutate(load_nitrate_PT2_lag48=lag(nitrate_load_PT2_kg_h,48))
+model_data <- model_data %>%
   #
   #The nitrate concentration in process tank 3 column
   #
@@ -1097,7 +1097,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(nitrate_PT3_lag45=lag(nitrate_PT3_mg_L,45))%>% 
   mutate(nitrate_PT3_lag46=lag(nitrate_PT3_mg_L,46))%>% 
   mutate(nitrate_PT3_lag47=lag(nitrate_PT3_mg_L,47))%>% 
-  mutate(nitrate_PT3_lag48=lag(nitrate_PT3_mg_L,48))%>%
+  mutate(nitrate_PT3_lag48=lag(nitrate_PT3_mg_L,48))
+model_data <- model_data %>%
   #
   #The nitrate load in process tank 3 column
   #
@@ -1148,7 +1149,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(load_nitrate_PT3_lag45=lag(nitrate_load_PT3_kg_h,45))%>% 
   mutate(load_nitrate_PT3_lag46=lag(nitrate_load_PT3_kg_h,46))%>% 
   mutate(load_nitrate_PT3_lag47=lag(nitrate_load_PT3_kg_h,47))%>% 
-  mutate(load_nitrate_PT3_lag48=lag(nitrate_load_PT3_kg_h,48))%>%
+  mutate(load_nitrate_PT3_lag48=lag(nitrate_load_PT3_kg_h,48))
+model_data <- model_data %>%
   #
   #The nitrate concentration in process tank 4 column
   #
@@ -1199,7 +1201,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(nitrate_PT4_lag45=lag(nitrate_PT4_mg_L,45))%>% 
   mutate(nitrate_PT4_lag46=lag(nitrate_PT4_mg_L,46))%>% 
   mutate(nitrate_PT4_lag47=lag(nitrate_PT4_mg_L,47))%>% 
-  mutate(nitrate_PT4_lag48=lag(nitrate_PT4_mg_L,48))%>%
+  mutate(nitrate_PT4_lag48=lag(nitrate_PT4_mg_L,48))
+model_data <- model_data %>%
   #
   #The nitrate load in process tank 4 column
   #
@@ -1250,7 +1253,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(load_nitrate_PT4_lag45=lag(nitrate_load_PT4_kg_h,45))%>% 
   mutate(load_nitrate_PT4_lag46=lag(nitrate_load_PT4_kg_h,46))%>% 
   mutate(load_nitrate_PT4_lag47=lag(nitrate_load_PT4_kg_h,47))%>% 
-  mutate(load_nitrate_PT4_lag48=lag(nitrate_load_PT4_kg_h,48))%>%
+  mutate(load_nitrate_PT4_lag48=lag(nitrate_load_PT4_kg_h,48))
+model_data <- model_data %>%
   #
   #The dissolved oxygen in process tank 1 column
   #
@@ -1301,7 +1305,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(DO_PT1_lag45=lag(DO_PT1_mg_L,45))%>% 
   mutate(DO_PT1_lag46=lag(DO_PT1_mg_L,46))%>% 
   mutate(DO_PT1_lag47=lag(DO_PT1_mg_L,47))%>% 
-  mutate(DO_PT1_lag48=lag(DO_PT1_mg_L,48))%>%
+  mutate(DO_PT1_lag48=lag(DO_PT1_mg_L,48))
+model_data <- model_data %>%
   #
   #The dissolved oxygen in process tank 2 column
   #
@@ -1352,7 +1357,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(DO_PT2_lag45=lag(DO_PT2_mg_L,45))%>% 
   mutate(DO_PT2_lag46=lag(DO_PT2_mg_L,46))%>% 
   mutate(DO_PT2_lag47=lag(DO_PT2_mg_L,47))%>% 
-  mutate(DO_PT2_lag48=lag(DO_PT2_mg_L,48))%>%
+  mutate(DO_PT2_lag48=lag(DO_PT2_mg_L,48))
+model_data <- model_data %>%
   #
   #The dissolved oxygen in process tank 3 column
   #
@@ -1403,7 +1409,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(DO_PT3_lag45=lag(DO_PT3_mg_L,45))%>% 
   mutate(DO_PT3_lag46=lag(DO_PT3_mg_L,46))%>% 
   mutate(DO_PT3_lag47=lag(DO_PT3_mg_L,47))%>% 
-  mutate(DO_PT3_lag48=lag(DO_PT3_mg_L,48))%>%
+  mutate(DO_PT3_lag48=lag(DO_PT3_mg_L,48))
+model_data <- model_data %>%
   #
   #The dissolved oxygen in process tank 4 column
   #
@@ -1454,7 +1461,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(DO_PT4_lag45=lag(DO_PT4_mg_L,45))%>% 
   mutate(DO_PT4_lag46=lag(DO_PT4_mg_L,46))%>% 
   mutate(DO_PT4_lag47=lag(DO_PT4_mg_L,47))%>% 
-  mutate(DO_PT4_lag48=lag(DO_PT4_mg_L,48))%>%
+  mutate(DO_PT4_lag48=lag(DO_PT4_mg_L,48))
+model_data <- model_data %>%
   #
   #The temperature in process tank 1 column
   #
@@ -1505,7 +1513,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(temperature_PT1_lag45=lag(T_PT1_C,45))%>% 
   mutate(temperature_PT1_lag46=lag(T_PT1_C,46))%>% 
   mutate(temperature_PT1_lag47=lag(T_PT1_C,47))%>% 
-  mutate(temperature_PT1_lag48=lag(T_PT1_C,48))%>%
+  mutate(temperature_PT1_lag48=lag(T_PT1_C,48))
+model_data <- model_data %>%
   #
   #The temperature in process tank 2 column
   #
@@ -1556,7 +1565,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(temperature_PT2_lag45=lag(T_PT2_C,45))%>% 
   mutate(temperature_PT2_lag46=lag(T_PT2_C,46))%>% 
   mutate(temperature_PT2_lag47=lag(T_PT2_C,47))%>% 
-  mutate(temperature_PT2_lag48=lag(T_PT2_C,48))%>%
+  mutate(temperature_PT2_lag48=lag(T_PT2_C,48))
+model_data <- model_data %>%
   #
   #The temperature in process tank 3 column
   #
@@ -1607,7 +1617,8 @@ data_thirty_min <- data_thirty_min %>%
   mutate(temperature_PT3_lag45=lag(T_PT3_C,45))%>% 
   mutate(temperature_PT3_lag46=lag(T_PT3_C,46))%>% 
   mutate(temperature_PT3_lag47=lag(T_PT3_C,47))%>% 
-  mutate(temperature_PT3_lag48=lag(T_PT3_C,48))%>%
+  mutate(temperature_PT3_lag48=lag(T_PT3_C,48))
+model_data <- model_data %>%
   #
   #The temperature in process tank 4 column
   #
@@ -1658,5 +1669,4 @@ data_thirty_min <- data_thirty_min %>%
   mutate(temperature_PT4_lag45=lag(T_PT4_C,45))%>% 
   mutate(temperature_PT4_lag46=lag(T_PT4_C,46))%>% 
   mutate(temperature_PT4_lag47=lag(T_PT4_C,47))%>% 
-  mutate(temperature_PT4_lag48=lag(T_PT4_C,48))%>%
-  na.omit() 
+  mutate(temperature_PT4_lag48=lag(T_PT4_C,48))
