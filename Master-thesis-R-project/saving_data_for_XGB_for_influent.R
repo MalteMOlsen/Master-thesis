@@ -41,12 +41,14 @@ FT_without_yearly <- training_data %>%
 
 model_data_FT_subtracted <- model_data %>% 
   left_join(FT_with_yearly) %>% 
-  mutate(ammonium_load_AN_kg_h=ammonium_load_AN_kg_h-.fitted)
+  mutate(ammonium_load_AN_kg_h=ammonium_load_AN_kg_h-.fitted) %>% 
+  rename(model_fit = .fitted)
 
 
 model_data_FT_without_yearly_subtracted <- model_data %>% 
   left_join(FT_without_yearly) %>% 
-  mutate(ammonium_load_AN_kg_h=ammonium_load_AN_kg_h-.fitted)
+  mutate(ammonium_load_AN_kg_h=ammonium_load_AN_kg_h-.fitted) %>% 
+  rename(model_fit = .fitted)
 
 #-------------------------------------------------------------------------------
 #Saving data which is ready for XGB training in three data frame
@@ -80,14 +82,14 @@ test_data_FT_without_yearly_subtracted <- model_data_FT_without_yearly_subtracte
 #save model data without 
 
 #Set working directory
-setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/data_for_XGB/Influent_modelling")
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project")
 
 #Save the data as a csv file
 write_csv(training_data, 
           "training_data_for_influent.csv")
 
 #Set working directory
-setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/data_for_XGB/Influent_modelling")
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project")
 
 #Save the data as a csv file
 write_csv(test_data, 
@@ -97,14 +99,14 @@ write_csv(test_data,
 #For the data frame with seasonality adjustment(yearly seasonality is included)
 
 #Set working directory
-setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/data_for_XGB/Influent_modelling")
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project")
 
 #Save the data as a csv file
 write_csv(training_data_FT_subtracted, 
           "training_data_FT_subtracted_for_influent.csv")
 
 #Set working directory
-setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/data_for_XGB/Influent_modelling")
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project")
 
 #Save the data as a csv file
 write_csv(test_data_FT_subtracted, 
@@ -114,14 +116,14 @@ write_csv(test_data_FT_subtracted,
 #---------
 #For the data frame with seasonality adjustment(yearly seasonality is NOT included)
 #Set working directory
-setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/data_for_XGB/Influent_modelling")
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project")
 
 #Save the data as a csv file
 write_csv(training_data_FT_without_yearly_subtracted, 
           "training_data_FT_without_yearly_subtracted_for_influent.csv")
 
 #Set working directory
-setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/data_for_XGB/Influent_modelling")
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project")
 
 #Save the data as a csv file
 write_csv(test_data_FT_without_yearly_subtracted, 
