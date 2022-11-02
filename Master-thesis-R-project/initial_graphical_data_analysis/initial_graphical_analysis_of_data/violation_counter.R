@@ -14,12 +14,34 @@ source("setup.R")
 #All other columns than the effluent data is removed and the months and year 
 #of the different data is found.
 data_legal <- data_thirty_min %>% 
-  select(nitrate_effluent_mg_L,ammonium_effluent_mg_L, rainfall_mm) %>% 
+  select(nitrate_effluent_mg_L,ammonium_effluent_mg_L, rainfall_mm,flow_effluent_m3_h) %>% 
   mutate(months=month(time_thirty_min))%>% 
   mutate(year_data=year(time_thirty_min)) %>% 
+  mutate(day_data=as.Date(time_thirty_min)) %>%
   as_tibble() %>% 
   select(-time_thirty_min) %>% 
   mutate(total_N=ammonium_effluent_mg_L+nitrate_effluent_mg_L)
+
+yearly_average <- data_legal %>% 
+  group_by(year_data) %>% 
+  summarise(flow_year=mean(flow_effluent_m3_h, 
+                           na.rm=T))
+
+daily_average <- data_legal%>% 
+  group_by(day_data) %>% 
+  summarise(flow_day=mean(flow_effluent_m3_h, 
+                          na.rm=T))
+
+
+
+#Adding the drought data to the data frame
+data_legal <- data_legal %>% 
+  left_join(yearly_average) %>% 
+  left_join(daily_average) %>% 
+  mutate(total_N_vv=total_N*flow_day/flow_year)
+
+
+
 
 #Creating different dataframes based on the months
 data_january <- data_legal %>% 
@@ -978,36 +1000,36 @@ data_december %>%
 #-----------
 #Total
 data_january %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   nrow()
 
 #2018
 data_january %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2018) %>% 
   nrow()
 
 #2019
 data_january %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 
 #2020
 data_january %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2020) %>% 
   nrow()
 
 #2021
 data_january %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2021) %>% 
   nrow()
 
 #2022
 data_january %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2022) %>% 
   nrow()
 
@@ -1021,36 +1043,36 @@ data_january %>%
 #-----------
 #Total
 data_february %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   nrow()
 
 #2018
 data_february %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2018) %>% 
   nrow()
 
 #2019
 data_february %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 
 #2020
 data_february %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2020) %>% 
   nrow()
 
 #2021
 data_february %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2021) %>% 
   nrow()
 
 #2022
 data_february %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2022) %>% 
   nrow()
 
@@ -1060,36 +1082,36 @@ data_february %>%
 #-----------
 #Total
 data_march %>%
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   nrow()
 
 #2018
 data_march %>% 
-  filter(total_N>=8) %>%
+  filter(total_N_vv>=8) %>%
   filter(year_data==2018) %>% 
   nrow()
 
 #2019
 data_march %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 
 #2020
 data_march %>% 
-  filter(total_N>=8) %>%
+  filter(total_N_vv>=8) %>%
   filter(year_data==2020) %>% 
   nrow()
 
 #2021
 data_march %>% 
-  filter(total_N>=8) %>%
+  filter(total_N_vv>=8) %>%
   filter(year_data==2021) %>% 
   nrow()
 
 #2022
 data_march %>% 
-  filter(total_N>=8) %>%
+  filter(total_N_vv>=8) %>%
   filter(year_data==2022) %>% 
   nrow()
 
@@ -1099,36 +1121,36 @@ data_march %>%
 #-----------
 #Total
 data_april %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   nrow()
 
 #2018
 data_april %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2018) %>% 
   nrow()
 
 #2019
 data_april %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 
 #2020
 data_april %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2020) %>% 
   nrow()
 
 #2021
 data_april %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2021) %>% 
   nrow()
 
 #2022
 data_april %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2022) %>% 
   nrow()
 
@@ -1137,30 +1159,30 @@ data_april %>%
 #-----------
 #Total
 data_may %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   nrow()
 
 #2018
 data_may %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2018) %>% 
   nrow()
 
 #2019
 data_may %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 
 #2020
 data_may %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2020) %>% 
   nrow()
 
 #2021
 data_may %>% 
-  filter(total_N>=8) %>%  
+  filter(total_N_vv>=8) %>%  
   filter(year_data==2021) %>% 
   nrow()
 
@@ -1169,30 +1191,30 @@ data_may %>%
 #-----------
 #Total
 data_june %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   nrow()
 
 #2018
 data_june %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2018) %>% 
   nrow()
 
 #2019
 data_june %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 
 #2020
 data_june %>% 
-  filter(total_N>=8) %>%  
+  filter(total_N_vv>=8) %>%  
   filter(year_data==2020) %>% 
   nrow()
 
 #2021
 data_june %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2021) %>% 
   nrow()
 
@@ -1201,30 +1223,30 @@ data_june %>%
 #-----------
 #Total
 data_july %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   nrow()
 
 #2018
 data_july %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2018) %>% 
   nrow()
 
 #2019
 data_july %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 
 #2020
 data_july %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2020) %>% 
   nrow()
 
 #2021
 data_july %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2021) %>% 
   nrow()
 
@@ -1233,27 +1255,27 @@ data_july %>%
 #-----------
 #Total
 data_august %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   nrow()
 
 #2018
 data_august %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2018) %>% 
   nrow()
 #2019
 data_august %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 #2020
 data_august %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2020) %>% 
   nrow()
 #2021
 data_august %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2021) %>% 
   nrow()
 
@@ -1262,30 +1284,30 @@ data_august %>%
 #-----------
 #Total
 data_september %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   nrow()
 
 #2018
 data_september %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2018) %>% 
   nrow()
 
 #2019
 data_september %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 
 #2020
 data_september %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2020) %>% 
   nrow()
 
 #2021
 data_september %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2021) %>% 
   nrow()
 
@@ -1294,30 +1316,30 @@ data_september %>%
 #-----------
 #Total
 data_october %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   nrow()
 
 #2018
 data_october %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2018) %>% 
   nrow()
 
 #2019
 data_october %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 
 #2020
 data_october %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2020) %>% 
   nrow()
 
 #2021
 data_october %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2021) %>% 
   nrow()
 
@@ -1326,30 +1348,30 @@ data_october %>%
 #-----------
 #Total
 data_november %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   nrow()
 
 #2018
 data_november %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2018) %>% 
   nrow()
 
 #2019
 data_november %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 
 #2020
 data_november %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2020) %>% 
   nrow()
 
 #2021
 data_november %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2021) %>% 
   nrow()
 
@@ -1358,30 +1380,30 @@ data_november %>%
 #-----------
 #Total
 data_december %>% 
-  filter(total_N>=8) %>%  
+  filter(total_N_vv>=8) %>%  
   nrow()
 
 #2018
 data_december %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2018) %>% 
   nrow()
 
 #2019
 data_december %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2019) %>% 
   nrow()
 
 #2020
 data_december %>% 
-  filter(total_N>=8) %>% 
+  filter(total_N_vv>=8) %>% 
   filter(year_data==2020) %>% 
   nrow()
 
 #2021
 data_december %>% 
-  filter(total_N>=8) %>%  
+  filter(total_N_vv>=8) %>%  
   filter(year_data==2021) %>% 
   nrow()
 
@@ -1396,3 +1418,122 @@ rain_counter <- data_legal %>%
 rain_counter2 <- data_legal %>% 
   group_by(months) %>% 
   summarise(total_rain=sum(rainfall_mm))
+
+
+
+
+
+
+
+#--------
+#New section
+#-------
+
+data_lega_daily_basis <- data_legal %>% 
+  mutate(load_ammonium=ammonium_effluent_mg_L*flow_effluent_m3_h*10^3) %>% 
+  mutate(load_total_N=total_N*flow_effluent_m3_h*10^3) %>% 
+  group_by(day_data) %>% 
+  summarise(mean_load_ammonium=mean(load_ammonium, 
+                                    na.rm=T),
+            mean_load_total_N=mean(load_total_N,
+                                   na.rm=T))
+
+
+#Adding the drought data to the data frame
+data_lega_daily_basis <- data_lega_daily_basis %>% 
+  mutate(year_data=year(day_data)) %>%
+  left_join(yearly_average) %>% 
+  left_join(daily_average) %>% 
+  mutate(daily_ammonium=mean_load_ammonium/(flow_day*10^3)) %>% 
+  mutate(daily_total_N=mean_load_total_N/(flow_day*10^3)) %>% 
+  mutate(daily_total_N_vv=daily_total_N*flow_day/flow_year)
+
+
+
+#Creating different data frams based on the year
+data_2018 <- data_lega_daily_basis %>% 
+  filter(year_data==2018)
+data_2019 <- data_lega_daily_basis %>% 
+  filter(year_data==2019)
+data_2020 <- data_lega_daily_basis %>% 
+  filter(year_data==2020)
+data_2021 <- data_lega_daily_basis %>% 
+  filter(year_data==2021)
+data_2022 <- data_lega_daily_basis %>% 
+  filter(year_data==2022)
+
+
+
+counter_2018_am_2 <- data_2018 %>% 
+  select(daily_ammonium) %>% 
+  filter(daily_ammonium>=2)
+
+counter_2018_am_8 <- data_2018 %>% 
+  select(daily_ammonium) %>% 
+  filter(daily_ammonium>=8)
+
+counter_2018_TN_8 <- data_2018 %>% 
+  select(daily_total_N_vv) %>% 
+  filter(daily_total_N_vv>=8)
+
+
+
+
+counter_2019_am_2 <- data_2019 %>% 
+  select(daily_ammonium) %>% 
+  filter(daily_ammonium>=2)
+
+counter_2019_am_8 <- data_2019 %>% 
+  select(daily_ammonium) %>% 
+  filter(daily_ammonium>=8)
+
+counter_2019_TN_8 <- data_2019 %>% 
+  select(daily_total_N_vv) %>% 
+  filter(daily_total_N_vv>=8)
+
+
+
+
+
+counter_2020_am_2 <- data_2020 %>% 
+  select(daily_ammonium) %>% 
+  filter(daily_ammonium>=2)
+
+counter_2020_am_8 <- data_2020 %>% 
+  select(daily_ammonium) %>% 
+  filter(daily_ammonium>=8)
+
+counter_2020_TN_8 <- data_2020 %>% 
+  select(daily_total_N_vv) %>% 
+  filter(daily_total_N_vv>=8)
+
+
+
+
+counter_2021_am_2 <- data_2021 %>% 
+  select(daily_ammonium) %>% 
+  filter(daily_ammonium>=2)
+
+counter_2021_am_8 <- data_2021 %>% 
+  select(daily_ammonium) %>% 
+  filter(daily_ammonium>=8)
+
+counter_2021_TN_8 <- data_2021 %>% 
+  select(daily_total_N_vv) %>% 
+  filter(daily_total_N_vv>=8)
+
+
+
+
+
+counter_2022_am_2 <- data_2022 %>% 
+  select(daily_ammonium) %>% 
+  filter(daily_ammonium>=2)
+
+counter_2022_am_8 <- data_2022 %>% 
+  select(daily_ammonium) %>% 
+  filter(daily_ammonium>=8)
+
+counter_2022_TN_8 <- data_2022 %>% 
+  select(daily_total_N_vv) %>% 
+  filter(daily_total_N_vv>=8)

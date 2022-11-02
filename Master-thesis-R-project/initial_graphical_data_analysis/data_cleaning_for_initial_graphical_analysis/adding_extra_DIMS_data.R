@@ -10,8 +10,7 @@ setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-p
 #The extra ammonium in the effluent data
 #-------------------------------------------------------------------------------
 #Load the data from the csv file with every value as a character 
-temp_ammonium_effluent <- read_delim(here::here("data",
-                                                "extra_data_ammonium_effluent.csv"), 
+temp_ammonium_effluent <- read_delim("data/extra_data_ammonium_effluent.csv", 
                                delim=";",
                                col_types = cols(.default = "c"))
 
@@ -55,11 +54,14 @@ temp_ammonium_effluent_30min <- temp_ammonium_effluent %>%
   distinct(time_thirty_min, .keep_all = T)
 
 
+
+#choosing the the working directory to be here
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/initial_graphical_data_analysis/data_cleaning_for_initial_graphical_analysis")
+
 #The extra nitrate in the effluent data
 #-------------------------------------------------------------------------------
 #Load the data from the csv file with every value as a character 
-temp_nitrate_effluent <- read_delim(here::here("data",
-                                               "extra_data_nitrate_effluent.csv"), 
+temp_nitrate_effluent <- read_delim("data/extra_data_nitrate_effluent.csv", 
                                delim=";",
                                col_types = cols(.default = "c"))
 

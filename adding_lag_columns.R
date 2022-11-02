@@ -1658,5 +1658,6 @@ data_thirty_min <- data_thirty_min %>%
   mutate(temperature_PT4_lag45=lag(T_PT4_C,45))%>% 
   mutate(temperature_PT4_lag46=lag(T_PT4_C,46))%>% 
   mutate(temperature_PT4_lag47=lag(T_PT4_C,47))%>% 
-  mutate(temperature_PT4_lag48=lag(T_PT4_C,48))%>%
-  na.omit() 
+  mutate(temperature_PT4_lag48=lag(T_PT4_C,48))
+#%>%
+ # na.omit() 

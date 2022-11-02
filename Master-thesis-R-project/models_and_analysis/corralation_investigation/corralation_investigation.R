@@ -51,3 +51,6 @@ ammonium_load_AN_tank_AN <- ct3 %>%
 as.data.frame()
 
 
+effluent <- ct3 %>%
+  select(Names, ammonium_effluent_mg_L,total_N_effluent_mg_L)
+as.data.frame()

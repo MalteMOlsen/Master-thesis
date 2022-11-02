@@ -136,27 +136,277 @@ rain_ammonium_concentration("2019-04-20"~"2019-04-30",
                    "2019-08-03"~"2019-08-13")
 
 
-#
+#-------------------------------------------------------------------------------
+#Claim three: Ammonium load yields responses in the effluent concentration of N
+#-------------------------------------------------------------------------------
+
+load_response <- function(time_interval){
+  p1 <- data_thirty_min %>% 
+    mutate(total_N_effluent=ammonium_effluent_mg_L+nitrate_effluent_mg_L) %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=ammonium_effluent_mg_L),
+              color="Red")+
+    geom_line(aes(y=total_N_effluent),
+              color="Blue")+
+    ylab("Ammnonium/total N concentration in the effluent [mg/L]")+
+    xlab("Days")+
+    theme_malte()
+  
+  p2 <- data_thirty_min %>% 
+    mutate(ammonium_load_AN_tank=ammonium_AN_mg_L*flow_AN_m3_h*10^-3) %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=ammonium_load_AN_tank))+
+    ylab("Ammnonium load to the AN tank [kg/d]")+
+    xlab("Days")+
+    theme_malte()
+  
+  gridExtra::grid.arrange(p1,p2)
+}
+
+load_response("2019-02")
+load_response("2020-07")
+load_response("2021-11")
+load_response("2021-04")
+load_response("2022-01")
 
 
 
 
 
 
+#-------------------------------------------------------------------------------
+#Claim four: Magnitude of load peak to magnitude to the effluent concentration
+#-------------------------------------------------------------------------------
+
+rain_magnitude <- function(time_interval){
+  p1 <- data_thirty_min %>% 
+    mutate(total_N_effluent=ammonium_effluent_mg_L+nitrate_effluent_mg_L) %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=ammonium_effluent_mg_L),
+              color="Red")+
+    geom_line(aes(y=total_N_effluent),
+              color="Blue")+
+    ylab("Ammnonium/total N concentration in the effluent [mg/L]")+
+    xlab("Days")+
+    theme_malte()
+  
+  p2 <- data_thirty_min %>% 
+    mutate(ammonium_load_AN_tank=ammonium_AN_mg_L*flow_AN_m3_h*10^-3) %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=ammonium_load_AN_tank))+
+    ylab("Ammnonium load to the AN tank [kg/d]")+
+    xlab("Days")+
+    theme_malte()
+  
+  gridExtra::grid.arrange(p1,p2)
+}
+
+rain_magnitude("2022-02")
+rain_magnitude("2022-04")
+
+
+
+#-------------------------------------------------------------------------------
+#Claim six(or five): Aeration response to load increase
+#-------------------------------------------------------------------------------
+load_and_aeration <- function(time_interval){
+  p1 <- data_thirty_min %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=ammonium_load_PT4_kg_h))+
+    geom_line(aes(y=airflow_PT4_m3_h*1/40),
+              color="Red")+ 
+    #Create an second axis to the flow and scale it properly
+    scale_y_continuous(
+      name = "Ammonium load [kg/h]",
+      sec.axis = sec_axis(~.*40, name="Aeration [Nm3/h]"))+
+    theme_malte()
+  
+  p2 <- data_thirty_min %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=ammonium_load_PT3_kg_h))+
+    geom_line(aes(y=airflow_PT3_m3_h*1/40),
+              color="Red")+ 
+    #Create an second axis to the flow and scale it properly
+    scale_y_continuous(
+      name = "Ammonium load [kg/h]",
+      sec.axis = sec_axis(~.*40, name="Aeration [Nm3/h]"))+
+    theme_malte()
+  
+  p3 <- data_thirty_min %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=ammonium_load_PT2_kg_h))+
+    geom_line(aes(y=airflow_PT2_m3_h*1/40),
+              color="Red")+ 
+    #Create an second axis to the flow and scale it properly
+    scale_y_continuous(
+      name = "Ammonium load [kg/h]",
+      sec.axis = sec_axis(~.*40, name="Aeration [Nm3/h]"))+
+    theme_malte()
+  
+  p4 <- data_thirty_min %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=ammonium_load_PT1_kg_h))+
+    geom_line(aes(y=airflow_PT1_m3_h*1/40),
+              color="Red")+ 
+    #Create an second axis to the flow and scale it properly
+    scale_y_continuous(
+      name = "Ammonium load [kg/h]",
+      sec.axis = sec_axis(~.*40, name="Aeration [Nm3/h]"))+
+    theme_malte()
+  
+  
+  gridExtra::grid.arrange(p1,p2,p3,p4)
+}
+
+
+load_and_aeration("2021-08-06"~"2021-08-20")
+load_and_aeration("2021-02-06"~"2021-02-20")
+load_and_aeration("2021-04-01"~"2021-04-18")
 
 
 
 
 
 
+#-------------------------------------------------------------------------------
+#Claim nine: temperature decrease at rain events
+#-------------------------------------------------------------------------------
+rain_temperature <- function(time_interval){
+  p1 <- data_thirty_min %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=rainfall_mm))+
+    ylab("The rain precipitation [mm]")+
+    xlab("Days")+
+    theme_malte()
+  
+  p2 <- data_thirty_min %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=T_PT4_C))+
+    ylab("The temperature in process tank 4 [C]")+
+    xlab("Days")+
+    theme_malte()
+  
+  gridExtra::grid.arrange(p2,p1)
+}
+
+
+rain_temperature("2020-01-09"~"2020-01-11")
 
 
 
+#-------------------------------------------------------------------------------
+#Claim eight: temperature decrease at rain events
+#-------------------------------------------------------------------------------
+sensor_drift <- function(time_interval){
+ data_thirty_min %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=ammonium_effluent_mg_L))+
+    ylab("Ammnonium concentration in the effluent [mg/L]")+
+    xlab("Days")+
+    theme_malte()
+  
+
+}
+
+sensor_drift("2019-06-08"~"2019-07-02")
+
+#-------------------------------------------------------------------------------
+#Claim ten(or eight): sensor malfunction
+#-------------------------------------------------------------------------------
+SS_concentration <- function(time_interval){
+  p1 <- data_thirty_min %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=rainfall_mm))+
+    ylab("The rain precipitation [mm]")+
+    xlab("Days")+
+    theme_malte()
+  
+  p2 <- data_thirty_min %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=SS_PT4_g_L))+
+    ylab("The suspended solids in process tank 4 [g/L]")+
+    xlab("Days")+
+    theme_malte()
+  
+  p3 <- data_thirty_min %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y=SS_PT1_g_L))+
+    ylab("The suspended solids in process tank 1 [g/L]")+
+    xlab("Days")+
+    theme_malte()
+  
+  gridExtra::grid.arrange(p2,p3,p1)
+  
+}
+
+SS_concentration("2019-10")
+SS_concentration("2021-02")
+SS_concentration("2021-03")
+SS_concentration("2020-03")
+
+#-------------------------------------------------------------------------------
+#Claim twelve(or ten): sensor malfunction
+#-------------------------------------------------------------------------------
+sensor_malfunction <- function(df,
+                               column,
+                               time_interval,
+                               ylabel){
+  df %>% 
+    filter_index(time_interval) %>% 
+    ggplot(aes(x=time_thirty_min))+
+    geom_line(aes(y={{column}}))+
+    ylab(ylabel)+
+    xlab("Days")+
+    theme_malte()
+  
+}
+
+data_thirty_min %>% 
+  sensor_malfunction(ammonium_to_AN_mg_L,
+                     "2019-02"~"2019-04",
+                     "Ammnonium concentration in the AN tank [mg/L]")
+
+
+data_thirty_min %>% 
+  sensor_malfunction(ammonium_effluent_mg_L,
+                     "2021-07"~"2021-07",
+                     "Ammnonium concentration in the effluent [mg/L]")
+
+
+data_thirty_min %>% 
+  sensor_malfunction(ammonium_effluent_mg_L,
+                     "2019-01"~"2019-01",
+                     "Ammnonium concentration in the effluent [mg/L]")
+
+
+data_thirty_min %>% 
+  sensor_malfunction(nitrate_effluent_mg_L,
+                     "2019-06"~"2019-06",
+                     "Nitrate concentration in the effluent [mg/L]")
+
+
+data_thirty_min %>% 
+  sensor_malfunction(ammonium_to_AN_mg_L,
+                     "2019-06"~"2019-07",
+                     "Ammnonium concentration in the AN tank [mg/L]")
 
 
 
-
-
+#"Ammnonium concentration in the effluent [mg/L]"
 #Define the year, month and days/timeperiods
 year="2022"
 month="2022-02"
