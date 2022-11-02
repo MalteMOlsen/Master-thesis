@@ -44,3 +44,5 @@ vignettes/*.pdf
 *.docx
 *.xlsx
 *.rds
+
+.venv/
