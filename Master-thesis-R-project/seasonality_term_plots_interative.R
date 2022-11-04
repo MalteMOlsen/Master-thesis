@@ -85,13 +85,13 @@ temp <- FT_function%>%
   as_tsibble()
     
 
-# temp %>% 
-#   gg_season(.fitted, "day")+
-#   theme_malte()
+temp %>%
+  gg_season(.fitted, "day")+
+  theme_malte()
 
-# temp %>% 
-#   gg_season(.fitted, "week")+
-#   theme_malte()
+temp %>%
+  gg_season(.fitted, "week")+
+  theme_malte()
 temp %>%
   fill_gaps() %>% 
   gg_season(.fitted, "year")+
@@ -100,13 +100,13 @@ temp %>%
 
 
 
-# training_data %>%  
-#   fill_gaps() %>% 
-#   gg_season(ammonium_load_AN_kg_h, "day")+
-#   labs(x="Hours [h]",
-#        y='Ammonium load to the AN tank [kg/h]')+
-#   ylim(0,100)+
-#   theme_malte()
+training_data %>%
+  fill_gaps() %>%
+  gg_season(ammonium_load_AN_kg_h, "day")+
+  labs(x="Hours [h]",
+       y='Ammonium load to the AN tank [kg/h]')+
+  ylim(0,100)+
+  theme_malte()
 
 training_data %>%  
   fill_gaps() %>% 
