@@ -25,71 +25,76 @@ df_training = pd.read_csv(data_dir_path / "training_data_for_influent.csv",
 df_valid = pd.read_csv(data_dir_path / "validation_data_for_influent.csv",
     parse_dates=['time_thirty_min'])
 
+interation_step = 10 
+step = 1
 
+
+#Set target for the training and validation set
+target_training = df_training.loc[:, ["ammonium_load_AN_kg_h"]]
+target_training = target_training.loc[step:]
+target_valid = df_valid.loc[:, ["ammonium_load_AN_kg_h"]]
+
+
+
+#Define the column containing the last data we know
+df_training.loc[:,"rainfall_mm"+"_lag_"+str(step)] = df_training["rainfall_mm"].shift(step)
+
+
+extra_valid_data = df_training[-step:] 
+
+df_valid= pd.concat([extra_valid_data, 
+                        df_valid])
+
+df_valid.loc[:,"rainfall_mm"+"_lag_"+str(step)] = df_valid["rainfall_mm"].shift(step)
+
+df_valid = df_valid.dropna()
 
 #Removing columns that are not desired in the modelling
-df_training = df_training.loc[:, ["rainfall_mm"]]
+X_training = df_training.loc[:, ["rainfall_mm"+"_lag_"+str(step)]]
 #Load validation data
-df_valid = df_valid.loc[:, ["rainfall_mm"]]
+X_valid = df_valid.loc[:, ["rainfall_mm"+"_lag_"+str(step)]]
+
+
+extra_X_valid_data_constant = X_training
 
 
 #//////////////////////////////////////////////////////////////////////////////////////////////
 #Model experiment name
 #//////////////////////////////////////////////////////////////////////////////////////////////
 
-#Set target and predictors for the training set
-target_training = df_training.loc[:, ["ammonium_load_AN_kg_h"]]
-
-
-
 # Defining the evaluation metrics table and model number counter 
 performance = {}
 model_n = 1
 
-#Set model experiment broaders
-broaders = range(1,480,1)
+#Set model experiment broaders 
+broaders = range(step,1000,interation_step)
 
 
-
-#//////////////////////////////////////////////////////////////////////////////////////////////
-"""
-Chose the desired modelling investigation:
-    Investigating the accumulated columns:
-        df_training['cum_sum'] = df_training["ammonium_load_AN_kg_h"].rolling(window=accumulator).sum()
-        df_valid['cum_sum'] = df_valid["ammonium_load_AN_kg_h"].rolling(window=accumulator).sum()
-        
-    Investigating the lagged columns:
-        df_training.loc[:,"ammonium_load_AN_kg_h"+"_"+str(lags)] = df_training["ammonium_load_AN_kg_h"].shift(lags)
-        df_valid.loc[:,"ammonium_load_AN_kg_h"+"_"+str(lags)] = df_valid["ammonium_load_AN_kg_h"].shift(lags)
-""" 
-#//////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-for lags in broaders:
+for accumulator in broaders:
         #Print modelling progress
-        print(f"AR terms: {lags}")
+        print(f"AC terms: {accumulator}")
+        
+        target_training = target_training.loc[accumulator:]
+        
+ 
+        extra_valid_data = extra_X_valid_data_constant[-accumulator:]
+        
+        X_valid= pd.concat([extra_valid_data, 
+                             X_valid])
+        
         
         #Lagging or accumulating the chosen column
-        df_training.loc[:,"rainfall_mm"+"_"+str(lags)] = df_training["rainfall_mm"].shift(lags)
-        df_valid.loc[:,"rainfall_mm"+"_"+str(lags)] = df_valid["rainfall_mm"].shift(lags)
+        X_training.loc[:,"rainfall_mm"+"_lag_"+str(step)+"_AC_"+str(accumulator)] = X_training["rainfall_mm"+"_lag_"+str(step)].rolling(window=accumulator).sum()
+        X_valid.loc[:,"rainfall_mm"+"_lag_"+str(step)+"_AC_"+str(accumulator)] = X_valid["rainfall_mm"+"_lag_"+str(step)].rolling(window=accumulator).sum()
         #!!PUT THE CHOSEN INVESTIGATION METHOD HERE!!
         
+        
         #Removing NA created in the lagging or accumlation
-        evaluation_data_training = df_training.dropna()
-        evaluation_data_valid = df_valid.dropna()
+        predictors_training = X_training.dropna()
         
-        
-        #Redefining the target to obtain same length as predictors, after NA is removed
-        target_training = evaluation_data_training.loc[:, ["ammonium_load_AN_kg_h"]]
-        #Redefining the predictors, as new columns has been created and some row with NA has been removed
-        predictors_training = evaluation_data_training.drop(["ammonium_load_AN_kg_h"], axis=1)
-        
-        #Redefining the target to obtain same length as predictors, after NA is removed
-        target_valid = evaluation_data_valid.loc[:, ["ammonium_load_AN_kg_h"]]
-        #Redefining the predictors, as new columns has been created and some row with NA has been removed
-        predictors_valid = evaluation_data_valid.drop(["ammonium_load_AN_kg_h"], axis=1)
-       
+        predictors_valid = X_valid.dropna()
+        predictors_valid = predictors_valid.sort_index()
+        predictors_valid = predictors_valid[0:4318]
         
         
         #Defining and fitting the linear regression
@@ -135,7 +140,7 @@ for lags in broaders:
         
         
         #Saving the metrics in a preformance table
-        performance[model_n] = {"Model terms:"             : lags, 
+        performance[model_n] = {"Model_terms"              : accumulator, 
                                 "r2_training_set"          : r2_training_set,
                                 "rmse_training_set"        : rmse_training_set,
                                 "mae_training_set"         : mae_training_set,
@@ -152,14 +157,12 @@ for lags in broaders:
 
         model_n += 1 
         print(mae_training_set)
-        
+    
         
         
 #Save evaluation metrics as csv
 preformace_table = pd.DataFrame.from_dict(performance).T      
-preformace_table.to_csv("AC_0_to_480_accumulated_ammonium_load.csv")
-
-
+preformace_table.to_csv(str(step)+"_step_forecast_AC_0_to_1000_accumulated_rainfall_iteration_step_"+str(interation_step)+".csv")
 
 
 
