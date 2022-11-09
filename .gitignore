@@ -46,3 +46,4 @@ vignettes/*.pdf
 *.rds
 
 .venv/
+Master-thesis-R-project/data_for_XGB.zip
