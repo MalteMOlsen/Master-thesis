@@ -14,134 +14,118 @@ training_data <- model_data %>%
 
 
 
+training_data %>%
+  gg_season(ammonium_load_AN_kg_h, "day")+
+  theme_malte()
 
-plotting_FT_function(day_term, week_term, year_term){
+
+training_data %>%
+  gg_season(ammonium_load_AN_kg_h, "week")+
+  theme_malte()
+
+training_data %>%
+  gg_season(ammonium_load_AN_kg_h, "year")+
+  theme_malte()
+
+training_data %>%
+  gg_season(ammonium_load_AN_kg_h, "year")+
+  ylim(0,100)+
+  theme_malte()
+
+#Train Fourier models daily
+
+FT_function <- training_data %>%
+  model(
+    model_1 = TSLM(ammonium_load_AN_kg_h ~ fourier(period = "day", K = 2))
+  ) %>% 
+  augment() %>% 
+  select(time_thirty_min,.fitted) %>% 
+  as_tsibble() %>% 
+  fill_gaps()
+
+plot_data <- training_data %>% 
+  select(ammonium_load_AN_kg_h) %>% 
+  left_join(FT_function)
+
+plot_data %>%
+  gg_season(ammonium_load_AN_kg_h, "day")+
+  geom_line(aes(y=.fitted),color="Black")+
+  theme_malte()+
+  labs(x="Hours [h]",
+       y='Ammonium load in the AN tank [kg/h]')+
+  ylim(0,150)
   
-  FT_function <- training_data %>% 
-    model(
-      model_1 = TSLM(ammonium_load_AN_kg_h ~ fourier(period = "day", K = day_term) +
-                    fourier(period = "week", K = week_term) +
-                    fourier(period = "year", K = year_term)),
-    
-      model_1X2 = TSLM(ammonium_load_AN_kg_h ~ fourier(period = "day", K = 2*day_term) +
-                     fourier(period = "week", K = 2*week_term) +
-                     fourier(period = "year", K = 2*year_term)),
-    
-      model_1X3 = TSLM(ammonium_load_AN_kg_h ~ fourier(period = "day", K = 3*day_term) +
-                     fourier(period = "week", K = 3*week_term) +
-                     fourier(period = "year", K = 3*year_term))
-    
-              )
-    
-    p1 <- training_data %>%  
-      fill_gaps() %>% 
-      gg_season(ammonium_load_AN_kg_h, "day")+
-      labs(x="Hours [h]",
-           y='Ammonium load to the AN tank [kg/h]')+
-      geom_line(data = fitted(FT_function),
-                aes(y = .fitted, colour = .model))+
-      theme_malte()
-    
-    
-    p2 <- training_data %>%  
-      fill_gaps() %>% 
-      gg_season(ammonium_load_AN_kg_h, "week")+
-      labs(x="Days [d]",
-           y='Ammonium load to the AN tank [kg/h]')+
-      geom_line(data = fitted(FT_function),
-                aes(y = .fitted, colour = .model))+
-      theme_malte()
-    
-    
-    p3 <- training_data %>%  
-      fill_gaps() %>% 
-      gg_season(ammonium_load_AN_kg_h, "year")+
-      labs(x="Months",
-           y='Ammonium load to the AN tank [kg/h]')+
-      geom_line(data = fitted(FT_function),
-                aes(y = .fitted, colour = .model))+
-      theme_malte()
-    
-    gridExtra::grid.arrange(p1,p2,p3)
-  
-}
-
-plotting_FT_function(2,2,2)
-
 
 
 
 FT_function <- training_data %>%
-  filter(ammonium_load_AN_kg_h<100) %>% 
   model(
-    model_1 = TSLM(ammonium_load_AN_kg_h ~ fourier(period = "day", K = 6) +
-                     fourier(period = "week", K = 40) +
-                     fourier(period = "year", K = 6))
-   ) 
-
-temp <- FT_function%>% 
+    model_1 = TSLM(ammonium_load_AN_kg_h ~ fourier(period = "day", K = 6))
+  ) %>% 
   augment() %>% 
   select(time_thirty_min,.fitted) %>% 
-  as_tsibble()
-    
+  as_tsibble() %>% 
+  fill_gaps()
 
-temp %>%
-  gg_season(.fitted, "day")+
-  theme_malte()
+plot_data <- training_data %>% 
+  select(ammonium_load_AN_kg_h) %>% 
+  left_join(FT_function)
 
-temp %>%
-  gg_season(.fitted, "week")+
-  theme_malte()
-temp %>%
-  fill_gaps() %>% 
-  gg_season(.fitted, "year")+
-  ylim(0,60)+
-  theme_malte()
-
-
-
-training_data %>%
-  fill_gaps() %>%
-  gg_season(ammonium_load_AN_kg_h, "day")+
-  labs(x="Hours [h]",
-       y='Ammonium load to the AN tank [kg/h]')+
-  ylim(0,100)+
-  theme_malte()
-
-training_data %>%  
-  fill_gaps() %>% 
+plot_data %>%
   gg_season(ammonium_load_AN_kg_h, "week")+
+  geom_line(aes(y=.fitted),color="Black")+
+  theme_malte()+
   labs(x="Days [d]",
-       y='Ammonium load to the AN tank [kg/h]')+
-  theme_malte()
-
-
-training_data %>%  
-  fill_gaps() %>% 
-  gg_season(ammonium_load_AN_kg_h, "year")+
-  labs(x="Months",
-       y='Ammonium load to the AN tank [kg/h]')+
-  ylim(0,60)+
-  theme_malte()
+       y='Ammonium load in the AN tank [kg/h]')+
+  ylim(0,150)
 
 
 
-FT_without_yearly <- training_data %>% 
-  model(TSLM(ammonium_load_AN_kg_h ~ fourier(period = "day", K = 6) +
-               fourier(period = "week", K = 30)))%>% 
+#Making new training data frame and saving it as CSV
+Fourier_model_training_data <- training_data %>%
+  model(
+    TSLM(ammonium_load_AN_kg_h ~ fourier(period = "day", K = 6)+
+           fourier(period = "week", K = 30))
+  ) %>% 
   augment() %>% 
-  select(time_thirty_min,.fitted) %>% 
-  as_tsibble()
+  select(-.model,-.innov)%>% 
+  filter_index("2018-01-26"~"2021") %>% 
+  mutate(ammonium_load_AN_kg_h=na.approx(ammonium_load_AN_kg_h)) %>% 
+  mutate(.fitted=na.approx(.fitted)) %>% 
+  mutate(.resid=na.approx(.resid)) %>% 
+  rename("fitted"=.fitted) %>% 
+  rename("resid"=.resid)
 
-temp <- model_data %>% 
-  left_join(FT_with_yearly) %>% 
-  mutate(test=ammonium_load_AN_kg_h-.fitted)
+#Save as csv
+#Set working directory
+setwd("C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Master-thesis-R-project/data_for_XGB/Influent_modelling")
 
-temp %>% 
-  filter_index("2021-01"~"2021-06") %>% 
-  ggplot(aes(x=time_thirty_min))+
-  geom_line(aes(y=test))+
-  geom_line(aes(y=ammonium_load_AN_kg_h), 
-            color="Blue")#+
-# geom_line(aes(y=.fitted),
-#           color="Red")
+#Save the data as a csv file
+write_csv(Fourier_model_training_data, 
+          "seasonallity_adjusted_training_data_for_influent.csv")
+
+
+#making the predicted seasonality for the valid data set
+
+valid_data <- model_data %>% 
+  filter_index("2022-01"~"2022-03")
+
+
+Fourier_model_training_data <- training_data %>%
+  model(
+    TSLM(ammonium_load_AN_kg_h ~ fourier(period = "day", K = 6)+
+           fourier(period = "week", K = 30))) 
+
+fc_Fourier_model_valid_data <- forecast(Fourier_model_training_data,
+                                        h=nrow(valid_data)) 
+
+fc_Fourier_model_valid_data <- fc_Fourier_model_valid_data %>% 
+  as_tsibble(index = time_thirty_min) %>% 
+  select(-.model) %>% 
+  select(-ammonium_load_AN_kg_h) %>% 
+  rename("predicted"=.mean)
+
+
+#Save the data as a csv file
+write_csv(fc_Fourier_model_valid_data, 
+          "seasonallity_prediction_for_validation_data_for_influent.csv")

@@ -169,3 +169,5 @@ for j in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,2
 
 
 
+X_training.loc[:,"ammonium_load_AN_kg_h_lag_"+str(step)+"_AC_"+str(1)] = X_training["ammonium_load_AN_kg_h_lag_"+str(step)].rolling(window=2).sum()
+                   

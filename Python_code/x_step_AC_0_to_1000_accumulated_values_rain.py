@@ -12,9 +12,9 @@ from sklearn.metrics import _regression
 5. Select to investigate lagging or accumulation.
 6. Replace the desired investigation function in the for loop. 
 """ 
-#
-for j in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48]:
-    for i in [5,10]:
+#1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48
+for j in [48]:
+    for i in [1]:
             #Load data
             #////////////////
             #Load training data
@@ -30,7 +30,7 @@ for j in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,2
             iteration_step = i 
             step = j
             iteration_length = 1000
-            
+            #print(step)
             #Set target for the training and validation set
             target_training = df_training.loc[:, ["ammonium_load_AN_kg_h"]]
             target_training = target_training.loc[step:]
@@ -75,7 +75,7 @@ for j in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,2
             for accumulator in broaders:
                     #Print modelling progress
                     print(f"AC terms: {accumulator}")
-                    
+                    print(f"Step: {step}, accumulor: {accumulator}")
                     target_training = target_training.loc[accumulator+step-1:]
                     
             
@@ -158,14 +158,13 @@ for j in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,2
                                             "forecasting_step_"+str(j)+"max_ae_validation_set"+"iteration_step_"+str(i)         : max_ae_valid_set}
 
                     model_n += 1 
-                    print(mae_training_set)
+                    #print(mae_training_set)
                 
                     
                     
             #Save evaluation metrics as csv
             preformace_table = pd.DataFrame.from_dict(performance).T      
             preformace_table.to_csv(str(step)+"_step_forecast_AC_0_to_"+str(iteration_length)+"_accumulated_rain_iteration_step_"+str(iteration_step)+".csv")
-
 
 
 

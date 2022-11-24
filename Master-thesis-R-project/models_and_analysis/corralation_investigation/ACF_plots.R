@@ -40,3 +40,15 @@ model_data %>%
   theme_malte()+
   ylab("Correlation - ammonium concentration in the AN tank")+
   xlab("Lagged time steps (step size = 30min)")
+
+
+
+
+
+
+
+
+
+
+
+

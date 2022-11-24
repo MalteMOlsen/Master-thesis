@@ -43,9 +43,6 @@ for(file in list_of_filenames){
   #printing the counter to follow the progress of the code
   print(i)
 }
-fourier_beer <- recent_production %>%
-  model(TSLM(Beer ~ trend() + fourier(K=2)))
-report(fourier_beer)
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
