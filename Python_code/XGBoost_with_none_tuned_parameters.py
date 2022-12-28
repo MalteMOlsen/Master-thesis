@@ -12,7 +12,8 @@ from sklearn.metrics import _regression
 5. Select to investigate lagging or accumulation.
 6. Replace the desired investigation function in the for loop. 
 """
-for j in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48]:
+#,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48
+for j in [1]:
         #Load data
         #////////////////
         #Load training data
@@ -51,45 +52,38 @@ for j in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,2
         """
         #//////////////////////////////////////////////////////////////////////////////////////////////
 
+        extra_valid_data = df_training[-1000:]
+                
+        df_valid= pd.concat([extra_valid_data, 
+                             df_valid])
 
 
         for lags in AR_broaders:
                 #Print modelling progress
-                print(f"AR terms: {lags}")
+                #print(f"AR terms: {lags}")
                 
-                extra_valid_data = df_training[-lags:]
-                
-                df_valid= pd.concat([extra_valid_data, 
-                                    df_valid])
-                
+               
                 #Lagging or accumulating the chosen column
-                df_training.loc[:,"ammonium_load_AN_kg_h"+"_"+str(lags)] = df_training["ammonium_load_AN_kg_h"].shift(lags)
-                df_valid.loc[:,"ammonium_load_AN_kg_h"+"_"+str(lags)] = df_valid["ammonium_load_AN_kg_h"].shift(lags)
+                df_training.loc[:,"ammonium_load_AN_kg_h"+"_lag_"+str(lags)] = df_training["ammonium_load_AN_kg_h"].shift(lags)
+                df_valid.loc[:,"ammonium_load_AN_kg_h"+"_lag_"+str(lags)] = df_valid["ammonium_load_AN_kg_h"].shift(lags)
                 
-                df_training.loc[:,"rainfall_mm"+"_"+str(lags)] = df_training["rainfall_mm"].shift(lags)
-                df_valid.loc[:,"rainfall_mm"+"_"+str(lags)] = df_valid["rainfall_mm"].shift(lags)
+                df_training.loc[:,"rainfall_mm"+"_lag_"+str(lags)] = df_training["rainfall_mm"].shift(lags)
+                df_valid.loc[:,"rainfall_mm"+"_lag_"+str(lags)] = df_valid["rainfall_mm"].shift(lags)
                 
-                df_valid = df_valid.dropna()
-            
+        print("done")
                 
         for accumulator in AC_broaders:
                 #Print modelling progress
                 print(f"AR terms: {accumulator}")
-                
-                extra_valid_data = df_training[-accumulator:]
-                
-                df_valid= pd.concat([extra_valid_data, 
-                                    df_valid])
-                
+                               
                 
                 df_training.loc[:,"rainfall_mm_lag_"+str(step)+"_AC_"+str(accumulator)] = df_training["rainfall_mm_lag_"+str(step)].rolling(window=accumulator).sum()
                 df_valid.loc[:,"rainfall_mm_lag_"+str(step)+"_AC_"+str(accumulator)] = df_valid["rainfall_mm_lag_"+str(step)].rolling(window=accumulator).sum()
                 
-                df_training.loc[:,"ammonium_load_AN_kg_h"+str(step)+"_AC_"+str(accumulator)] = df_training["ammonium_load_AN_kg_h"+str(step)].rolling(window=accumulator).sum()
-                df_valid.loc[:,"ammonium_load_AN_kg_h"+str(step)+"_AC_"+str(accumulator)] = df_valid["ammonium_load_AN_kg_h"+str(step)].rolling(window=accumulator).sum()
+                df_training.loc[:,"ammonium_load_AN_kg_h_lag_"+str(step)+"_AC_"+str(accumulator)] = df_training["ammonium_load_AN_kg_h_lag_"+str(step)].rolling(window=accumulator).sum()
+                df_valid.loc[:,"ammonium_load_AN_kg_h_lag_"+str(step)+"_AC_"+str(accumulator)] = df_valid["ammonium_load_AN_kg_h_lag_"+str(step)].rolling(window=accumulator).sum()
 
-                
-                df_valid = df_valid.dropna()
+    
                 
                 
                 
@@ -108,12 +102,21 @@ for j in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,2
         target_valid = df_valid.loc[:, ["ammonium_load_AN_kg_h"]]
         #Redefining the predictors, as new columns has been created and some row with NA has been removed
         predictors_valid = df_valid.drop(["ammonium_load_AN_kg_h"], axis=1)
-                
+            
+        predictors_training = predictors_training.drop("time_thirty_min", axis=1)        
+        
+        predictors_valid = predictors_valid.sort_index()
+        predictors_valid = predictors_valid[0:4318]
+        predictors_valid = predictors_valid.drop("time_thirty_min",axis=1)
+        
+        
+        target_valid = target_valid.sort_index()
+        target_valid = target_valid[0:4318]
                 
                 
                 
         #Defining and fitting the linear regression
-        xgb = XGBRegressor()
+        xgb = XGBRegressor(n_estimators=1000)
         xgb.fit(predictors_training,
                     target_training) 
 
@@ -177,8 +180,14 @@ for j in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,2
                 
         #Save evaluation metrics as csv
         preformace_table = pd.DataFrame.from_dict(performance).T      
-        preformace_table.to_csv("none_tuned_XGB_1000_features_x4_weather_forecast_not_known_with_drought.csv")        
+        preformace_table.to_csv("none_tuned_XGB_auto_trees1000_1000_features_x4_weather_forecast_not_known_with_drought.csv")        
 
 
 
 
+from xgboost import plot_importance
+plot_importance(xgb,  max_num_features=30)
+
+
+from xgboost import plot_importance
+plot_importance(xgb,  max_num_features=10, importance_type="gain")

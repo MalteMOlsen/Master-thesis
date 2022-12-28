@@ -9,38 +9,22 @@ options(lubridate.fasttime = TRUE)
 
 #Load the data in a for loop
 parrent_folder="C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Python_code"
-folder_name = "accuracy_linear_models_lagged_ammonium_load"
+folder_name = "Integral_of_rain"
 
 #Making a list of all the csv file names that should be used
 list_of_filenames <- list.files(paste(parrent_folder,
                                       folder_name,
                                       sep = "/"))
- 
+
 
 #!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!
 #Check length need to be 288
 #!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!
 
-new_col_names <- c("feature_delay",
-                   "r2_training",
-                   "rmse_training",
-                   "mae_training",
-                   "mape_training",
-                   "median_ae_training",
-                   "max_ae_training",
-                   "r2_validation",
-                   "rmse_validation",
-                   "mae_validation",
-                   "mape_validation",
-                   "median_ae_validation",
-                   "max_ae_validation")
 
 wd <- paste(parrent_folder,folder_name,sep="/")
 
 drops1 <- c("...1")
-drops2 <- c("mape_validation",
-            "mape_training")
-
 accuracy_table <- data.frame()
 
 
@@ -49,10 +33,7 @@ for (file in list_of_filenames){
   df <- read_delim(paste(wd,file,sep = "/"))
   
   df <- df[ , !(names(df) %in% drops1)]
-  
-  colnames(df) <- new_col_names
-  
-  df <- df[ , !(names(df) %in% drops2)]
+
   
   forecasting_counter <- gsub("_step_forecast.*",
                               "",
@@ -60,18 +41,8 @@ for (file in list_of_filenames){
     as.numeric()
   
   
-  iteration_counter <- gsub(".*iteration_step_",
-                            "",
-                            file)
-  
-  iteration_counter <- gsub(".csv",
-                            "",
-                            iteration_counter) %>% 
-    as.numeric()
-  
   df <- df %>% 
-    mutate(forecasting_horizon=forecasting_counter) %>% 
-    mutate(time_step=iteration_counter)
+    mutate(forecasting_horizon=forecasting_counter) 
   
   accuracy_table <- bind_rows(df,
                               accuracy_table)
@@ -116,12 +87,8 @@ all_ts_within_a_fh <- function(df,
     filter(forecasting_horizon==forecastinghorizon) %>%
     ggplot(                    
       aes(x = feature_delay,
-          y = {{eval_parameter}},
-          group = time_step,
-          col = time_step,
-          guide_colourbar(title.theme="red"))) +
+          y = {{eval_parameter}})) +
     geom_line()+
-    
     theme_malte()
   
 }
@@ -412,7 +379,7 @@ grid_rmse_part1(47)
 
 
 
-
+accuracy_table2 <- accuracy_table
 
 
 
@@ -502,106 +469,3 @@ grid_max_ae_part1(41)
 grid_max_ae_part1(43)
 grid_max_ae_part1(45)
 grid_max_ae_part1(47)
-
-
-
-
-
-
-all_fh_within_a_ts <- function(df,
-                               timestep,
-                               eval_parameter){
-  df %>%  
-    filter(time_step==timestep) %>%
-    ggplot(                    
-      aes(x = feature_delay,
-          y = {{eval_parameter}},
-          group = forecasting_horizon,
-          col = forecasting_horizon)) +
-    geom_line()+
-    
-    theme_malte()
-  
-}
-
-accuracy_table %>% 
-  all_fh_within_a_ts(1,
-                     r2_validation)
-
-
-
-accuracy_table %>% 
-  all_fh_within_a_ts(1,
-                     rmse_validation)
-
-
-accuracy_table %>% 
-  all_fh_within_a_ts(1,
-                     mae_validation)
-
-
-
-
-
-
-
-all_ts_within_a_fh <- function(df,
-                               forecastinghorizon,
-                               eval_parameter){
-  df %>%  
-    filter(forecasting_horizon==forecastinghorizon) %>%
-    ggplot(                    
-      aes(x = feature_delay,
-          y = {{eval_parameter}},
-          group = time_step,
-          col = time_step,
-          guide_colourbar(title.theme="red"))) +
-    geom_line()+
-    
-    theme_malte()
-  
-}
-
-
-
-
-
-p1 <- accuracy_table %>% 
-  all_ts_within_a_fh(1,
-                     r2_validation)+
-  geom_vline(xintercept = 350, 
-             color="red")+
-  labs(x=,element_blank(),
-       y=''~r^2~' of the validation set',
-       subtitle  = "Forecastin horizon of 1")
-
-p2 <- accuracy_table %>% 
-  all_ts_within_a_fh(7,r2_validation)+
-  geom_vline(xintercept = 350, 
-             color="red")+
-  labs(x=element_blank(),
-       y=element_blank(),
-       subtitle  = "Forecastin horizon of 7")
-
-p3 <- accuracy_table %>% 
-  all_ts_within_a_fh(21,r2_validation)+
-  geom_vline(xintercept = 350, 
-             color="red")+
-  labs(x="# past values of ammonium load in the AN tank",
-       y=''~r^2~' of the validation set',
-       subtitle  = "Forecastin horizon of 21")
-
-p4 <- accuracy_table %>% 
-  all_ts_within_a_fh(42,r2_validation)+
-  geom_vline(xintercept = 350, 
-             color="red")+
-  labs(x="# past values of ammonium load in the AN tank",
-       y=element_blank(),
-       subtitle  = "Forecastin horizon of 42")
-
-gridExtra::grid.arrange(p1,p2,p3,p4)
-
-
-
-grid_to_results()
-

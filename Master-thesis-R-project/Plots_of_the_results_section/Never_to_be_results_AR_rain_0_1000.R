@@ -9,7 +9,7 @@ options(lubridate.fasttime = TRUE)
 
 #Load the data in a for loop
 parrent_folder="C:/Users/malte/OneDrive/Dokumenter/GitHub/Master-thesis/Python_code"
-folder_name = "AR_375_ammonium_with_0_to500_lagged_rain"
+folder_name = "accuracy_linear_models_lagged_rain"
 
 #Making a list of all the csv file names that should be used
 list_of_filenames <- list.files(paste(parrent_folder,
@@ -21,10 +21,26 @@ list_of_filenames <- list.files(paste(parrent_folder,
 #Check length need to be 288
 #!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!
 
+new_col_names <- c("feature_delay",
+                   "r2_training",
+                   "rmse_training",
+                   "mae_training",
+                   "mape_training",
+                   "median_ae_training",
+                   "max_ae_training",
+                   "r2_validation",
+                   "rmse_validation",
+                   "mae_validation",
+                   "mape_validation",
+                   "median_ae_validation",
+                   "max_ae_validation")
 
 wd <- paste(parrent_folder,folder_name,sep="/")
 
 drops1 <- c("...1")
+drops2 <- c("mape_validation",
+            "mape_training")
+
 accuracy_table <- data.frame()
 
 
@@ -33,7 +49,10 @@ for (file in list_of_filenames){
   df <- read_delim(paste(wd,file,sep = "/"))
   
   df <- df[ , !(names(df) %in% drops1)]
-
+  
+  colnames(df) <- new_col_names
+  
+  df <- df[ , !(names(df) %in% drops2)]
   
   forecasting_counter <- gsub("_step_forecast.*",
                               "",
@@ -41,8 +60,18 @@ for (file in list_of_filenames){
     as.numeric()
   
   
+  iteration_counter <- gsub(".*iteration_step_",
+                            "",
+                            file)
+  
+  iteration_counter <- gsub(".csv",
+                            "",
+                            iteration_counter) %>% 
+    as.numeric()
+  
   df <- df %>% 
-    mutate(forecasting_horizon=forecasting_counter) 
+    mutate(forecasting_horizon=forecasting_counter) %>% 
+    mutate(time_step=iteration_counter)
   
   accuracy_table <- bind_rows(df,
                               accuracy_table)
@@ -52,6 +81,20 @@ for (file in list_of_filenames){
 
 #-------------------------------------------------------------------------------
 #Functions for the plots
+
+
+#Defining the theme
+theme_malte <- function(){
+  theme_light(base_size = 16)+
+    theme(
+      axis.line = element_line(),
+      panel.border = element_blank(),
+      axis.title=element_text(size=16),
+      axis.text=element_text(size=12))
+}
+
+
+
 
 
 #FOR APPENDIX
@@ -90,7 +133,7 @@ accuracy_table %>%
 
 
 
-
+#FOR results
 
 all_ts_within_a_fh <- function(df,
                                forecastinghorizon,
@@ -99,7 +142,12 @@ all_ts_within_a_fh <- function(df,
     filter(forecasting_horizon==forecastinghorizon) %>%
     ggplot(                    
       aes(x = feature_delay,
-          y = {{eval_parameter}}))+
+          y = {{eval_parameter}},
+          group = time_step,
+          col = time_step))+
+    scale_colour_gradient(name="Timestep",
+                          low = "#2a9d8f", 
+                          high = "#e76f51")+
     geom_line()+
     
     theme_malte()
@@ -131,7 +179,7 @@ p3 <- accuracy_table %>%
   all_ts_within_a_fh(21,r2_validation)+
   geom_vline(xintercept = 350, 
              color="Black")+
-  labs(x="# of delayss",
+  labs(x="# of features",
        y=''~r^2~'of the validation set',
        subtitle  = "Forecastin horizon of 21")
 
@@ -139,7 +187,7 @@ p4 <- accuracy_table %>%
   all_ts_within_a_fh(42,r2_validation)+
   geom_vline(xintercept = 350, 
              color="Black")+
-  labs(x="# of delayss",
+  labs(x="# of features",
        y=element_blank(),
        subtitle  = "Forecastin horizon of 42")
 
@@ -175,7 +223,7 @@ p3 <- accuracy_table %>%
   all_ts_within_a_fh(21,mae_validation)+
   geom_vline(xintercept = 350, 
              color="Black")+
-  labs(x="# of delayss",
+  labs(x="# of features",
        y='MAE of the validation set',
        subtitle  = "Forecastin horizon of 21")
 
@@ -183,7 +231,7 @@ p4 <- accuracy_table %>%
   all_ts_within_a_fh(42,mae_validation)+
   geom_vline(xintercept = 350, 
              color="Black")+
-  labs(x="# of delayss",
+  labs(x="# of features",
        y=element_blank(),
        subtitle  = "Forecastin horizon of 42")
 
@@ -215,7 +263,7 @@ p3 <- accuracy_table %>%
   all_ts_within_a_fh(21,rmse_validation)+
   geom_vline(xintercept = 350, 
              color="Black")+
-  labs(x="# of delayss",
+  labs(x="# of features",
        y='RMSE of the validation set',
        subtitle  = "Forecastin horizon of 21")
 
@@ -223,10 +271,9 @@ p4 <- accuracy_table %>%
   all_ts_within_a_fh(42,rmse_validation)+
   geom_vline(xintercept = 350, 
              color="Black")+
-  labs(x="# of delays",
+  labs(x="# of features",
        y=element_blank(),
        subtitle  = "Forecastin horizon of 42")
 
 gridExtra::grid.arrange(p1,p2,p3,p4)
-
 

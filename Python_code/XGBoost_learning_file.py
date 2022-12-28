@@ -10,7 +10,7 @@ from pathlib import Path
 import pandas as pd
 from xgboost import XGBRegressor
 from sklearn.metrics._regression import mean_absolute_error
-
+import xgboost
 #Load data
 data_dir_path = Path(__file__).parent.parent / "Master-thesis-R-project" / "data_for_XGB" / "Influent_modelling"
 
@@ -55,9 +55,6 @@ for n_trees in n_trees_grid:
 
 df = pd.DataFrame.from_dict(performance).T
 df.to_csv("results.csv", sep=";")
-
-from xgboost import plot_importance
-plot_importance(xgb,  max_num_features=10)
 #Måse søt til gain i stedet for weight
 
 

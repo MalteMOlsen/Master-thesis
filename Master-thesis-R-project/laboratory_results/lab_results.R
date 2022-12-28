@@ -11,12 +11,17 @@ source("load_packages.R")
 
 
 #Defining the theme
+
 theme_malte <- function(){
-  theme_light()+
+  theme_light(base_size = 12)+
     theme(
       axis.line = element_line(),
-      panel.border = element_blank())
-}
+      panel.border = element_blank(),
+      axis.title=element_text(size=12),
+      axis.text=element_text(size=11),
+      plot.tag = element_text(size = 14),
+      plot.tag.position = c(0.75, 1),
+      plot.subtitle=element_text(size=12))}
 
 #-------------------------------------------------------------------------------
 #Write in the results
